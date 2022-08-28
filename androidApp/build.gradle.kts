@@ -1,19 +1,16 @@
-import com.nikitakrapo.build.ApplicationConfig
-import com.nikitakrapo.build.Versions
-
 plugins {
     id("com.android.application")
     kotlin("android")
 }
 
 android {
-    compileSdk = Versions.compileSdk
+    compileSdk = 32
     defaultConfig {
-        applicationId = ApplicationConfig.applicationId
-        minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
-        versionCode = ApplicationConfig.versionCode
-        versionName = ApplicationConfig.versionName
+        applicationId = "com.nikitakrapo.monkeybusiness"
+        minSdk = 24
+        targetSdk = 32
+        versionCode = 1
+        versionName = "1.0"
     }
     buildTypes {
         getByName("release") {
