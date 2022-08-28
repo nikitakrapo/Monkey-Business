@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeyforecast
+package com.nikitakrapo.monkeybusiness
 
 class Greeting {
     fun greeting(): String {

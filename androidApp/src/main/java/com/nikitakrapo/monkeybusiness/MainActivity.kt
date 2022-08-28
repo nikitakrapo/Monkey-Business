@@ -1,8 +1,7 @@
-package com.nikitakrapo.monkeyforecast.android
+package com.nikitakrapo.monkeybusiness
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.nikitakrapo.monkeyforecast.Greeting
 import android.widget.TextView
 
 fun greet(): String {

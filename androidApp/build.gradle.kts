@@ -6,7 +6,7 @@ plugins {
 android {
     compileSdk = 32
     defaultConfig {
-        applicationId = "com.nikitakrapo.monkeyforecast.android"
+        applicationId = "com.nikitakrapo.monkeybusiness"
         minSdk = 24
         targetSdk = 32
         versionCode = 1

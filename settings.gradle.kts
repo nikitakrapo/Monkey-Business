@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Monkey_Forecast"
+rootProject.name = "Monkey Business"
 include(":androidApp")
 include(":core")
 include(":mvi:feature")

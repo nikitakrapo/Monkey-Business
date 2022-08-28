@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeyforecast
+package com.nikitakrapo.monkeybusiness
 
 import platform.UIKit.UIDevice
 
