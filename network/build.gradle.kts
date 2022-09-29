@@ -28,8 +28,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(KtorLib.core)
-                implementation(LogLib.napier)
+                api(KtorLib.core)
+                api(KtorLib.logging)
             }
         }
         val commonTest by getting {
