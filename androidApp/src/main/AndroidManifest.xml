@@ -3,6 +3,7 @@
     package="com.nikitakrapo.monkeybusiness">
 
     <application
+        android:icon="@mipmap/monkey_icon"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
