@@ -4,6 +4,8 @@ compileSdk = "32"
 targetSdk = "31"
 minSdk = "24"
 
+buildToolsVersion = "31.0.0"
+
 # Gradle
 
 agp-bundle = "7.2.2" # https://developer.android.com/studio/releases/gradle-plugin
