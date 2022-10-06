@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../core"
 
 SPEC CHECKSUMS:
-  core: 7f723fc49f9a887a012fce960b3e7f18c80ecd8c
+  core: 85bddb430fb62813da99aaef307bc0a8bdc85783
 
 PODFILE CHECKSUM: c969fb8739c1db546f3bba35fd72d0efec79470d
 

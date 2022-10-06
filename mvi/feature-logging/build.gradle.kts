@@ -1,4 +1,3 @@
-import com.nikitakrapo.build.CoroutinesLib
 import com.nikitakrapo.build.Features
 import com.nikitakrapo.build.Versions
 
@@ -19,7 +18,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib"))
-                implementation(CoroutinesLib.core)
+                implementation(libs.kotlinx.coroutines)
                 api(project(Features.mviFeature))
             }
         }

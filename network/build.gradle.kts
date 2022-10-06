@@ -1,5 +1,3 @@
-import com.nikitakrapo.build.KtorLib
-import com.nikitakrapo.build.LogLib
 import com.nikitakrapo.build.Versions
 
 plugins {
@@ -28,8 +26,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(KtorLib.core)
-                api(KtorLib.logging)
+                api(libs.ktor.core)
+                api(libs.ktor.logging)
             }
         }
         val commonTest by getting {
@@ -39,7 +37,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(KtorLib.okHttp)
+                implementation(libs.ktor.okhttp)
             }
         }
         val androidTest by getting
@@ -49,7 +47,7 @@ kotlin {
         val iosMain by creating {
             dependsOn(commonMain)
             dependencies {
-                implementation(KtorLib.darwin)
+                implementation(libs.ktor.darwin)
             }
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)

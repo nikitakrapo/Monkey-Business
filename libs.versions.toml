@@ -1,0 +1,80 @@
+[versions]
+
+compileSdk = "32"
+targetSdk = "31"
+minSdk = "24"
+
+# Gradle
+
+agp-bundle = "7.2.2" # https://developer.android.com/studio/releases/gradle-plugin
+
+# Kotlin
+
+kotlin = "1.7.20" # https://kotlinlang.org/docs/releases.html#release-details
+kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/releases
+kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime/releases
+
+# Compose
+
+kotlinCompilerCompose = "1.3.2" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
+compose = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/compose
+accompanist = "0.25.1" # https://github.com/google/accompanist/releases
+material3 = "1.0.0-rc01" # https://developer.android.com/jetpack/androidx/releases/compose-material3
+constraintlayout-compose = "1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
+
+# AndroidX
+
+androidx-appcompat = "1.6.0-rc01" # https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-activity-compose = "1.6.0" # https://developer.android.com/jetpack/androidx/releases/activity
+
+# Ktor
+
+ktor = "2.1.2" # https://github.com/ktorio/ktor/releases
+
+# Utils
+
+napier = "2.6.1" # https://github.com/AAkira/Napier/releases
+
+
+[libraries]
+
+# Gradle
+
+agp-bundle-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp-bundle" }
+
+# Kotlin
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# Compose
+
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+compose-uiTest-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+compose-uiTest-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
+constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
+
+accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
+
+# Ktor
+
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+
+# AndroidX
+
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+
+# Utils
+
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
