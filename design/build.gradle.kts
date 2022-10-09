@@ -4,6 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material3)
+    api(libs.compose.ui)
+    api(libs.compose.material3)
+    api(libs.compose.foundation)
+    api(libs.compose.ui.tooling)
+    api(libs.compose.ui.tooling.preview)
 }

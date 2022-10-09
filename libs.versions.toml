@@ -1,6 +1,6 @@
 [versions]
 
-compileSdk = "32"
+compileSdk = "33"
 targetSdk = "31"
 minSdk = "24"
 
@@ -8,7 +8,7 @@ buildToolsVersion = "31.0.0"
 
 # Gradle
 
-agp-bundle = "7.2.2" # https://developer.android.com/studio/releases/gradle-plugin
+agp-bundle = "7.4.0-beta02" # https://developer.android.com/studio/releases/gradle-plugin
 
 # Kotlin
 
@@ -36,7 +36,7 @@ ktor = "2.1.2" # https://github.com/ktorio/ktor/releases
 # Utils
 
 napier = "2.6.1" # https://github.com/AAkira/Napier/releases
-
+turbine = "0.11.0"
 
 [libraries]
 
@@ -50,6 +50,7 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.re
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 # Compose
@@ -64,7 +65,7 @@ compose-uiTest-junit = { module = "androidx.compose.ui:ui-test-junit4", version.
 compose-uiTest-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
 
-accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 # Ktor
 
@@ -76,7 +77,9 @@ ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 # AndroidX
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 
 # Utils
 
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }

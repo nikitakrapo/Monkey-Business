@@ -18,6 +18,9 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":design"))
     implementation(libs.androidx.appcompat)
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.accompanist.systemuicontroller)
 }
