@@ -14,7 +14,7 @@ import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 
 class MainActivity : AppCompatActivity() {
 
-    private val component = CoreComponent()
+    private val component = CoreComponentImpl()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)

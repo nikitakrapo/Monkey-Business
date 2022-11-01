@@ -15,16 +15,16 @@ import com.nikitakrapo.monkeybusiness.design.NavigationBarItemModel
 @Composable
 fun CoreScreen(
     modifier: Modifier = Modifier,
-    component: Core,
+    component: CoreComponent,
 ) {
-    val state = component.state.collectAsState()
+    val child = component.child.collectAsState()
 
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        when (state.value.child) {
-            Core.Child.Home -> Column(
+        when (child.value) {
+            is CoreComponent.Child.Home -> Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
@@ -47,7 +47,7 @@ fun CoreScreen(
                     windowInsets = WindowInsets.navigationBars
                 )
             }
-            Core.Child.Profile -> Column(
+            is CoreComponent.Child.Profile -> Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {

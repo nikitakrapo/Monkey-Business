@@ -1,37 +1,17 @@
 package com.nikitakrapo.monkeybusiness
 
+import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import kotlinx.coroutines.flow.StateFlow
-import ru.yandex.lavka.mvi.feature.FeatureFactory
-import ru.yandex.lavka.mvi.feature.createReducerFeature
 
-class CoreComponent(
-    initialChild: Core.Child = Core.Child.Home,
-    featureFactory: FeatureFactory = FeatureFactory(),
-) : Core {
+interface CoreComponent {
 
-    private val coreFeature = featureFactory.createReducerFeature<Intent, Core.State>(
-        name = "Core",
-        initialState = Core.State(child = initialChild),
-        reducer = {
-            when (it) {
-                Intent.NavigateHome -> copy(child = Core.Child.Home)
-                Intent.NavigateProfile -> copy(child = Core.Child.Profile)
-            }
-        },
-    )
+    val child: StateFlow<Child>
 
-    override val state: StateFlow<Core.State> = coreFeature.state
+    fun onHomeClicked()
+    fun onProfileClicked()
 
-    override fun onHomeClicked() {
-        coreFeature.accept(Intent.NavigateHome)
-    }
-
-    override fun onProfileClicked() {
-        coreFeature.accept(Intent.NavigateProfile)
-    }
-
-    sealed class Intent {
-        object NavigateHome : Intent()
-        object NavigateProfile : Intent()
+    sealed class Child {
+        class Home(val component: HomeComponent) : Child()
+        class Profile(val component: Unit) : Child()
     }
 }

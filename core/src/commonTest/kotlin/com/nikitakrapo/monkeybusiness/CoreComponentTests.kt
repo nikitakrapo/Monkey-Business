@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness
 
 import app.cash.turbine.test
+import com.nikitakrapo.monkeybusiness.CoreComponentImpl.CoreScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -11,6 +12,7 @@ import ru.yandex.lavka.mvi.feature.logging.LoggingFeatureFactory
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CoreComponentTests {
@@ -23,80 +25,67 @@ class CoreComponentTests {
 
     @Test
     fun `correct initial state WHEN Profile initial child`() = runTest {
-        val component = component(initialChild = Core.Child.Profile)
+        val component = component(initialChild = CoreScreen.PROFILE)
 
-        component.state.test {
-            assertEquals(state(child = Core.Child.Profile), awaitItem())
+        component.child.test {
+            assertTrue { awaitItem() is CoreComponent.Child.Profile }
         }
     }
 
     @Test
     fun `correct initial state WHEN Home initial child`() = runTest {
-        val component = component(initialChild = Core.Child.Home)
+        val component = component(initialChild = CoreScreen.HOME)
 
-        component.state.test {
-            assertEquals(state(child = Core.Child.Home), awaitItem())
+        component.child.test {
+            assertTrue { awaitItem() is CoreComponent.Child.Home }
         }
     }
 
     @Test
     fun `navigate home WHEN home clicked and Profile initial child`() = runTest {
-        val component = component(initialChild = Core.Child.Profile)
+        val component = component(initialChild = CoreScreen.PROFILE)
         component.onHomeClicked()
 
-        component.state.test {
-            assertEquals(state(child = Core.Child.Profile), awaitItem())
-            assertEquals(state(child = Core.Child.Home), awaitItem())
+        component.child.test {
+            assertTrue { awaitItem() is CoreComponent.Child.Home }
         }
     }
 
     @Test
     fun `navigate home WHEN home clicked and Home initial child`() = runTest {
-        val component = component(initialChild = Core.Child.Home)
+        val component = component(initialChild = CoreScreen.HOME)
         component.onHomeClicked()
 
-        component.state.test {
-            assertEquals(state(Core.Child.Home), awaitItem())
+        component.child.test {
+            assertTrue { awaitItem() is CoreComponent.Child.Home }
         }
     }
 
     @Test
     fun `navigate profile WHEN profile clicked and Profile initial child`() = runTest {
-        val component = component(initialChild = Core.Child.Profile)
+        val component = component(initialChild = CoreScreen.PROFILE)
         component.onProfileClicked()
 
-        component.state.test {
-            assertEquals(state(child = Core.Child.Profile), awaitItem())
+        component.child.test {
+            assertTrue { awaitItem() is CoreComponent.Child.Profile }
         }
     }
 
     @Test
     fun `navigate profile WHEN profile clicked and Home initial child`() = runTest {
-        val component = component(initialChild = Core.Child.Home)
+        val component = component(initialChild = CoreScreen.HOME)
         component.onProfileClicked()
 
-        component.state.test {
-            assertEquals(state(child = Core.Child.Home), awaitItem())
-            assertEquals(state(child = Core.Child.Profile), awaitItem())
+        component.child.test {
+            assertTrue { awaitItem() is CoreComponent.Child.Profile }
         }
     }
 
     private fun component(
-        initialChild: Core.Child = Core.Child.Home,
-    ): Core {
-        return CoreComponent(
-            initialChild = initialChild,
-            featureFactory = LoggingFeatureFactory(FeatureFactory()) {
-                println(it)
-            }
-        )
-    }
-
-    private fun state(
-        child: Core.Child = Core.Child.Home,
-    ): Core.State {
-        return Core.State(
-            child = child,
+        initialChild: CoreScreen = CoreScreen.HOME,
+    ): CoreComponent {
+        return CoreComponentImpl(
+            initialScreen = initialChild,
         )
     }
 }

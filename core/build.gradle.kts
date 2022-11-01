@@ -27,6 +27,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":mvi:feature"))
+                implementation(project(":components:home"))
             }
         }
         val commonTest by getting {
