@@ -17,8 +17,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":design"))
+    implementation(projects.core)
+    implementation(projects.design)
     implementation(libs.androidx.appcompat)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.compose)

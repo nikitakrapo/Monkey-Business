@@ -26,21 +26,21 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":mvi:feature"))
-                implementation(project(":components:home"))
+                implementation(projects.mvi.feature)
+                implementation(projects.components.home)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(project(":mvi:feature-logging"))
+                implementation(projects.mvi.featureLogging)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(project(":design"))
+                implementation(projects.design)
             }
         }
         val androidTest by getting

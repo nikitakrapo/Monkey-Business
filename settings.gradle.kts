@@ -1,4 +1,5 @@
 enableFeaturePreview("VERSION_CATALOGS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
@@ -16,7 +17,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Monkey Business"
+rootProject.name = "MonkeyBusiness"
 include(":androidApp")
 include(":core")
 include(":network")

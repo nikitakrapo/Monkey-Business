@@ -1,4 +1,3 @@
-import com.nikitakrapo.build.Features
 import com.nikitakrapo.build.Versions
 
 plugins {
@@ -19,7 +18,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 implementation(libs.kotlinx.coroutines)
-                api(project(Features.mviFeature))
+                api(projects.mvi.feature)
             }
         }
         val commonTest by getting

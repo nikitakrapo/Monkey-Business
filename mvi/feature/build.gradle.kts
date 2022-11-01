@@ -24,7 +24,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.kotlinx.coroutines.test)
-                implementation(project(":mvi:feature-logging"))
+                implementation(projects.mvi.featureLogging)
             }
         }
         val androidMain by getting
