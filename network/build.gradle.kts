@@ -1,4 +1,5 @@
-import com.nikitakrapo.build.Versions
+import modulesSetup.iosCompat
+import modulesSetup.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -8,17 +9,19 @@ plugins {
 
 version = "1.0"
 
-kotlin {
+setupMultiplatformModule {
     android()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    jvm()
+    iosCompat()
+}
 
+kotlin {
     cocoapods {
         name = "MonkeyNetwork"
         summary = "Networking module"
         ios.deploymentTarget = "14.1"
         framework {
+            isStatic = true
             baseName = "network"
         }
     }
@@ -30,17 +33,11 @@ kotlin {
                 api(libs.ktor.logging)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
         val androidMain by getting {
             dependencies {
                 implementation(libs.ktor.okhttp)
             }
         }
-        val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -53,23 +50,5 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
         }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
-        }
-    }
-}
-
-android {
-    compileSdk = Versions.compileSdk
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
     }
 }

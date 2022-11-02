@@ -1,4 +1,5 @@
-import com.nikitakrapo.build.Versions
+import modulesSetup.iosCompat
+import modulesSetup.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -7,12 +8,13 @@ plugins {
 
 version = "1.0"
 
-kotlin {
+setupMultiplatformModule {
     android()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    jvm()
+    iosCompat()
+}
 
+kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -20,15 +22,10 @@ kotlin {
                 api(libs.kotlinx.coroutines)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(projects.mvi.featureLogging)
-            }
+        val jvmMain by getting
+        val androidMain by getting {
+            dependsOn(jvmMain)
         }
-        val androidMain by getting
-        val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -38,28 +35,5 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
         }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
-        }
-    }
-}
-
-android {
-    compileSdk = Versions.compileSdk
-
-    defaultConfig {
-        minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
-    }
-
-    compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
     }
 }

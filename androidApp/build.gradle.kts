@@ -1,20 +1,18 @@
+import modulesSetup.applyCompose
+import modulesSetup.setupAndroidApp
+
 plugins {
-    id("convention.android-mobile-app")
-    id("convention.compose")
+    id("com.android.application")
+    kotlin("android")
 }
 
-android {
-    defaultConfig {
-        applicationId = "com.nikitakrapo.monkeybusiness"
-        versionCode = 1
-        versionName = "1.0"
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-}
+setupAndroidApp(
+    applicationId = "com.nikitakrapo.monkeybusiness",
+    versionCode = 1,
+    versionName = "1.0",
+)
+
+applyCompose()
 
 dependencies {
     implementation(projects.core)
