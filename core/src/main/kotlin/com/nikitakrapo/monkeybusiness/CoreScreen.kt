@@ -14,24 +14,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.nikitakrapo.monkeybusiness.design.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.NavigationBarItemModel
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.home.HomeScreen
 
 @Composable
 fun CoreScreen(
     modifier: Modifier = Modifier,
     component: CoreComponent,
 ) {
-    val child = component.child.collectAsState()
+    val childState = component.child.collectAsState()
 
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        when (child.value) {
+        when (val child = childState.value) {
             is CoreComponent.Child.Home -> Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text("Home")
+                HomeScreen(
+                    modifier = Modifier.fillMaxWidth(),
+                    component = child.component,
+                )
                 BottomNavigationBar(
                     items = listOf(
                         NavigationBarItemModel(

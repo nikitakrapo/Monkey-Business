@@ -1,3 +1,4 @@
+import modulesSetup.applyCompose
 import modulesSetup.iosCompat
 import modulesSetup.setupMultiplatformModule
 
@@ -15,6 +16,8 @@ setupMultiplatformModule {
     iosCompat()
 }
 
+applyCompose()
+
 kotlin {
     cocoapods {
         name = "Home"
@@ -30,11 +33,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.mvi.feature)
+                implementation(projects.finance.models)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
                 implementation(projects.mvi.featureLogging)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)

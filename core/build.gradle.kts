@@ -39,7 +39,6 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
                 implementation(projects.mvi.featureLogging)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
