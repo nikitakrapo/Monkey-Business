@@ -1,5 +1,5 @@
-import modulesSetup.applyCompose
-import modulesSetup.setupAndroidLibrary
+import com.nikitakrapo.modules_setup.applyCompose
+import com.nikitakrapo.modules_setup.setupAndroidLibrary
 
 plugins {
     id("com.android.library")
@@ -15,4 +15,5 @@ dependencies {
     api(libs.compose.foundation)
     api(libs.compose.ui.tooling)
     api(libs.compose.ui.tooling.preview)
+    api(libs.constraintlayout.compose)
 }

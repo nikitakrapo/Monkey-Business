@@ -1,4 +1,4 @@
-package modulesSetup
+package com.nikitakrapo.modules_setup
 
 data class AndroidConfig(
     val minSdk: Int,

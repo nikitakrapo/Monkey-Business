@@ -3,7 +3,7 @@ package com.nikitakrapo.monkeybusiness
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,19 +46,19 @@ fun CoreScreen(
                         ),
                         NavigationBarItemModel(
                             selected = false,
-                            onClick = component::onProfileClicked,
-                            icon = Icons.Default.Person,
-                            iconContentDescription = stringResource(R.string.cd_profile),
+                            onClick = component::onMoreClicked,
+                            icon = Icons.Default.MoreVert,
+                            iconContentDescription = stringResource(R.string.cd_more),
                         ),
                     ),
                     windowInsets = WindowInsets.navigationBars
                 )
             }
-            is CoreComponent.Child.Profile -> Column(
+            is CoreComponent.Child.More -> Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text("Profile")
+                Text("More")
                 BottomNavigationBar(
                     items = listOf(
                         NavigationBarItemModel(
@@ -69,13 +69,19 @@ fun CoreScreen(
                         ),
                         NavigationBarItemModel(
                             selected = true,
-                            onClick = component::onProfileClicked,
-                            icon = Icons.Default.Person,
-                            iconContentDescription = stringResource(R.string.cd_profile),
+                            onClick = component::onMoreClicked,
+                            icon = Icons.Default.MoreVert,
+                            iconContentDescription = stringResource(R.string.cd_more),
                         ),
                     ),
                     windowInsets = WindowInsets.navigationBars
                 )
+            }
+            is CoreComponent.Child.Profile -> Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text("Profile")
             }
         }
     }
@@ -107,7 +113,7 @@ fun CoreScreen_Preview_Profile() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = CoreComponentImpl(initialScreen = CoreComponentImpl.CoreScreen.PROFILE),
+                component = CoreComponentImpl(initialScreen = CoreComponentImpl.CoreScreen.MORE),
             )
         }
     }

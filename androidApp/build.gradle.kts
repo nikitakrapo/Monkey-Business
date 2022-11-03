@@ -1,5 +1,5 @@
-import modulesSetup.applyCompose
-import modulesSetup.setupAndroidApp
+import com.nikitakrapo.modules_setup.applyCompose
+import com.nikitakrapo.modules_setup.setupAndroidApp
 
 plugins {
     id("com.android.application")

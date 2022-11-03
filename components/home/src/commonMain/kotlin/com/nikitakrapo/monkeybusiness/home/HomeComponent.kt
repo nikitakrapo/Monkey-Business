@@ -7,6 +7,8 @@ interface HomeComponent {
 
     val state: StateFlow<State>
 
+    fun onSearchBarClicked()
+    fun onAvatarClicked()
     fun onTopupClicked()
     fun onWithdrawClicked()
 

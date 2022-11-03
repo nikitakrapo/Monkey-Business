@@ -1,6 +1,5 @@
-import modulesSetup.applyCompose
-import modulesSetup.iosCompat
-import modulesSetup.setupMultiplatformModule
+import com.nikitakrapo.modules_setup.applyCompose
+import com.nikitakrapo.modules_setup.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -10,11 +9,7 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule {
-    android()
-    jvm()
-    iosCompat()
-}
+setupMultiplatformModule()
 
 applyCompose()
 

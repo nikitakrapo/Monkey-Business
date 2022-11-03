@@ -1,5 +1,5 @@
-import modulesSetup.iosCompat
-import modulesSetup.setupMultiplatformModule
+import com.nikitakrapo.modules_setup.iosCompat
+import com.nikitakrapo.modules_setup.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -9,11 +9,7 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule {
-    android()
-    jvm()
-    iosCompat()
-}
+setupMultiplatformModule()
 
 kotlin {
     cocoapods {

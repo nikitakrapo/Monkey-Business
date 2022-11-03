@@ -1,4 +1,4 @@
-package modulesSetup
+package com.nikitakrapo.modules_setup
 
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
@@ -33,7 +33,9 @@ fun Project.setupAndroidApp(
     }
 }
 
-internal fun Project.setupAndroidCommon(config: AndroidConfig = defaultAndroidConfig()) {
+internal fun Project.setupAndroidCommon(
+    config: AndroidConfig = defaultAndroidConfig(),
+) {
     extensions.configure<BaseExtension> {
         compileSdkVersion(config.compileSdk)
 

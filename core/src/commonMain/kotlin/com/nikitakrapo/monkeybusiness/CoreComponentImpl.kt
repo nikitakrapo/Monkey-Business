@@ -10,7 +10,11 @@ class CoreComponentImpl(
     initialScreen: CoreScreen = CoreScreen.HOME,
 ) : CoreComponent {
 
-    private val homeComponent: HomeComponent = HomeComponentImpl()
+    private val homeComponent: HomeComponent = HomeComponentImpl(
+        navigateToSearch = {},
+        navigateToProfile = ::navigateToProfile,
+    )
+    private val moreComponent = Unit
     private val profileComponent = Unit
 
     private val childFlow = MutableStateFlow(createChildForScreen(initialScreen))
@@ -20,17 +24,23 @@ class CoreComponentImpl(
         childFlow.value = createChildForScreen(CoreScreen.HOME)
     }
 
-    override fun onProfileClicked() {
+    override fun onMoreClicked() {
+        childFlow.value = createChildForScreen(CoreScreen.MORE)
+    }
+
+    private fun navigateToProfile() {
         childFlow.value = createChildForScreen(CoreScreen.PROFILE)
     }
 
     enum class CoreScreen {
         HOME,
+        MORE,
         PROFILE
     }
 
     private fun createChildForScreen(screen: CoreScreen) = when (screen) {
         CoreScreen.HOME -> CoreComponent.Child.Home(homeComponent)
+        CoreScreen.MORE -> CoreComponent.Child.More(moreComponent)
         CoreScreen.PROFILE -> CoreComponent.Child.Profile(profileComponent)
     }
 }

@@ -7,11 +7,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import ru.yandex.lavka.mvi.feature.FeatureFactory
-import ru.yandex.lavka.mvi.feature.logging.LoggingFeatureFactory
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -24,11 +21,11 @@ class CoreComponentTests {
     }
 
     @Test
-    fun `correct initial state WHEN Profile initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.PROFILE)
+    fun `correct initial state WHEN more initial child`() = runTest {
+        val component = component(initialChild = CoreScreen.MORE)
 
         component.child.test {
-            assertTrue { awaitItem() is CoreComponent.Child.Profile }
+            assertTrue { awaitItem() is CoreComponent.Child.More }
         }
     }
 
@@ -42,8 +39,8 @@ class CoreComponentTests {
     }
 
     @Test
-    fun `navigate home WHEN home clicked and Profile initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.PROFILE)
+    fun `navigate home WHEN home clicked and more initial child`() = runTest {
+        val component = component(initialChild = CoreScreen.MORE)
         component.onHomeClicked()
 
         component.child.test {
@@ -62,22 +59,22 @@ class CoreComponentTests {
     }
 
     @Test
-    fun `navigate profile WHEN profile clicked and Profile initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.PROFILE)
-        component.onProfileClicked()
+    fun `navigate more WHEN more clicked and more initial child`() = runTest {
+        val component = component(initialChild = CoreScreen.MORE)
+        component.onMoreClicked()
 
         component.child.test {
-            assertTrue { awaitItem() is CoreComponent.Child.Profile }
+            assertTrue { awaitItem() is CoreComponent.Child.More }
         }
     }
 
     @Test
-    fun `navigate profile WHEN profile clicked and Home initial child`() = runTest {
+    fun `navigate more WHEN more clicked and Home initial child`() = runTest {
         val component = component(initialChild = CoreScreen.HOME)
-        component.onProfileClicked()
+        component.onMoreClicked()
 
         component.child.test {
-            assertTrue { awaitItem() is CoreComponent.Child.Profile }
+            assertTrue { awaitItem() is CoreComponent.Child.More }
         }
     }
 

@@ -1,4 +1,4 @@
-package modulesSetup
+package com.nikitakrapo.modules_setup
 
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType

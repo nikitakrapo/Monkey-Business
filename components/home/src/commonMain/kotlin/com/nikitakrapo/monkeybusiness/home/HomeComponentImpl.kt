@@ -6,7 +6,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class HomeComponentImpl : HomeComponent {
+class HomeComponentImpl(
+    private val navigateToSearch: () -> Unit,
+    private val navigateToProfile: () -> Unit,
+) : HomeComponent {
 
     private val stateFlow = MutableStateFlow(
         HomeComponent.State(
@@ -14,6 +17,14 @@ class HomeComponentImpl : HomeComponent {
         )
     )
     override val state: StateFlow<HomeComponent.State> = stateFlow.asStateFlow()
+
+    override fun onSearchBarClicked() {
+        navigateToSearch()
+    }
+
+    override fun onAvatarClicked() {
+        navigateToProfile()
+    }
 
     override fun onTopupClicked() {
         changeMoneyAmount(1)
