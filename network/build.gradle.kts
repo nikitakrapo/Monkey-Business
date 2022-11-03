@@ -1,9 +1,7 @@
-import com.nikitakrapo.modules_setup.iosCompat
 import com.nikitakrapo.modules_setup.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("com.android.library")
 }
 
@@ -12,16 +10,6 @@ version = "1.0"
 setupMultiplatformModule()
 
 kotlin {
-    cocoapods {
-        name = "MonkeyNetwork"
-        summary = "Networking module"
-        ios.deploymentTarget = "14.1"
-        framework {
-            isStatic = true
-            baseName = "network"
-        }
-    }
-    
     sourceSets {
         val commonMain by getting {
             dependencies {

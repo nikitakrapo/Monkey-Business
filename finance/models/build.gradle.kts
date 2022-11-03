@@ -1,9 +1,7 @@
-import com.nikitakrapo.modules_setup.iosCompat
 import com.nikitakrapo.modules_setup.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("com.android.library")
 }
 
@@ -12,17 +10,6 @@ version = "1.0"
 setupMultiplatformModule()
 
 kotlin {
-    cocoapods {
-        name = "FinancialModels"
-        summary = "Shared financial models"
-        homepage = "https://github.com/nikitakrapo/Monkey-Business"
-        ios.deploymentTarget = "14.1"
-        framework {
-            isStatic = true
-            baseName = "financialModels"
-        }
-    }
-    
     sourceSets {
         val commonMain by getting
         val androidMain by getting

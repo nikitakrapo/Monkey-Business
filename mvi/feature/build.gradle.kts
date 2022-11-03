@@ -1,4 +1,3 @@
-import com.nikitakrapo.modules_setup.iosCompat
 import com.nikitakrapo.modules_setup.setupMultiplatformModule
 
 plugins {

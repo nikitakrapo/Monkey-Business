@@ -3,7 +3,6 @@ import com.nikitakrapo.modules_setup.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("com.android.library")
 }
 
@@ -14,16 +13,6 @@ setupMultiplatformModule()
 applyCompose()
 
 kotlin {
-    cocoapods {
-        name = "Home"
-        summary = "Homepage of the application"
-        ios.deploymentTarget = "14.1"
-        framework {
-            isStatic = true
-            baseName = "home"
-        }
-    }
-    
     sourceSets {
         val commonMain by getting {
             dependencies {
