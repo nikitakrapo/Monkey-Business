@@ -1,5 +1,6 @@
 package com.nikitakrapo.monkeybusiness
 
+import com.nikitakrapo.component.ComponentContext
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,8 +8,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class CoreComponentImpl(
+    componentContext: ComponentContext,
     initialScreen: CoreScreen = CoreScreen.HOME,
-) : CoreComponent {
+) : CoreComponent, ComponentContext by componentContext {
 
     private val homeComponent: HomeComponent = HomeComponentImpl(
         navigateToSearch = {},

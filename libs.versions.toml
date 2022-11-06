@@ -27,6 +27,7 @@ constraintlayout-compose = "1.0.1" # https://developer.android.com/jetpack/andro
 # AndroidX
 
 androidx-appcompat = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-activity = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/activity
 androidx-activity-compose = "1.6.0" # https://developer.android.com/jetpack/androidx/releases/activity
 
 # Ktor
@@ -77,6 +78,7 @@ ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 # AndroidX
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 
 # Utils

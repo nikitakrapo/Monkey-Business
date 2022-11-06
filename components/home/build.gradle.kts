@@ -16,8 +16,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(projects.finance.models)
                 implementation(projects.mvi.feature)
-                implementation(projects.finance.models)
             }
         }
         val commonTest by getting {

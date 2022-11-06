@@ -1,6 +1,11 @@
 package com.nikitakrapo.monkeybusiness
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
@@ -15,6 +20,9 @@ import com.nikitakrapo.monkeybusiness.design.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.NavigationBarItemModel
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
+import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun CoreScreen(
@@ -97,7 +105,7 @@ fun CoreScreen_Preview_Home() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = CoreComponentImpl(initialScreen = CoreComponentImpl.CoreScreen.HOME),
+                component = PreviewCoreComponent(CoreComponent.Child.Home(PreviewHomeComponent())),
             )
         }
     }
@@ -113,8 +121,18 @@ fun CoreScreen_Preview_Profile() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = CoreComponentImpl(initialScreen = CoreComponentImpl.CoreScreen.MORE),
+                component = PreviewCoreComponent(CoreComponent.Child.Profile(Unit)),
             )
         }
     }
+}
+
+internal fun PreviewCoreComponent(
+    child: CoreComponent.Child,
+) = object : CoreComponent {
+    override val child: StateFlow<CoreComponent.Child>
+        get() = MutableStateFlow(child)
+
+    override fun onHomeClicked() {}
+    override fun onMoreClicked() {}
 }

@@ -29,6 +29,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(projects.navigation)
                 implementation(projects.mvi.feature)
                 implementation(projects.components.home)
             }

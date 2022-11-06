@@ -11,10 +11,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.navigation.defaultComponentContext
 
 class MainActivity : AppCompatActivity() {
 
-    private val component = CoreComponentImpl()
+    private val component = CoreComponentImpl(
+        componentContext = defaultComponentContext(),
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)

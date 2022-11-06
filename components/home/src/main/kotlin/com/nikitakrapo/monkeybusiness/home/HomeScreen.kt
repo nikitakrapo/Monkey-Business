@@ -19,7 +19,11 @@ import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.SearchBarButton
 import com.nikitakrapo.monkeybusiness.design.UserAvatar
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finance.models.Currency
+import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.home.balance.BalanceCard
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HomeScreen(
@@ -69,8 +73,21 @@ fun HomeScreen_Preview() {
         Surface {
             HomeScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = HomeComponentImpl({},{})
+                component = PreviewHomeComponent()
             )
         }
     }
+}
+
+//TODO: figure out what to do with preview components
+fun PreviewHomeComponent(
+    moneyAmount: MoneyAmount = MoneyAmount(amount = 201923, currency = Currency.GBP),
+) = object : HomeComponent {
+    override val state: StateFlow<HomeComponent.State> =
+        MutableStateFlow(HomeComponent.State(moneyAmount))
+
+    override fun onSearchBarClicked() {}
+    override fun onAvatarClicked() {}
+    override fun onTopupClicked() {}
+    override fun onWithdrawClicked() {}
 }
