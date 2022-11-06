@@ -12,12 +12,12 @@ abstract class BackCallback(
         }
 
     fun registerEnabledChangedCallback(callback: (isEnabled: Boolean) -> Unit) {
-        check (callback in enableChangeCallbacks) { "Callback already registered" }
+        check (callback !in enableChangeCallbacks) { "Callback already registered" }
         this.enableChangeCallbacks += callback
     }
 
     fun unregisterEnabledChangedCallback(callback: (isEnabled: Boolean) -> Unit) {
-        check (callback !in enableChangeCallbacks) { "Callback not registered" }
+        check (callback in enableChangeCallbacks) { "Callback not registered" }
         this.enableChangeCallbacks -= callback
     }
 
