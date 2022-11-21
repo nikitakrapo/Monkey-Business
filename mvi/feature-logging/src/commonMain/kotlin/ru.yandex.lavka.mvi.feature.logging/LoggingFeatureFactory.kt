@@ -1,14 +1,14 @@
 package ru.yandex.lavka.mvi.feature.logging
 
 import kotlinx.coroutines.flow.onEach
-import ru.yandex.lavka.mvi.feature.Actor
-import ru.yandex.lavka.mvi.feature.Bootstrapper
-import ru.yandex.lavka.mvi.feature.EventsPublisher
-import ru.yandex.lavka.mvi.feature.Feature
-import ru.yandex.lavka.mvi.feature.FeatureFactory
-import ru.yandex.lavka.mvi.feature.IntentToAction
-import ru.yandex.lavka.mvi.feature.Reducer
-import ru.yandex.lavka.mvi.feature.ThreadVerifier
+import com.nikitakrapo.mvi.feature.Actor
+import com.nikitakrapo.mvi.feature.Bootstrapper
+import com.nikitakrapo.mvi.feature.EventsPublisher
+import com.nikitakrapo.mvi.feature.Feature
+import com.nikitakrapo.mvi.feature.FeatureFactory
+import com.nikitakrapo.mvi.feature.IntentToAction
+import com.nikitakrapo.mvi.feature.Reducer
+import com.nikitakrapo.mvi.feature.ThreadVerifier
 import kotlin.coroutines.CoroutineContext
 
 fun LoggingFeatureFactory(

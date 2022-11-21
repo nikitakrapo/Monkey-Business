@@ -1,4 +1,4 @@
-package ru.yandex.lavka.mvi.feature
+package com.nikitakrapo.mvi.feature
 
 fun interface ThreadVerifier {
     @Throws(IllegalStateException::class)

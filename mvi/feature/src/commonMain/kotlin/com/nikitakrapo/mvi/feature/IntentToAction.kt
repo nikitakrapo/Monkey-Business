@@ -1,4 +1,4 @@
-package ru.yandex.lavka.mvi.feature
+package com.nikitakrapo.mvi.feature
 
 fun interface IntentToAction<in Intent : Any, out Action : Any> {
 

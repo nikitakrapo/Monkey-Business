@@ -1,4 +1,4 @@
-package ru.yandex.lavka.mvi.feature
+package com.nikitakrapo.mvi.feature
 
 internal actual fun ThreadVerifier(): ThreadVerifier {
     val originId = Thread.currentThread().id

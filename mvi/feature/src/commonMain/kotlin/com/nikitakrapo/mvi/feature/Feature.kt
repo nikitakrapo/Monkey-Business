@@ -1,4 +1,4 @@
-package ru.yandex.lavka.mvi.feature
+package com.nikitakrapo.mvi.feature
 
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow

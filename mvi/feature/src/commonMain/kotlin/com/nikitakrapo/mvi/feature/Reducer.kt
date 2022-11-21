@@ -1,4 +1,4 @@
-package ru.yandex.lavka.mvi.feature
+package com.nikitakrapo.mvi.feature
 
 fun interface Reducer<State : Any, in Effect : Any> {
 
