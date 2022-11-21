@@ -3,14 +3,17 @@ package com.nikitakrapo.monkeybusiness
 import com.nikitakrapo.component.ComponentContext
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
+import com.nikitakrapo.navigation.StackNavigation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class CoreComponentImpl(
     componentContext: ComponentContext,
-    initialScreen: CoreScreen = CoreScreen.HOME,
+    initialScreen: CoreScreen = CoreScreen.Home,
 ) : CoreComponent, ComponentContext by componentContext {
+
+    val navigation = StackNavigation<CoreScreen>()
 
     private val homeComponent: HomeComponent = HomeComponentImpl(
         navigateToSearch = {},
@@ -23,26 +26,26 @@ class CoreComponentImpl(
     override val child: StateFlow<CoreComponent.Child> = childFlow.asStateFlow()
 
     override fun onHomeClicked() {
-        childFlow.value = createChildForScreen(CoreScreen.HOME)
+        childFlow.value = createChildForScreen(CoreScreen.Home)
     }
 
     override fun onMoreClicked() {
-        childFlow.value = createChildForScreen(CoreScreen.MORE)
+        childFlow.value = createChildForScreen(CoreScreen.More)
     }
 
     private fun navigateToProfile() {
-        childFlow.value = createChildForScreen(CoreScreen.PROFILE)
+        childFlow.value = createChildForScreen(CoreScreen.Profile)
     }
 
-    enum class CoreScreen {
-        HOME,
-        MORE,
-        PROFILE
+    sealed class CoreScreen {
+        object Home : CoreScreen()
+        object More : CoreScreen()
+        object Profile : CoreScreen()
     }
 
     private fun createChildForScreen(screen: CoreScreen) = when (screen) {
-        CoreScreen.HOME -> CoreComponent.Child.Home(homeComponent)
-        CoreScreen.MORE -> CoreComponent.Child.More(moreComponent)
-        CoreScreen.PROFILE -> CoreComponent.Child.Profile(profileComponent)
+        CoreScreen.Home -> CoreComponent.Child.Home(homeComponent)
+        CoreScreen.More -> CoreComponent.Child.More(moreComponent)
+        CoreScreen.Profile -> CoreComponent.Child.Profile(profileComponent)
     }
 }
