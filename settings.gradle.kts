@@ -21,6 +21,7 @@ rootProject.name = "MonkeyBusiness"
 include(":androidApp")
 include(":core")
 include(":network")
+include(":analytics")
 include(":mvi:feature")
 include(":mvi:feature-logging")
 include(":components:home")

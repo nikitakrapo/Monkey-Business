@@ -4,6 +4,7 @@ import com.nikitakrapo.modules_setup.setupAndroidApp
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("com.google.gms.google-services")
 }
 
 setupAndroidApp(
@@ -17,8 +18,10 @@ applyCompose()
 dependencies {
     implementation(projects.core)
     implementation(projects.design)
+    implementation(projects.analytics)
     implementation(libs.androidx.appcompat)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.compose)
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.firebase.analytics)
 }

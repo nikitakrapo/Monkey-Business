@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath(libs.kotlin.gradle)
         classpath(libs.agp.bundle.gradle)
+        classpath(libs.google.services)
     }
 }
 

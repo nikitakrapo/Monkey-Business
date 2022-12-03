@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "955479723902",
+    "project_id": "monkey-business-app",
+    "storage_bucket": "monkey-business-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955479723902:android:4457f84e3a4b0d2c52ad2f",
+        "android_client_info": {
+          "package_name": "com.nikitakrapo.monkeybusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955479723902-fai4k7g0qa5vkio3g88avc3svgcurm14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNs_NWo0SC43YyMidMDoe1IaF1IFIDxcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955479723902-fai4k7g0qa5vkio3g88avc3svgcurm14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
