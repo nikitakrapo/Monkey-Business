@@ -22,7 +22,6 @@ rootProject.name = "MonkeyBusiness"
 include(":androidApp")
 include(":core")
 include(":analytics")
-include(":finance:models")
 include(":design")
 
 include(":components:home")
@@ -32,3 +31,4 @@ include(":features:navigation:test")
 include(":features:mvi:feature")
 include(":features:mvi:feature-logging")
 include(":features:network")
+include(":features:finance:models")
