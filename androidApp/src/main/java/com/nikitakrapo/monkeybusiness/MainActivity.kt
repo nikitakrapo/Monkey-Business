@@ -10,17 +10,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.nikitakrapo.analytics.FirebaseAnalyticsManager
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.navigation.defaultComponentContext
 
 class MainActivity : AppCompatActivity() {
 
-    private val component = CoreComponentImpl(
-        componentContext = defaultComponentContext(),
-    )
+    private lateinit var mainActivityComponent: MainActivityComponent
+    private lateinit var coreComponent: CoreComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mainActivityComponent = MainActivityComponent(
+            analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this))
+        )
+
+        //TODO: make proper dependency management (at least component factory)
+        coreComponent = CoreComponentImpl(
+            componentContext = defaultComponentContext(),
+            analytics = CoreScreenAnalytics(mainActivityComponent.analyticsManager),
+        )
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val systemUiController = rememberSystemUiController()
@@ -39,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(WindowInsets.statusBars.asPaddingValues()),
-                    component = component,
+                    component = coreComponent,
                 )
             }
         }

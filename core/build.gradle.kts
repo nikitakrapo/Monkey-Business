@@ -30,6 +30,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.navigation.core)
+                api(projects.features.analytics)
                 implementation(projects.features.mvi.feature)
                 implementation(projects.components.home)
             }

@@ -85,6 +85,7 @@ class CoreComponentTests {
         return CoreComponentImpl(
             componentContext = TestComponentContext(),
             initialScreen = initialChild,
+            analytics = FakeCoreScreenAnalytics(),
         )
     }
 }

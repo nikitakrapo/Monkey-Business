@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class CoreComponentImpl(
     componentContext: ComponentContext,
     initialScreen: CoreScreen = CoreScreen.Home,
+    private val analytics: CoreScreenAnalytics,
 ) : CoreComponent, ComponentContext by componentContext {
 
     val navigation = StackNavigation<CoreScreen>()
@@ -27,10 +28,12 @@ class CoreComponentImpl(
 
     override fun onHomeClicked() {
         childFlow.value = createChildForScreen(CoreScreen.Home)
+        analytics.onHomeClicked()
     }
 
     override fun onMoreClicked() {
         childFlow.value = createChildForScreen(CoreScreen.More)
+        analytics.onMoreClicked()
     }
 
     private fun navigateToProfile() {
