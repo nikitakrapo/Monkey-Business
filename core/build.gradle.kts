@@ -30,14 +30,14 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.navigation.core)
-                implementation(projects.mvi.feature)
+                implementation(projects.features.mvi.feature)
                 implementation(projects.components.home)
             }
         }
         val commonTest by getting {
             dependencies {
                 api(projects.features.navigation.test)
-                implementation(projects.mvi.featureLogging)
+                implementation(projects.features.mvi.featureLogging)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
             }

@@ -17,12 +17,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.finance.models)
-                implementation(projects.mvi.feature)
+                implementation(projects.features.mvi.feature)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(projects.mvi.featureLogging)
+                implementation(projects.features.mvi.featureLogging)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
             }

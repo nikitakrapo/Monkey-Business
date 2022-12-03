@@ -15,7 +15,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 implementation(libs.kotlinx.coroutines)
-                api(projects.mvi.feature)
+                api(projects.features.mvi.feature)
             }
         }
         val jvmMain by getting
