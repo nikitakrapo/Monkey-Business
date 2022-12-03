@@ -18,7 +18,7 @@ applyCompose()
 dependencies {
     implementation(projects.core)
     implementation(projects.design)
-    implementation(projects.analytics)
+    implementation(projects.features.analytics)
     implementation(libs.androidx.appcompat)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.compose)
