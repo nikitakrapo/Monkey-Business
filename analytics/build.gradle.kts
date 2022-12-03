@@ -3,7 +3,6 @@ import com.nikitakrapo.modules_setup.setupMultiplatformModule
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.google.gms.google-services")
     kotlin("plugin.serialization") version "1.7.20"
 }
 

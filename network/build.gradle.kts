@@ -1,3 +1,4 @@
+import com.nikitakrapo.modules_setup.iosCompat
 import com.nikitakrapo.modules_setup.setupMultiplatformModule
 
 plugins {
@@ -7,7 +8,10 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule()
+setupMultiplatformModule {
+    android()
+    iosCompat()
+}
 
 kotlin {
     sourceSets {
