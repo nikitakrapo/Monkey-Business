@@ -18,14 +18,17 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "MonkeyBusiness"
+
 include(":androidApp")
 include(":core")
 include(":network")
 include(":analytics")
 include(":mvi:feature")
 include(":mvi:feature-logging")
-include(":components:home")
 include(":finance:models")
 include(":design")
-include(":navigation:core")
-include(":navigation:test")
+
+include(":components:home")
+
+include(":features:navigation:core")
+include(":features:navigation:test")

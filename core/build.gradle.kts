@@ -29,14 +29,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.navigation.core)
+                api(projects.features.navigation.core)
                 implementation(projects.mvi.feature)
                 implementation(projects.components.home)
             }
         }
         val commonTest by getting {
             dependencies {
-                api(projects.navigation.test)
+                api(projects.features.navigation.test)
                 implementation(projects.mvi.featureLogging)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
