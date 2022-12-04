@@ -1,5 +1,5 @@
-import com.nikitakrapo.modules_setup.applyCompose
-import com.nikitakrapo.modules_setup.setupMultiplatformModule
+import com.nikitakrapo.configuration.applyCompose
+import com.nikitakrapo.configuration.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")

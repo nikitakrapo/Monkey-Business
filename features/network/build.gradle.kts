@@ -1,5 +1,5 @@
-import com.nikitakrapo.modules_setup.iosCompat
-import com.nikitakrapo.modules_setup.setupMultiplatformModule
+import com.nikitakrapo.configuration.iosCompat
+import com.nikitakrapo.configuration.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")

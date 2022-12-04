@@ -1,4 +1,4 @@
-package com.nikitakrapo.source_sets
+package com.nikitakrapo.sourcesets
 
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 

@@ -1,4 +1,4 @@
-package com.nikitakrapo.modules_setup
+package com.nikitakrapo.configuration
 
 import com.android.build.gradle.BaseExtension
 import org.gradle.api.Project

@@ -1,7 +1,7 @@
-package com.nikitakrapo.modules_setup
+package com.nikitakrapo.configuration
 
-import com.nikitakrapo.source_sets.DefaultMultiplatformSourceSets
-import com.nikitakrapo.source_sets.MultiplatformSourceSets
+import com.nikitakrapo.sourcesets.DefaultMultiplatformSourceSets
+import com.nikitakrapo.sourcesets.MultiplatformSourceSets
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 

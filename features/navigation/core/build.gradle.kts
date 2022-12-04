@@ -1,4 +1,4 @@
-import com.nikitakrapo.modules_setup.setupMultiplatformModule
+import com.nikitakrapo.configuration.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")

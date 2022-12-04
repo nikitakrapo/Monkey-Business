@@ -1,5 +1,5 @@
-import com.nikitakrapo.modules_setup.applyCompose
-import com.nikitakrapo.modules_setup.setupAndroidLibrary
+import com.nikitakrapo.configuration.applyCompose
+import com.nikitakrapo.configuration.setupAndroidLibrary
 
 plugins {
     id("com.android.library")
