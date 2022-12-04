@@ -23,6 +23,8 @@ firebase-analytics = "21.2.0" # https://mvnrepository.com/artifact/com.google.fi
 firebase-crashlytics = "18.3.2" # https://mvnrepository.com/artifact/com.google.firebase/firebase-crashlytics-ktx
 firebase-crashlytics-gradle = "2.9.2" # https://mvnrepository.com/artifact/com.google.firebase/firebase-crashlytics-gradle
 
+profile-installer = "1.2.0" # https://mvnrepository.com/artifact/androidx.profileinstaller/profileinstaller
+
 # Compose
 
 kotlinCompilerCompose = "1.3.2" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
@@ -68,6 +70,8 @@ google-services = { module = "com.google.gms:google-services", version.ref = "go
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx", version.ref = "firebase-crashlytics" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
+
+profile-installer = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profile-installer" }
 
 # Compose
 

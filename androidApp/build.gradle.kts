@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.design)
     implementation(projects.features.analytics)
     implementation(libs.androidx.appcompat)
+    implementation(libs.profile.installer)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.compose)
     implementation(libs.accompanist.systemuicontroller)
