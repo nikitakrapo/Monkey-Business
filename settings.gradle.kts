@@ -32,3 +32,5 @@ include(":features:mvi:feature-logging")
 include(":features:network")
 include(":features:analytics")
 include(":features:finance:models")
+
+include(":macrobenchmark")

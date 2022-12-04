@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.nikitakrapo.monkeybusiness.core.R
 import com.nikitakrapo.monkeybusiness.design.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.NavigationBarItemModel
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme

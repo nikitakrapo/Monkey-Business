@@ -16,6 +16,16 @@ setupAndroidApp(
 
 applyCompose()
 
+android {
+    buildTypes {
+        create("benchmark") {
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
+        }
+    }
+}
+
 dependencies {
     implementation(projects.core)
     implementation(projects.design)
