@@ -27,22 +27,22 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun CoreScreen(
     modifier: Modifier = Modifier,
-    component: CoreComponent,
+    component: CoreComponent
 ) {
     val childState = component.child.collectAsState()
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         when (val child = childState.value) {
             is CoreComponent.Child.Home -> Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
                 HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
-                    component = child.component,
+                    component = child.component
                 )
                 BottomNavigationBar(
                     items = listOf(
@@ -50,21 +50,21 @@ fun CoreScreen(
                             selected = true,
                             onClick = component::onHomeClicked,
                             icon = Icons.Default.Home,
-                            iconContentDescription = stringResource(R.string.cd_home),
+                            iconContentDescription = stringResource(R.string.cd_home)
                         ),
                         NavigationBarItemModel(
                             selected = false,
                             onClick = component::onMoreClicked,
                             icon = Icons.Default.MoreVert,
-                            iconContentDescription = stringResource(R.string.cd_more),
-                        ),
+                            iconContentDescription = stringResource(R.string.cd_more)
+                        )
                     ),
                     windowInsets = WindowInsets.navigationBars
                 )
             }
             is CoreComponent.Child.More -> Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text("More")
                 BottomNavigationBar(
@@ -73,21 +73,21 @@ fun CoreScreen(
                             selected = false,
                             onClick = component::onHomeClicked,
                             icon = Icons.Default.Home,
-                            iconContentDescription = stringResource(R.string.cd_home),
+                            iconContentDescription = stringResource(R.string.cd_home)
                         ),
                         NavigationBarItemModel(
                             selected = true,
                             onClick = component::onMoreClicked,
                             icon = Icons.Default.MoreVert,
-                            iconContentDescription = stringResource(R.string.cd_more),
-                        ),
+                            iconContentDescription = stringResource(R.string.cd_more)
+                        )
                     ),
                     windowInsets = WindowInsets.navigationBars
                 )
             }
             is CoreComponent.Child.Profile -> Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text("Profile")
             }
@@ -97,7 +97,7 @@ fun CoreScreen(
 
 @Preview(
     widthDp = 360,
-    heightDp = 720,
+    heightDp = 720
 )
 @Composable
 fun CoreScreen_Preview_Home() {
@@ -105,7 +105,7 @@ fun CoreScreen_Preview_Home() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponent.Child.Home(PreviewHomeComponent())),
+                component = PreviewCoreComponent(CoreComponent.Child.Home(PreviewHomeComponent()))
             )
         }
     }
@@ -113,7 +113,7 @@ fun CoreScreen_Preview_Home() {
 
 @Preview(
     widthDp = 360,
-    heightDp = 720,
+    heightDp = 720
 )
 @Composable
 fun CoreScreen_Preview_Profile() {
@@ -121,14 +121,14 @@ fun CoreScreen_Preview_Profile() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponent.Child.Profile(Unit)),
+                component = PreviewCoreComponent(CoreComponent.Child.Profile(Unit))
             )
         }
     }
 }
 
 internal fun PreviewCoreComponent(
-    child: CoreComponent.Child,
+    child: CoreComponent.Child
 ) = object : CoreComponent {
     override val child: StateFlow<CoreComponent.Child>
         get() = MutableStateFlow(child)

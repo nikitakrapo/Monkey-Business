@@ -12,7 +12,7 @@ fun OnBackPressedDispatcher.asBackHandler(): BackHandler = AndroidBackHandler(th
 fun OnBackPressedDispatcherOwner.backHandler() = onBackPressedDispatcher.asBackHandler()
 
 private class AndroidBackHandler(
-    androidBackPressDispatcher: OnBackPressedDispatcher,
+    androidBackPressDispatcher: OnBackPressedDispatcher
 ) : BackHandler {
 
     private var set = emptySet<BackCallback>()

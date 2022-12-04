@@ -8,5 +8,5 @@ enum class Currency(val code: String) {
     EUR("EUR"),
     GBP("GBP"),
     RUB("RUB"),
-    HUF("HUF"),
+    HUF("HUF")
 }

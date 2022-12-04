@@ -7,7 +7,7 @@ import io.ktor.client.plugins.logging.Logging
 
 object HttpClientFactory {
     fun createHttpClient(
-        logger: Logger,
+        logger: Logger
     ) = httpClient {
         install(HttpTimeout) {
             requestTimeoutMillis = 60_000

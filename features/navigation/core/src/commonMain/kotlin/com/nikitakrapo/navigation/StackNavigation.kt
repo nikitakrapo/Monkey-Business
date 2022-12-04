@@ -8,6 +8,6 @@ interface StackNavigation<T : Any> {
 
     fun navigate(
         transformation: (stack: List<T>) -> List<T>,
-        onComplete: (oldStack: List<T>, newStack: List<T>) -> Unit,
+        onComplete: (oldStack: List<T>, newStack: List<T>) -> Unit
     )
 }

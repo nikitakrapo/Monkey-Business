@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 fun BottomNavigationBar(
     modifier: Modifier = Modifier,
     items: List<NavigationBarItemModel>,
-    windowInsets: WindowInsets,
+    windowInsets: WindowInsets
 ) {
     BottomAppBar(
         modifier = modifier,
@@ -24,13 +24,13 @@ fun BottomNavigationBar(
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = item.iconContentDescription,
+                            contentDescription = item.iconContentDescription
                         )
                     }
                 )
             }
         },
-        windowInsets = windowInsets,
+        windowInsets = windowInsets
     )
 }
 
@@ -38,5 +38,5 @@ class NavigationBarItemModel(
     val selected: Boolean,
     val onClick: () -> Unit,
     val icon: ImageVector,
-    val iconContentDescription: String,
+    val iconContentDescription: String
 )

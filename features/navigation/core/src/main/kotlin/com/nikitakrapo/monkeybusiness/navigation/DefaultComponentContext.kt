@@ -11,15 +11,15 @@ import androidx.lifecycle.Lifecycle as AndroidLifecycle
 import androidx.lifecycle.LifecycleOwner as AndroidLifecycleOwner
 
 fun <T> T.defaultComponentContext() where
-        T : AndroidLifecycleOwner, T : OnBackPressedDispatcherOwner =
+T : AndroidLifecycleOwner, T : OnBackPressedDispatcherOwner =
     DefaultComponentContext(
         androidLifecycle = lifecycle,
-        onBackPressedDispatcher = onBackPressedDispatcher,
+        onBackPressedDispatcher = onBackPressedDispatcher
     )
 
 class DefaultComponentContext(
     androidLifecycle: AndroidLifecycle,
-    onBackPressedDispatcher: OnBackPressedDispatcher,
+    onBackPressedDispatcher: OnBackPressedDispatcher
 ) : ComponentContext {
 
     override val lifecycle: Lifecycle = androidLifecycle.asCommonLifecycle()

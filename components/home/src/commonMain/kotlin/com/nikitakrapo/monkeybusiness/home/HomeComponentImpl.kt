@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class HomeComponentImpl(
     private val navigateToSearch: () -> Unit,
-    private val navigateToProfile: () -> Unit,
+    private val navigateToProfile: () -> Unit
 ) : HomeComponent {
 
     private val stateFlow = MutableStateFlow(

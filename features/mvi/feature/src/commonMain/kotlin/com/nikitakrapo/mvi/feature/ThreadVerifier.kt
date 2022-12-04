@@ -5,4 +5,4 @@ fun interface ThreadVerifier {
     fun verify(component: String)
 }
 
-internal expect fun ThreadVerifier() : ThreadVerifier
+internal expect fun ThreadVerifier(): ThreadVerifier

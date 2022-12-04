@@ -24,7 +24,7 @@ kotlin {
             baseName = "core"
         }
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {

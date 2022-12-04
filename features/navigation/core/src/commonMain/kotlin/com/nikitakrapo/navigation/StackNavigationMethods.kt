@@ -9,17 +9,17 @@ fun <T : Any> StackNavigation<T>.pop(onComplete: (Boolean) -> Unit) {
 
 fun <T : Any> StackNavigation<T>.popWhile(
     predicate: (T) -> Boolean,
-    onComplete: (isSuccess: Boolean) -> Unit = {},
+    onComplete: (isSuccess: Boolean) -> Unit = {}
 ) {
     navigate(
         transformation = { stack -> stack.dropLastWhile(predicate) },
-        onComplete = { newStack, oldStack -> onComplete(newStack.size < oldStack.size) },
+        onComplete = { newStack, oldStack -> onComplete(newStack.size < oldStack.size) }
     )
 }
 
 fun <T : Any> StackNavigation<T>.bringToFront(item: T, onComplete: () -> Unit = {}) {
     navigate(
         transformation = { stack -> stack.filterNot { it::class == item::class } + item },
-        onComplete = { _, _ -> onComplete() },
+        onComplete = { _, _ -> onComplete() }
     )
 }

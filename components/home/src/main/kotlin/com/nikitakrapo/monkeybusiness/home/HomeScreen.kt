@@ -28,14 +28,14 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    component: HomeComponent,
+    component: HomeComponent
 ) {
     val state = component.state.collectAsState()
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
     ) {
         Row(
             modifier = Modifier
@@ -47,10 +47,10 @@ fun HomeScreen(
                 modifier = modifier
                     .weight(1f)
                     .fillMaxHeight(),
-                onClick = component::onSearchBarClicked,
+                onClick = component::onSearchBarClicked
             )
             Spacer(
-                modifier = Modifier.width(16.dp),
+                modifier = Modifier.width(16.dp)
             )
             UserAvatar(
                 modifier = Modifier.fillMaxHeight(),
@@ -61,7 +61,7 @@ fun HomeScreen(
         BalanceCard(
             balance = state.value.balance,
             onTopupClicked = component::onTopupClicked,
-            onWithdrawClicked = component::onWithdrawClicked,
+            onWithdrawClicked = component::onWithdrawClicked
         )
     }
 }
@@ -79,9 +79,9 @@ fun HomeScreen_Preview() {
     }
 }
 
-//TODO: figure out what to do with preview components
+// TODO: figure out what to do with preview components
 fun PreviewHomeComponent(
-    moneyAmount: MoneyAmount = MoneyAmount(amount = 201923, currency = Currency.GBP),
+    moneyAmount: MoneyAmount = MoneyAmount(amount = 201923, currency = Currency.GBP)
 ) = object : HomeComponent {
     override val state: StateFlow<HomeComponent.State> =
         MutableStateFlow(HomeComponent.State(moneyAmount))

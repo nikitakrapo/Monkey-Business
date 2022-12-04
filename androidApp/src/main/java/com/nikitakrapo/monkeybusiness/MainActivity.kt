@@ -4,7 +4,12 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,10 +32,10 @@ class MainActivity : AppCompatActivity() {
             analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this))
         )
 
-        //TODO: make proper dependency management (at least component factory)
+        // TODO: make proper dependency management (at least component factory)
         coreComponent = CoreComponentImpl(
             componentContext = defaultComponentContext(),
-            analytics = CoreScreenAnalytics(mainActivityComponent.analyticsManager),
+            analytics = CoreScreenAnalytics(mainActivityComponent.analyticsManager)
         )
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -50,15 +55,15 @@ class MainActivity : AppCompatActivity() {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(WindowInsets.statusBars.asPaddingValues()),
+                        .padding(WindowInsets.statusBars.asPaddingValues())
                 ) {
                     CoreScreen(
                         modifier = Modifier
                             .fillMaxSize(),
-                        component = coreComponent,
+                        component = coreComponent
                     )
 
-                    //TODO: make testing abstraction
+                    // TODO: make testing abstraction
                     if (BuildConfig.DEBUG) {
                         DebugButton()
                     }

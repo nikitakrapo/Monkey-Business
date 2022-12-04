@@ -11,14 +11,14 @@ import kotlinx.coroutines.flow.asStateFlow
 class CoreComponentImpl(
     componentContext: ComponentContext,
     initialScreen: CoreScreen = CoreScreen.Home,
-    private val analytics: CoreScreenAnalytics,
+    private val analytics: CoreScreenAnalytics
 ) : CoreComponent, ComponentContext by componentContext {
 
     val navigation = StackNavigation<CoreScreen>()
 
     private val homeComponent: HomeComponent = HomeComponentImpl(
         navigateToSearch = {},
-        navigateToProfile = ::navigateToProfile,
+        navigateToProfile = ::navigateToProfile
     )
     private val moreComponent = Unit
     private val profileComponent = Unit

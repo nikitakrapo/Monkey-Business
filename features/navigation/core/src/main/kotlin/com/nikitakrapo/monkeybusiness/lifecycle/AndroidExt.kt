@@ -2,17 +2,17 @@ package com.nikitakrapo.monkeybusiness.lifecycle
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner as AndroidLifecycleOwner
 import com.nikitakrapo.lifecycle.Lifecycle
 import com.nikitakrapo.lifecycle.LifecycleCallbacks
 import androidx.lifecycle.Lifecycle as AndroidLifecycle
+import androidx.lifecycle.LifecycleOwner as AndroidLifecycleOwner
 
 fun AndroidLifecycle.asCommonLifecycle(): Lifecycle = CommonLifecycle(this)
 
 fun AndroidLifecycleOwner.commonLifecycle() = lifecycle.asCommonLifecycle()
 
 private class CommonLifecycle(
-    private val androidLifecycle: AndroidLifecycle,
+    private val androidLifecycle: AndroidLifecycle
 ) : Lifecycle {
 
     private val observerMap = HashMap<LifecycleCallbacks, LifecycleObserver>()
@@ -44,7 +44,7 @@ fun AndroidLifecycle.State.asCommonState() = when (this) {
 
 private class AndroidLifecycleObserver(
     private val delegate: LifecycleCallbacks,
-    private val onDestroy: () -> Unit,
+    private val onDestroy: () -> Unit
 ) : DefaultLifecycleObserver {
     override fun onCreate(owner: androidx.lifecycle.LifecycleOwner) {
         delegate.onCreate()

@@ -13,6 +13,6 @@ interface HomeComponent {
     fun onWithdrawClicked()
 
     data class State(
-        val balance: MoneyAmount,
+        val balance: MoneyAmount
     )
 }

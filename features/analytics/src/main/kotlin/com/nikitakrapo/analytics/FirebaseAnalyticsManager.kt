@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class FirebaseAnalyticsManager(
-    private val firebaseAnalytics: FirebaseAnalytics,
+    private val firebaseAnalytics: FirebaseAnalytics
 ) : AnalyticsManager {
 
     override fun reportEvent(event: String) {

@@ -11,7 +11,7 @@ plugins {
 setupAndroidApp(
     applicationId = "com.nikitakrapo.monkeybusiness",
     versionCode = 1,
-    versionName = "1.0",
+    versionName = "1.0"
 )
 
 applyCompose()

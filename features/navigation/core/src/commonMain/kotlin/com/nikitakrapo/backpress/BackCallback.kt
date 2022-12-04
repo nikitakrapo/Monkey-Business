@@ -1,7 +1,7 @@
 package com.nikitakrapo.backpress
 
 abstract class BackCallback(
-    isEnabled: Boolean = true,
+    isEnabled: Boolean = true
 ) {
     private var enableChangeCallbacks = emptySet<(Boolean) -> Unit>()
 
@@ -12,12 +12,12 @@ abstract class BackCallback(
         }
 
     fun registerEnabledChangedCallback(callback: (isEnabled: Boolean) -> Unit) {
-        check (callback !in enableChangeCallbacks) { "Callback already registered" }
+        check(callback !in enableChangeCallbacks) { "Callback already registered" }
         this.enableChangeCallbacks += callback
     }
 
     fun unregisterEnabledChangedCallback(callback: (isEnabled: Boolean) -> Unit) {
-        check (callback in enableChangeCallbacks) { "Callback not registered" }
+        check(callback in enableChangeCallbacks) { "Callback not registered" }
         this.enableChangeCallbacks -= callback
     }
 
@@ -26,7 +26,7 @@ abstract class BackCallback(
 
 fun BackCallback(
     isEnabled: Boolean = true,
-    onBack: () -> Unit,
+    onBack: () -> Unit
 ): BackCallback =
     object : BackCallback(isEnabled = isEnabled) {
         override fun onBack() {

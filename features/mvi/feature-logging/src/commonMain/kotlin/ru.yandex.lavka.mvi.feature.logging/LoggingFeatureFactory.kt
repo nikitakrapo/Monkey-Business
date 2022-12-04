@@ -1,6 +1,5 @@
 package ru.yandex.lavka.mvi.feature.logging
 
-import kotlinx.coroutines.flow.onEach
 import com.nikitakrapo.mvi.feature.Actor
 import com.nikitakrapo.mvi.feature.Bootstrapper
 import com.nikitakrapo.mvi.feature.EventsPublisher
@@ -9,6 +8,7 @@ import com.nikitakrapo.mvi.feature.FeatureFactory
 import com.nikitakrapo.mvi.feature.IntentToAction
 import com.nikitakrapo.mvi.feature.Reducer
 import com.nikitakrapo.mvi.feature.ThreadVerifier
+import kotlinx.coroutines.flow.onEach
 import kotlin.coroutines.CoroutineContext
 
 fun LoggingFeatureFactory(
@@ -25,7 +25,7 @@ fun LoggingFeatureFactory(
         bootstrapper: Bootstrapper<Action>?,
         eventsPublisher: EventsPublisher<Action, Effect, State, Event>?,
         coroutineContext: CoroutineContext,
-        threadVerifier: ThreadVerifier,
+        threadVerifier: ThreadVerifier
     ): Feature<Intent, State, Event> {
         if (name == null) {
             return delegate.create(
@@ -37,7 +37,7 @@ fun LoggingFeatureFactory(
                 bootstrapper = bootstrapper,
                 eventsPublisher = eventsPublisher,
                 coroutineContext = coroutineContext,
-                threadVerifier = threadVerifier,
+                threadVerifier = threadVerifier
             )
         }
 
@@ -78,7 +78,7 @@ fun LoggingFeatureFactory(
                 }
             },
             coroutineContext = coroutineContext,
-            threadVerifier = threadVerifier,
+            threadVerifier = threadVerifier
         )
 
         return object : Feature<Intent, State, Event> by origin {

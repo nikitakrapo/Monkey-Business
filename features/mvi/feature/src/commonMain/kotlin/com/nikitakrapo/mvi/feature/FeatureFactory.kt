@@ -27,7 +27,7 @@ interface FeatureFactory {
         bootstrapper: Bootstrapper<Action>? = null,
         eventsPublisher: EventsPublisher<Action, Effect, State, Event>? = null,
         coroutineContext: CoroutineContext = Dispatchers.Main.immediate,
-        threadVerifier: ThreadVerifier = ThreadVerifier(),
+        threadVerifier: ThreadVerifier = ThreadVerifier()
     ): Feature<Intent, State, Event>
 }
 
@@ -106,12 +106,12 @@ fun <Intent : Any, State : Any> FeatureFactory.createReducerFeature(
     name: String? = null,
     initialState: State,
     reducer: Reducer<State, Intent>,
-    coroutineContext: CoroutineContext = Dispatchers.Main.immediate,
+    coroutineContext: CoroutineContext = Dispatchers.Main.immediate
 ): Feature<Intent, State, Nothing> = create(
     name = name,
     initialState = initialState,
     intentToAction = { it },
     reducer = reducer,
     actor = { intent, _ -> flowOf(intent) },
-    coroutineContext = coroutineContext,
+    coroutineContext = coroutineContext
 )

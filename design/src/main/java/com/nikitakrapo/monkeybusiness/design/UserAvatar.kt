@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -26,7 +25,7 @@ import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 @Composable
 fun UserAvatar(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier
@@ -34,7 +33,7 @@ fun UserAvatar(
             .clip(CircleShape)
             .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
-            containerColor = colorScheme.background,
+            containerColor = colorScheme.background
         ),
         shape = CircleShape,
         border = BorderStroke(1.dp, colorScheme.outline)
@@ -58,7 +57,7 @@ fun UserAvatar_Preview() {
         Surface {
             UserAvatar(
                 modifier = Modifier.size(92.dp),
-                onClick = {},
+                onClick = {}
             )
         }
     }

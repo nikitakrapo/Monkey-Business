@@ -35,7 +35,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun DebugButton(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
@@ -54,15 +54,15 @@ fun DebugButton(
             }
             .clip(RoundedCornerShape(20))
             .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.1f))
-            .animateContentSize(),
+            .animateContentSize()
     ) {
         Row(
             modifier = Modifier
-                .defaultMinSize(minWidth = if (debugViewExpanded) 200.dp else 0.dp),
+                .defaultMinSize(minWidth = if (debugViewExpanded) 200.dp else 0.dp)
         ) {
             IconButton(
                 modifier = Modifier.clip(CircleShape),
-                onClick = { debugViewExpanded = !debugViewExpanded },
+                onClick = { debugViewExpanded = !debugViewExpanded }
             ) {
                 Crossfade(targetState = debugViewExpanded) { isExpanded ->
                     if (isExpanded) {
@@ -83,7 +83,7 @@ fun DebugButton(
                 Text(
                     modifier = Modifier.align(Alignment.CenterVertically),
                     text = "Debug panel",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
         }
@@ -91,7 +91,7 @@ fun DebugButton(
         if (debugViewExpanded) {
             Column(
                 modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
             ) {
                 DebugItem(
                     titleText = "Crash app",
@@ -108,23 +108,23 @@ fun DebugItem(
     modifier: Modifier = Modifier,
     titleText: String,
     subtitleText: String?,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(15))
             .background(Color.White.copy(alpha = 0.7f))
             .padding(6.dp)
-            .clickable(onClick = onClick),
+            .clickable(onClick = onClick)
     ) {
         Text(
             text = titleText,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelLarge
         )
         subtitleText?.let {
             Text(
                 text = it,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelMedium
             )
         }
     }

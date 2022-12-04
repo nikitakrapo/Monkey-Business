@@ -6,7 +6,7 @@ import com.nikitakrapo.lifecycle.Lifecycle
 import com.nikitakrapo.lifecycle.LifecycleCallbacks
 
 fun TestComponentContext(
-    lifecycleState: Lifecycle.State = Lifecycle.State.CREATED,
+    lifecycleState: Lifecycle.State = Lifecycle.State.CREATED
 ) = object : ComponentContext {
     override val lifecycle: Lifecycle = object : Lifecycle {
         override val state: Lifecycle.State = lifecycleState

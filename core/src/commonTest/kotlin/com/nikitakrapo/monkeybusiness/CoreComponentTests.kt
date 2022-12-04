@@ -80,12 +80,12 @@ class CoreComponentTests {
     }
 
     private fun component(
-        initialChild: CoreScreen = CoreScreen.Home,
+        initialChild: CoreScreen = CoreScreen.Home
     ): CoreComponent {
         return CoreComponentImpl(
             componentContext = TestComponentContext(),
             initialScreen = initialChild,
-            analytics = FakeCoreScreenAnalytics(),
+            analytics = FakeCoreScreenAnalytics()
         )
     }
 }
