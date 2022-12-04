@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 setupAndroidApp(
@@ -24,4 +25,5 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 }

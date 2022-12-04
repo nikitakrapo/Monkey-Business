@@ -8,6 +8,7 @@ buildscript {
         classpath(libs.kotlin.gradle)
         classpath(libs.agp.bundle.gradle)
         classpath(libs.google.services)
+        classpath(libs.firebase.crashlytics.gradle)
     }
 }
 
