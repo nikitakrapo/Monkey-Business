@@ -1,8 +1,8 @@
 package com.nikitakrapo.monkeybusiness
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.LaunchedEffect
@@ -47,12 +47,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             MonkeyTheme {
-                CoreScreen(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(WindowInsets.statusBars.asPaddingValues()),
-                    component = coreComponent,
-                )
+                ) {
+                    CoreScreen(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        component = coreComponent,
+                    )
+
+                    //TODO: make testing abstraction
+                    if (BuildConfig.DEBUG) {
+                        DebugButton()
+                    }
+                }
             }
         }
     }
