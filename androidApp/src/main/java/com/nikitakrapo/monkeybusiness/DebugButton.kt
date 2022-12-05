@@ -53,7 +53,7 @@ fun DebugButton(
                 }
             }
             .clip(RoundedCornerShape(20))
-            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.1f))
+            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
             .animateContentSize()
     ) {
         Row(
@@ -113,7 +113,7 @@ fun DebugItem(
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(15))
-            .background(Color.White.copy(alpha = 0.7f))
+            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.7f))
             .padding(6.dp)
             .clickable(onClick = onClick)
     ) {

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,20 +54,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             MonkeyTheme {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(WindowInsets.statusBars.asPaddingValues())
-                ) {
-                    CoreScreen(
+                Surface(color = MaterialTheme.colorScheme.surface) {
+                    Box(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        component = coreComponent
-                    )
+                            .fillMaxSize()
+                            .padding(WindowInsets.statusBars.asPaddingValues())
+                    ) {
+                        CoreScreen(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            component = coreComponent
+                        )
 
-                    // TODO: make testing abstraction
-                    if (BuildConfig.DEBUG) {
-                        DebugButton()
+                        // TODO: make testing abstraction
+                        if (BuildConfig.DEBUG) {
+                            DebugButton()
+                        }
                     }
                 }
             }
