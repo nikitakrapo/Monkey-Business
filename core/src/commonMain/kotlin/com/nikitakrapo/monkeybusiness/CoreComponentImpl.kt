@@ -3,7 +3,6 @@ package com.nikitakrapo.monkeybusiness
 import com.nikitakrapo.component.ComponentContext
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
-import com.nikitakrapo.navigation.StackNavigation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,8 +12,6 @@ class CoreComponentImpl(
     initialScreen: CoreScreen = CoreScreen.Home,
     private val analytics: CoreScreenAnalytics
 ) : CoreComponent, ComponentContext by componentContext {
-
-    val navigation = StackNavigation<CoreScreen>()
 
     private val homeComponent: HomeComponent = HomeComponentImpl(
         navigateToSearch = {},

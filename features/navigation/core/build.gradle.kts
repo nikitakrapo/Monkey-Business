@@ -9,6 +9,11 @@ setupMultiplatformModule()
 
 kotlin {
     sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(libs.kotlinx.coroutines)
+            }
+        }
         val androidMain by getting {
             dependencies {
                 implementation(libs.androidx.activity.ktx)
