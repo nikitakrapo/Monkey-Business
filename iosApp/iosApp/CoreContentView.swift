@@ -1,19 +1,24 @@
 import SwiftUI
-import core
 
 struct CoreContentView: View {
+    @State var activeScreen = "Home"
+
     var body: some View {
-        TabView {
-            Text("Home")
+        TabView(selection: $activeScreen) {
+            HomeScreen().tag("Home")
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
-                    .tag("Home")
-            Text("More")
+                    .onTapGesture {
+                        activeScreen = "More"
+                    }
+            Text("More").tag("More")
                     .tabItem {
                         Label("More", systemImage: "ellipsis")
                     }
-                    .tag("More")
+                    .onTapGesture {
+                        activeScreen = "Home"
+                    }
         }
     }
 }
