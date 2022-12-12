@@ -9,6 +9,7 @@
         android:name=".MonkeyApplication"
         android:icon="@mipmap/monkey_icon"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <profileable

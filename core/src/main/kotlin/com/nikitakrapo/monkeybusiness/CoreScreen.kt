@@ -51,7 +51,7 @@ fun CoreScreen(
                             selected = true,
                             onClick = component::onHomeClicked,
                             icon = Icons.Default.Home,
-                            iconContentDescription = stringResource(R.string.cd_home)
+                            iconContentDescription = stringResource(R.string.cd_home_screen)
                         ),
                         NavigationBarItemModel(
                             selected = false,
@@ -74,7 +74,7 @@ fun CoreScreen(
                             selected = false,
                             onClick = component::onHomeClicked,
                             icon = Icons.Default.Home,
-                            iconContentDescription = stringResource(R.string.cd_home)
+                            iconContentDescription = stringResource(R.string.cd_home_screen)
                         ),
                         NavigationBarItemModel(
                             selected = true,

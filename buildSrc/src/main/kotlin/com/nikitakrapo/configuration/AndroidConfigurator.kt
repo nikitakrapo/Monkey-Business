@@ -20,7 +20,8 @@ fun Project.setupAndroidLibrary() {
 fun Project.setupAndroidApp(
     applicationId: String,
     versionCode: Int,
-    versionName: String
+    versionName: String,
+    supportedLocales: List<String>,
 ) {
     setupAndroidCommon()
 
@@ -29,6 +30,8 @@ fun Project.setupAndroidApp(
             this.applicationId = applicationId
             this.versionCode = versionCode
             this.versionName = versionName
+
+            resourceConfigurations += supportedLocales
         }
     }
 }

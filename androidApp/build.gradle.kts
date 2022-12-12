@@ -1,4 +1,5 @@
 import com.nikitakrapo.configuration.applyCompose
+import com.nikitakrapo.configuration.createBenchmarkBuildType
 import com.nikitakrapo.configuration.setupAndroidApp
 
 plugins {
@@ -11,20 +12,13 @@ plugins {
 setupAndroidApp(
     applicationId = "com.nikitakrapo.monkeybusiness",
     versionCode = 1,
-    versionName = "1.0"
+    versionName = "1.0",
+    supportedLocales = listOf("en", "de", "ru"),
 )
 
 applyCompose()
 
-android {
-    buildTypes {
-        create("benchmark") {
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks += listOf("release")
-            isDebuggable = false
-        }
-    }
-}
+createBenchmarkBuildType()
 
 dependencies {
     implementation(projects.core)
