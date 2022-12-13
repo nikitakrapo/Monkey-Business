@@ -1,4 +1,5 @@
 import com.nikitakrapo.configuration.applyCompose
+import com.nikitakrapo.configuration.iosCompat
 import com.nikitakrapo.configuration.setupMultiplatformModule
 
 plugins {
@@ -9,7 +10,10 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule()
+setupMultiplatformModule {
+    android()
+    iosCompat()
+}
 
 applyCompose()
 
@@ -22,6 +26,8 @@ kotlin {
         framework {
             isStatic = true
             baseName = "core"
+            export(projects.features.analytics)
+            transitiveExport = true
         }
     }
 

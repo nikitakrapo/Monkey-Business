@@ -1,7 +1,16 @@
 import SwiftUI
+import core
 
 struct CoreContentView: View {
+    private var analyticsManager: AnalyticsManager
+    private var analytics: CoreScreenAnalytics
+
     @State var activeScreen = "Home"
+
+    init() {
+        analyticsManager = FirebaseAnalyticsManager()
+        analytics = CoreScreenAnalytics(analytics: analyticsManager)
+    }
 
     var body: some View {
         TabView(selection: $activeScreen) {
@@ -11,6 +20,7 @@ struct CoreContentView: View {
                     }
                     .onTapGesture {
                         activeScreen = "More"
+                        analytics.onMoreClicked()
                     }
             Text("More").tag("More")
                     .tabItem {
@@ -18,6 +28,7 @@ struct CoreContentView: View {
                     }
                     .onTapGesture {
                         activeScreen = "Home"
+                        analytics.onHomeClicked()
                     }
         }
     }

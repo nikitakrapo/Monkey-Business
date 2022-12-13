@@ -17,6 +17,6 @@ struct HomeScreen: View {
                     Text("Withdraw")
                 }
             }
-        }.background(.brown)
+        }
     }
 }
