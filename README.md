@@ -7,6 +7,7 @@
 - Baseline Profiles
 - Firebase Analytics & Crashlytics
 - Per-app language settings
+- Dark theme
 - Cool floating debug panel
 
 ## How to build & start project
