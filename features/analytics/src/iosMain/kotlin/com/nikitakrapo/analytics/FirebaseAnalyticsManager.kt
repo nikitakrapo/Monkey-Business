@@ -1,13 +1,18 @@
 package com.nikitakrapo.analytics
 
 import cocoapods.FirebaseAnalytics.FIRAnalytics
+import com.nikitakrapo.analytics.firebase.checkEventName
 
 class FirebaseAnalyticsManager : AnalyticsManager {
     override fun reportEvent(event: String) {
+        checkEventName(event)
+
         FIRAnalytics.logEventWithName(event, null)
     }
 
     override fun reportAttributedEvent(event: String, attributeBuilder: AttributeSet.() -> Unit) {
+        checkEventName(event)
+
         val attrs = AttributeSet()
         attributeBuilder.invoke(attrs)
 

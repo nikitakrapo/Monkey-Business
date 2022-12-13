@@ -2,16 +2,21 @@ package com.nikitakrapo.analytics
 
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.nikitakrapo.analytics.firebase.checkEventName
 
 class FirebaseAnalyticsManager(
     private val firebaseAnalytics: FirebaseAnalytics
 ) : AnalyticsManager {
 
     override fun reportEvent(event: String) {
+        checkEventName(event)
+
         firebaseAnalytics.logEvent(event, null)
     }
 
     override fun reportAttributedEvent(event: String, attributeBuilder: AttributeSet.() -> Unit) {
+        checkEventName(event)
+
         val attrs = AttributeSet()
         attributeBuilder.invoke(attrs)
 
