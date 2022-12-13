@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -55,20 +56,29 @@ class MainActivity : AppCompatActivity() {
 
             MonkeyTheme {
                 Surface(color = MaterialTheme.colorScheme.surface) {
-                    Box(
+                    ConstraintLayout(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(WindowInsets.statusBars.asPaddingValues())
                     ) {
+                        val (coreScreen, debugButton) = createRefs()
+
                         CoreScreen(
                             modifier = Modifier
-                                .fillMaxSize(),
+                                .fillMaxSize()
+                                .constrainAs(coreScreen) {
+                                    centerTo(parent)
+                                },
                             component = coreComponent
                         )
 
                         // TODO: make testing abstraction
                         if (BuildConfig.DEBUG) {
-                            DebugButton()
+                            DebugButton(
+                                modifier = Modifier
+                                    .constrainAs(debugButton) {
+                                        centerTo(parent)
+                                    },
+                            )
                         }
                     }
                 }

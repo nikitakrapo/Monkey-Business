@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
@@ -22,6 +24,7 @@ import com.nikitakrapo.monkeybusiness.design.NavigationBarItemModel
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
+import com.nikitakrapo.monkeybusiness.profile.ProfileScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -64,7 +67,9 @@ fun CoreScreen(
                 )
             }
             is CoreComponent.Child.More -> Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.statusBars),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text("More")
@@ -90,7 +95,10 @@ fun CoreScreen(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("Profile")
+                ProfileScreen(
+                    modifier = Modifier.fillMaxWidth(),
+                    onBackPressed = component::onHomeClicked //TODO: make proper navigation
+                )
             }
         }
     }

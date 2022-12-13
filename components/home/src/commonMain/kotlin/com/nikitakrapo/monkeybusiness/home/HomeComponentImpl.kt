@@ -13,7 +13,7 @@ class HomeComponentImpl(
 
     private val stateFlow = MutableStateFlow(
         HomeComponent.State(
-            MoneyAmount(203141, Currency.GBP)
+            balance = MoneyAmount(203141, Currency.GBP)
         )
     )
     override val state: StateFlow<HomeComponent.State> = stateFlow.asStateFlow()
