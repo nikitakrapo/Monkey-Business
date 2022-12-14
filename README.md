@@ -2,12 +2,11 @@
 
 ## Features
 ### Multiplatform
-- Firebase Analytics
+- Firebase Analytics and Crashlytics
 ### iOS
 - Basic SwiftUI skeleton
 ### Android
 - Baseline Profiles
-- Firebase Crashlytics
 - Per-app language settings
 - Dark theme
 - Cool floating debug panel
