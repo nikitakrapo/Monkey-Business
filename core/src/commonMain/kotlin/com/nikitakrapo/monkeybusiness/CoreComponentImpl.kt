@@ -3,6 +3,8 @@ package com.nikitakrapo.monkeybusiness
 import com.nikitakrapo.component.ComponentContext
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
+import com.nikitakrapo.monkeybusiness.profile.ProfileComponent
+import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +20,7 @@ class CoreComponentImpl(
         navigateToProfile = ::navigateToProfile
     )
     private val moreComponent = Unit
-    private val profileComponent = Unit
+    private val profileComponent: ProfileComponent = ProfileComponentImpl()
 
     private val childFlow = MutableStateFlow(createChildForScreen(initialScreen))
     override val child: StateFlow<CoreComponent.Child> = childFlow.asStateFlow()

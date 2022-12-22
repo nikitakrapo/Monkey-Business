@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.design
+package com.nikitakrapo.monkeybusiness.design.components
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.BottomAppBar

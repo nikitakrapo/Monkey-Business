@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness
 
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
+import com.nikitakrapo.monkeybusiness.profile.ProfileComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface CoreComponent {
@@ -13,6 +14,6 @@ interface CoreComponent {
     sealed class Child {
         class Home(val component: HomeComponent) : Child()
         class More(val component: Unit) : Child()
-        class Profile(val component: Unit) : Child()
+        class Profile(val component: ProfileComponent) : Child()
     }
 }

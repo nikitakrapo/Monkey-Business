@@ -20,6 +20,7 @@ kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime/releases
 # Google
 google-services = "4.3.13" # https://developers.google.com/android/guides/releases
 firebase-analytics = "21.2.0" # https://mvnrepository.com/artifact/com.google.firebase/firebase-analytics-ktx
+firebase-auth = "21.1.0" # https://mvnrepository.com/artifact/com.google.firebase/firebase-auth-ktx
 firebase-crashlytics = "18.3.2" # https://mvnrepository.com/artifact/com.google.firebase/firebase-crashlytics-ktx
 firebase-crashlytics-gradle = "2.9.2" # https://mvnrepository.com/artifact/com.google.firebase/firebase-crashlytics-gradle
 
@@ -68,6 +69,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebase-analytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebase-auth" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx", version.ref = "firebase-crashlytics" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 

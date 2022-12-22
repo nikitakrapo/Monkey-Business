@@ -15,15 +15,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.nikitakrapo.monkeybusiness.core.R
-import com.nikitakrapo.monkeybusiness.design.BottomNavigationBar
-import com.nikitakrapo.monkeybusiness.design.NavigationBarItemModel
+import com.nikitakrapo.monkeybusiness.design.components.BottomNavigationBar
+import com.nikitakrapo.monkeybusiness.design.components.NavigationBarItemModel
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
+import com.nikitakrapo.monkeybusiness.profile.PreviewProfileComponent
 import com.nikitakrapo.monkeybusiness.profile.ProfileScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,13 +35,13 @@ fun CoreScreen(
     modifier: Modifier = Modifier,
     component: CoreComponent
 ) {
-    val childState = component.child.collectAsState()
+    val childState by component.child.collectAsState()
 
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        when (val child = childState.value) {
+        when (val child = childState) {
             is CoreComponent.Child.Home -> Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
@@ -97,6 +99,7 @@ fun CoreScreen(
             ) {
                 ProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
+                    component = child.component,
                     onBackPressed = component::onHomeClicked //TODO: make proper navigation
                 )
             }
@@ -130,7 +133,7 @@ fun CoreScreen_Preview_Profile() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponent.Child.Profile(Unit))
+                component = PreviewCoreComponent(CoreComponent.Child.Profile(PreviewProfileComponent()))
             )
         }
     }

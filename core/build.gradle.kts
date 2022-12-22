@@ -38,6 +38,7 @@ kotlin {
                 api(projects.features.analytics)
                 implementation(projects.features.mvi.feature)
                 implementation(projects.components.home)
+                implementation(projects.components.profile)
             }
         }
         val commonTest by getting {

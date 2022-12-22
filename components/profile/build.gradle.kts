@@ -20,15 +20,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.features.finance.models)
+                api(projects.features.account)
                 implementation(projects.features.mvi.feature)
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(projects.features.mvi.featureLogging)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.turbine)
             }
         }
         val androidMain by getting {
