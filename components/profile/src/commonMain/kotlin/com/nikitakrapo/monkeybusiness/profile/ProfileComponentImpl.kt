@@ -36,7 +36,10 @@ class ProfileComponentImpl(
     private fun getInitialChild(account: Account?): ProfileComponent.Child =
         when (account) {
             is Account.Emailish -> {
-                val component = ProfileDetailsComponentImpl(accountManager)
+                val component = ProfileDetailsComponentImpl(
+                    accountManager = accountManager,
+                    account = account
+                )
                 ProfileComponent.Child.LoggedIn(component)
             }
             is Account.Anonymous,

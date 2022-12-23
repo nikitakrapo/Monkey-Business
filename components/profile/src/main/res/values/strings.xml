@@ -4,4 +4,6 @@
     <string name="register_common">Register</string>
     <string name="email_hint" translatable="false">Email</string>
     <string name="password_hint">Password</string>
+
+    <string name="cd_profile_image">Profile image</string>
 </resources>

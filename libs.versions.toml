@@ -34,6 +34,8 @@ accompanist = "0.25.1" # https://github.com/google/accompanist/releases
 material3 = "1.0.0-rc01" # https://developer.android.com/jetpack/androidx/releases/compose-material3
 constraintlayout-compose = "1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 
+coil-compose = "2.2.2"
+
 # AndroidX
 
 androidx-appcompat = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -88,6 +90,8 @@ compose-uiTest-manifest = { module = "androidx.compose.ui:ui-test-manifest", ver
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
 
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 
 # Ktor
 
