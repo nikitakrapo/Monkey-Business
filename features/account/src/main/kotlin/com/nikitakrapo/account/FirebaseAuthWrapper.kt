@@ -23,28 +23,38 @@ class FirebaseAuthWrapper(
         email: String,
         password: String,
     ): Result<Account> {
-        return firebaseAuth.createUserWithEmailAndPassword(email, password).awaitAndFetchAccount()
+        return awaitAndFetchAccount {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+        }
     }
 
     suspend fun signInWithEmailAndPassword(
         email: String,
         password: String,
     ): Result<Account> {
-        return firebaseAuth.signInWithEmailAndPassword(email, password).awaitAndFetchAccount()
+        return awaitAndFetchAccount {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+        }
     }
 
     fun destroy() {
         firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
-    private suspend fun Task<AuthResult?>.awaitAndFetchAccount(): Result<Account> = try {
-        await()
+    private suspend fun awaitAndFetchAccount(
+        taskProvider: () -> Task<AuthResult?>,
+    ): Result<Account> = try {
+        taskProvider().await()
             ?.user
             ?.toDomainModel()
             ?.let(Result.Companion::success)
             ?: Result.failure(IllegalStateException("Unable to map firebase user to account"))
     } catch (e: Exception) {
         Result.failure(e)
+    }
+
+    fun signOut() {
+        firebaseAuth.signOut()
     }
 
     private fun onAuthStateChanged(auth: FirebaseAuth) {

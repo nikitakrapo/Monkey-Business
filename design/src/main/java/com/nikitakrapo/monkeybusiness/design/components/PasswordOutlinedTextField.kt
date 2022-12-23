@@ -24,6 +24,7 @@ import com.nikitakrapo.monkeybusiness.design.icons.VisibilityOff
 @Composable
 fun PasswordOutlinedTextField(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     value: String,
     onValueChange: (String) -> Unit,
     label: @Composable (() -> Unit)? = null,
@@ -33,6 +34,7 @@ fun PasswordOutlinedTextField(
 
     OutlinedTextField(
         modifier = modifier,
+        enabled = enabled,
         isError = isError,
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

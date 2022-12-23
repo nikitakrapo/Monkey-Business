@@ -25,13 +25,14 @@ fun ProfileScreen(
             navigationAction = onBackPressed
         )
 
-        when (val currentState = state) {
-            is ProfileComponent.State.LoggedIn -> ProfileDetailsScreen(
-                modifier = modifier
-            )
-            is ProfileComponent.State.LoggedOut -> LoginScreen(
+        when (val child = state.child) {
+            is ProfileComponent.Child.LoggedIn -> ProfileDetailsScreen(
                 modifier = modifier,
-                component = currentState.loginComponent
+                component = child.component
+            )
+            is ProfileComponent.Child.LoggedOut -> LoginScreen(
+                modifier = modifier,
+                component = child.component
             )
         }
     }
@@ -39,5 +40,5 @@ fun ProfileScreen(
 
 fun PreviewProfileComponent() = object : ProfileComponent {
     override val state: StateFlow<ProfileComponent.State> =
-        MutableStateFlow(ProfileComponent.State.LoggedOut(PreviewLoginComponent()))
+        MutableStateFlow(ProfileComponent.State(ProfileComponent.Child.LoggedOut(PreviewLoginComponent())))
 }

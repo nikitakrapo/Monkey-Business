@@ -6,12 +6,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
@@ -19,6 +23,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.nikitakrapo.monkeybusiness.design.components.PasswordOutlinedTextField
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.profile.R
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,10 +33,12 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     component: LoginComponent,
 ) {
+    val state by component.state.collectAsState()
+
     ConstraintLayout(
         modifier = modifier,
     ) {
-        val (email, inputsSpacer, password, buttonsSpacer, buttonsRow) = createRefs()
+        val (email, inputsSpacer, password, buttonsSpacer, buttonsRow, error) = createRefs()
 
         createVerticalChain(
             email,
@@ -37,6 +46,7 @@ fun LoginScreen(
             password,
             buttonsSpacer,
             buttonsRow,
+            error,
             chainStyle = ChainStyle.Packed
         )
 
@@ -45,9 +55,10 @@ fun LoginScreen(
                 .constrainAs(email) {
                     centerHorizontallyTo(parent)
                 },
-            value = "",
-            onValueChange = {},
-            label = { Text("Email") }
+            enabled = !state.isLoading,
+            value = state.emailText,
+            onValueChange = component::onEmailTextChanged,
+            label = { Text(stringResource(R.string.email_hint)) }
         )
 
         Spacer(
@@ -61,9 +72,10 @@ fun LoginScreen(
                 .constrainAs(password) {
                     centerHorizontallyTo(parent)
                 },
-            value = "",
-            onValueChange = {},
-            label = { Text("Password") }
+            enabled = !state.isLoading,
+            value = state.passwordText,
+            onValueChange = component::onPasswordTextChanged,
+            label = { Text(stringResource(R.string.password_hint)) }
         )
 
         Spacer(
@@ -81,14 +93,26 @@ fun LoginScreen(
                 },
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(onClick = component::onRegisterClicked) {
-                Text("Register")
+            TextButton(
+                enabled = !state.isLoading,
+                onClick = component::onRegisterClicked
+            ) {
+                Text(stringResource(R.string.register_common))
             }
 
-            ElevatedButton(onClick = component::onLoginClicked) {
-                Text("Login")
+            ElevatedButton(
+                enabled = !state.isLoading,
+                onClick = component::onLoginClicked
+            ) {
+                Text(stringResource(R.string.login_common))
             }
         }
+
+        Text(
+            modifier = Modifier.constrainAs(error) {},
+            text = state.error.orEmpty(),
+            color = MaterialTheme.colorScheme.error,
+        )
     }
 }
 
@@ -108,6 +132,11 @@ fun LoginScreen_Preview() {
 }
 
 fun PreviewLoginComponent() = object : LoginComponent {
+    override val state: StateFlow<LoginComponent.State>
+        get() = MutableStateFlow(LoginComponent.State("", "", false))
+
+    override fun onEmailTextChanged(text: String) {}
+    override fun onPasswordTextChanged(text: String) {}
     override fun onLoginClicked() {}
     override fun onRegisterClicked() {}
 }

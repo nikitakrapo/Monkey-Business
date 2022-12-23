@@ -1,5 +1,6 @@
 package com.nikitakrapo.monkeybusiness
 
+import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.component.ComponentContext
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
@@ -15,15 +16,10 @@ class CoreComponentImpl(
     private val analytics: CoreScreenAnalytics
 ) : CoreComponent, ComponentContext by componentContext {
 
-    private val homeComponent: HomeComponent = HomeComponentImpl(
-        navigateToSearch = {},
-        navigateToProfile = ::navigateToProfile
-    )
-    private val moreComponent = Unit
-    private val profileComponent: ProfileComponent = ProfileComponentImpl()
+    private val accountManager = AccountManager()
 
     private val childFlow = MutableStateFlow(createChildForScreen(initialScreen))
-    override val child: StateFlow<CoreComponent.Child> = childFlow.asStateFlow()
+    override val child: StateFlow<CoreComponent.Child> get() = childFlow.asStateFlow()
 
     override fun onHomeClicked() {
         childFlow.value = createChildForScreen(CoreScreen.Home)
@@ -46,8 +42,15 @@ class CoreComponentImpl(
     }
 
     private fun createChildForScreen(screen: CoreScreen) = when (screen) {
-        CoreScreen.Home -> CoreComponent.Child.Home(homeComponent)
-        CoreScreen.More -> CoreComponent.Child.More(moreComponent)
-        CoreScreen.Profile -> CoreComponent.Child.Profile(profileComponent)
+        CoreScreen.Home -> CoreComponent.Child.Home(
+            HomeComponentImpl(
+                navigateToSearch = {},
+                navigateToProfile = ::navigateToProfile
+            )
+        )
+        CoreScreen.More -> CoreComponent.Child.More(Unit)
+        CoreScreen.Profile -> CoreComponent.Child.Profile(
+            ProfileComponentImpl(accountManager)
+        )
     }
 }

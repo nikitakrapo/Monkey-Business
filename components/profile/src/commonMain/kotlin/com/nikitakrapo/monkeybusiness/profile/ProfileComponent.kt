@@ -8,13 +8,12 @@ interface ProfileComponent {
 
     val state: StateFlow<State>
 
-    sealed class State {
-        class LoggedIn(
-            val profileDetailsComponent: ProfileDetailsComponent,
-        ) : State()
+    data class State(
+        val child: Child,
+    )
 
-        class LoggedOut(
-            val loginComponent: LoginComponent,
-        ) : State()
+    sealed class Child {
+        class LoggedIn(val component: ProfileDetailsComponent) : Child()
+        class LoggedOut(val component: LoginComponent) : Child()
     }
 }

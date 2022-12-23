@@ -16,7 +16,7 @@ class HomeComponentImpl(
             balance = MoneyAmount(203141, Currency.GBP)
         )
     )
-    override val state: StateFlow<HomeComponent.State> = stateFlow.asStateFlow()
+    override val state: StateFlow<HomeComponent.State> get() = stateFlow.asStateFlow()
 
     override fun onSearchBarClicked() {
         navigateToSearch()
