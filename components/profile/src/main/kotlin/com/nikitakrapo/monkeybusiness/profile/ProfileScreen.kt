@@ -6,8 +6,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.nikitakrapo.monkeybusiness.design.components.TopNavigationBar
-import com.nikitakrapo.monkeybusiness.profile.login.LoginScreen
-import com.nikitakrapo.monkeybusiness.profile.login.PreviewLoginComponent
+import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
+import com.nikitakrapo.monkeybusiness.profile.auth.PreviewAuthComponent
 import com.nikitakrapo.monkeybusiness.profile.profiledetails.ProfileDetailsScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,7 +30,7 @@ fun ProfileScreen(
                 modifier = modifier,
                 component = child.component
             )
-            is ProfileComponent.Child.LoggedOut -> LoginScreen(
+            is ProfileComponent.Child.LoggedOut -> AuthScreen(
                 modifier = modifier,
                 component = child.component
             )
@@ -40,5 +40,7 @@ fun ProfileScreen(
 
 fun PreviewProfileComponent() = object : ProfileComponent {
     override val state: StateFlow<ProfileComponent.State> =
-        MutableStateFlow(ProfileComponent.State(ProfileComponent.Child.LoggedOut(PreviewLoginComponent())))
+        MutableStateFlow(ProfileComponent.State(ProfileComponent.Child.LoggedOut(
+            PreviewAuthComponent()
+        )))
 }

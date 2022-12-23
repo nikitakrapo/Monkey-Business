@@ -9,13 +9,20 @@ class FirebaseAccountManager(
 
     override val currentAccount: StateFlow<Account?> get() = firebaseWrapper.currentAccountFlow.asStateFlow()
 
-    override suspend fun createAccount(email: String, password: String): Result<Account> =
+    override suspend fun createAccount(
+        email: String,
+        password: String,
+        username: String
+    ): Result<Account> =
         firebaseWrapper.createUserWithEmailAndPassword(
             email = email,
             password = password
         )
 
-    override suspend fun login(email: String, password: String): Result<Account> =
+    override suspend fun login(
+        email: String,
+        password: String
+    ): Result<Account> =
         firebaseWrapper.signInWithEmailAndPassword(
             email = email,
             password = password

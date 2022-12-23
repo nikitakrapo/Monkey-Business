@@ -76,7 +76,8 @@ class MainActivity : AppCompatActivity() {
                             DebugButton(
                                 modifier = Modifier
                                     .constrainAs(debugButton) {
-                                        centerTo(parent)
+                                        centerVerticallyTo(parent)
+                                        end.linkTo(parent.end)
                                     },
                             )
                         }

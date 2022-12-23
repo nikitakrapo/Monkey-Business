@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.profile.login
+package com.nikitakrapo.monkeybusiness.profile.auth.login
 
 import kotlinx.coroutines.flow.StateFlow
 
@@ -9,7 +9,7 @@ interface LoginComponent {
     fun onEmailTextChanged(text: String)
     fun onPasswordTextChanged(text: String)
     fun onLoginClicked()
-    fun onRegisterClicked()
+    fun onRegistrationClicked()
 
     data class State(
         val emailText: String,

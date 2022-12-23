@@ -1,9 +1,11 @@
-package com.nikitakrapo.monkeybusiness.profile.login
+package com.nikitakrapo.monkeybusiness.profile.auth.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +13,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,6 +27,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.nikitakrapo.monkeybusiness.design.components.PasswordOutlinedTextField
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.profile.R
+import com.nikitakrapo.monkeybusiness.profile.auth.login.LoginComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -36,7 +40,8 @@ fun LoginScreen(
     val state by component.state.collectAsState()
 
     ConstraintLayout(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize(),
     ) {
         val (email, inputsSpacer, password, buttonsSpacer, buttonsRow, error) = createRefs()
 
@@ -52,13 +57,15 @@ fun LoginScreen(
 
         OutlinedTextField(
             modifier = Modifier
+                .width(TextFieldDefaults.MinWidth)
                 .constrainAs(email) {
                     centerHorizontallyTo(parent)
                 },
             enabled = !state.isLoading,
             value = state.emailText,
             onValueChange = component::onEmailTextChanged,
-            label = { Text(stringResource(R.string.email_hint)) }
+            label = { Text(stringResource(R.string.email_hint)) },
+            singleLine = true,
         )
 
         Spacer(
@@ -69,6 +76,7 @@ fun LoginScreen(
 
         PasswordOutlinedTextField(
             modifier = Modifier
+                .width(TextFieldDefaults.MinWidth)
                 .constrainAs(password) {
                     centerHorizontallyTo(parent)
                 },
@@ -81,7 +89,7 @@ fun LoginScreen(
         Spacer(
             modifier = Modifier
                 .constrainAs(buttonsSpacer) {}
-                .height(8.dp)
+                .height(12.dp)
         )
 
         Row(
@@ -93,11 +101,8 @@ fun LoginScreen(
                 },
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(
-                enabled = !state.isLoading,
-                onClick = component::onRegisterClicked
-            ) {
-                Text(stringResource(R.string.register_common))
+            TextButton(onClick = component::onRegistrationClicked) {
+                Text(stringResource(R.string.create_account))
             }
 
             ElevatedButton(
@@ -109,7 +114,9 @@ fun LoginScreen(
         }
 
         Text(
-            modifier = Modifier.constrainAs(error) {},
+            modifier = Modifier.constrainAs(error) {
+                start.linkTo(password.start)
+            },
             text = state.error.orEmpty(),
             color = MaterialTheme.colorScheme.error,
         )
@@ -138,5 +145,5 @@ fun PreviewLoginComponent() = object : LoginComponent {
     override fun onEmailTextChanged(text: String) {}
     override fun onPasswordTextChanged(text: String) {}
     override fun onLoginClicked() {}
-    override fun onRegisterClicked() {}
+    override fun onRegistrationClicked() {}
 }

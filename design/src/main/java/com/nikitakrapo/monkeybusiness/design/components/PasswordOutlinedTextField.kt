@@ -63,5 +63,6 @@ fun PasswordOutlinedTextField(
         label = label,
         value = value,
         onValueChange = onValueChange,
+        singleLine = true,
     )
 }

@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.profile.login
+package com.nikitakrapo.monkeybusiness.profile.auth.register
 
 import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.mvi.feature.FeatureFactory
@@ -6,36 +6,33 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
-class LoginComponentImpl(
-    private val accountManager: AccountManager,
+class RegistrationComponentImpl(
     featureFactory: FeatureFactory = FeatureFactory(),
-) : LoginComponent {
-
+    private val accountManager: AccountManager,
+) : RegistrationComponent {
     private val feature =
-        featureFactory.create<Intent, Intent, Effect, LoginComponent.State, Nothing>(
-            name = "LoginFeature",
-            initialState = LoginComponent.State(
-                emailText = "",
-                passwordText = "",
-                isLoading = false
+        featureFactory.create<Intent, Intent, Effect, RegistrationComponent.State, Nothing>(
+            name = "RegistrationFeature",
+            initialState = RegistrationComponent.State(
+                username = "",
+                email = "",
+                password = "",
+                isLoading = false,
+                error = null
             ),
             intentToAction = { it },
             actor = { action, state ->
                 when (action) {
+                    is Intent.ChangeUsernameText -> flowOf(Effect.UsernameChanged(action.text))
                     is Intent.ChangeEmailText -> flowOf(Effect.EmailChanged(action.text))
                     is Intent.ChangePasswordText -> flowOf(Effect.PasswordChanged(action.text))
-                    Intent.Login -> flow {
-                        emit(Effect.StartLoading)
-                        accountManager.login(email = state.emailText, password = state.passwordText)
-                            .fold(onSuccess = {
-                                emit(Effect.FinishLoading(Result.success(Unit)))
-                            }, onFailure = {
-                                emit(Effect.FinishLoading(Result.failure(it)))
-                            })
-                    }
                     Intent.Register -> flow {
                         emit(Effect.StartLoading)
-                        accountManager.createAccount(email = state.emailText, password = state.passwordText)
+                        accountManager.createAccount(
+                            email = state.email,
+                            password = state.password,
+                            username = state.username
+                        )
                             .fold(onSuccess = {
                                 emit(Effect.FinishLoading(Result.success(Unit)))
                             }, onFailure = {
@@ -46,12 +43,16 @@ class LoginComponentImpl(
             },
             reducer = {
                 when (it) {
+                    is Effect.UsernameChanged -> copy(
+                        username = it.text,
+                        error = null
+                    )
                     is Effect.EmailChanged -> copy(
-                        emailText = it.text,
+                        email = it.text,
                         error = null
                     )
                     is Effect.PasswordChanged -> copy(
-                        passwordText = it.text,
+                        password = it.text,
                         error = null
                     )
                     is Effect.FinishLoading -> copy(
@@ -66,7 +67,11 @@ class LoginComponentImpl(
             }
         )
 
-    override val state: StateFlow<LoginComponent.State> get() = feature.state
+    override val state: StateFlow<RegistrationComponent.State> get() = feature.state
+
+    override fun onUsernameTextChanged(text: String) {
+        feature.accept(Intent.ChangeUsernameText(text))
+    }
 
     override fun onEmailTextChanged(text: String) {
         feature.accept(Intent.ChangeEmailText(text))
@@ -76,22 +81,19 @@ class LoginComponentImpl(
         feature.accept(Intent.ChangePasswordText(text))
     }
 
-    override fun onLoginClicked() {
-        feature.accept(Intent.Login)
-    }
-
     override fun onRegisterClicked() {
         feature.accept(Intent.Register)
     }
 
     sealed class Intent {
+        class ChangeUsernameText(val text: String) : Intent()
         class ChangeEmailText(val text: String) : Intent()
         class ChangePasswordText(val text: String) : Intent()
-        object Login : Intent()
         object Register : Intent()
     }
 
     sealed class Effect {
+        class UsernameChanged(val text: String) : Effect()
         class EmailChanged(val text: String) : Effect()
         class PasswordChanged(val text: String) : Effect()
         object StartLoading : Effect()

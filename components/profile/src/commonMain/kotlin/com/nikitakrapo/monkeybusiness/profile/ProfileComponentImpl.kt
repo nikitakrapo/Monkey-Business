@@ -2,7 +2,7 @@ package com.nikitakrapo.monkeybusiness.profile
 
 import com.nikitakrapo.account.Account
 import com.nikitakrapo.account.AccountManager
-import com.nikitakrapo.monkeybusiness.profile.login.LoginComponentImpl
+import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.profiledetails.ProfileDetailsComponentImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +44,7 @@ class ProfileComponentImpl(
             }
             is Account.Anonymous,
             null -> {
-                val component = LoginComponentImpl(accountManager)
+                val component = AuthComponentImpl(accountManager = accountManager)
                 ProfileComponent.Child.LoggedOut(component)
             }
         }
