@@ -1,5 +1,7 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.login
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +19,11 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,7 +33,6 @@ import androidx.constraintlayout.compose.Dimension
 import com.nikitakrapo.monkeybusiness.design.components.PasswordOutlinedTextField
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.profile.R
-import com.nikitakrapo.monkeybusiness.profile.auth.login.LoginComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -39,9 +44,19 @@ fun LoginScreen(
 ) {
     val state by component.state.collectAsState()
 
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
     ConstraintLayout(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                onClick = {
+                    focusManager.clearFocus()
+                },
+                indication = null
+            ),
     ) {
         val (email, inputsSpacer, password, buttonsSpacer, buttonsRow, error) = createRefs()
 
@@ -60,7 +75,8 @@ fun LoginScreen(
                 .width(TextFieldDefaults.MinWidth)
                 .constrainAs(email) {
                     centerHorizontallyTo(parent)
-                },
+                }
+                .focusRequester(focusRequester),
             enabled = !state.isLoading,
             value = state.emailText,
             onValueChange = component::onEmailTextChanged,
@@ -79,7 +95,8 @@ fun LoginScreen(
                 .width(TextFieldDefaults.MinWidth)
                 .constrainAs(password) {
                     centerHorizontallyTo(parent)
-                },
+                }
+                .focusRequester(focusRequester),
             enabled = !state.isLoading,
             value = state.passwordText,
             onValueChange = component::onPasswordTextChanged,

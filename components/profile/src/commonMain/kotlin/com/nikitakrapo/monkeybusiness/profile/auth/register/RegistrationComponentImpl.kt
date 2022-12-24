@@ -18,7 +18,7 @@ class RegistrationComponentImpl(
                 email = "",
                 password = "",
                 isLoading = false,
-                error = null
+                error = null,
             ),
             intentToAction = { it },
             actor = { action, state ->

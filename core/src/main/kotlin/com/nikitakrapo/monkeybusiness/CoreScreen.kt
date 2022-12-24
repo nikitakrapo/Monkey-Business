@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -38,7 +39,8 @@ fun CoreScreen(
     val childState by component.child.collectAsState()
 
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .imePadding(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         when (val child = childState) {
