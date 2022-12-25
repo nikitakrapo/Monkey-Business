@@ -26,6 +26,7 @@ include(":design")
 include(":components:home")
 include(":components:profile")
 
+include(":features:kmmutils")
 include(":features:navigation:core")
 include(":features:navigation:test")
 include(":features:mvi:feature")

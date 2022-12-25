@@ -16,5 +16,5 @@ interface AccountManager {
         password: String
     ): Result<Account>
 
-    fun logout()
+    fun logout(): Result<Unit>
 }

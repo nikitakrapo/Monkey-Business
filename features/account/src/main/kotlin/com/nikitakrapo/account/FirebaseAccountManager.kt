@@ -1,11 +1,14 @@
 package com.nikitakrapo.account
 
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class FirebaseAccountManager(
-    private val firebaseWrapper: FirebaseAuthWrapper,
-) : AccountManager {
+@Suppress("FunctionName")
+actual fun FirebaseAccountManager(): AccountManager = object : AccountManager {
+
+    private val firebaseWrapper = FirebaseAuthWrapper(Firebase.auth)
 
     override val currentAccount: StateFlow<Account?> get() = firebaseWrapper.currentAccountFlow.asStateFlow()
 
@@ -28,7 +31,8 @@ class FirebaseAccountManager(
             password = password
         )
 
-    override fun logout() {
+    override fun logout(): Result<Unit> {
         firebaseWrapper.signOut()
+        return Result.success(Unit)
     }
 }

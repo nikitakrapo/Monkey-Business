@@ -6,13 +6,15 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 fun Project.setupMultiplatformModule(
-    targets: KotlinMultiplatformExtension.() -> Unit = ::multiplatformDefaultTargets
+    withUtils: Boolean = false,
+    targets: KotlinMultiplatformExtension.() -> Unit = ::multiplatformDefaultTargets,
 ) {
     multiplatformExtension.apply {
         targets()
 
         setupSourceSets {
             common.main.dependencies {
+                if (withUtils) { implementation(project(":features:kmmutils")) }
                 implementation(kotlin("stdlib"))
             }
 

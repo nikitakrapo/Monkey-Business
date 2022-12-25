@@ -4,35 +4,18 @@ import com.nikitakrapo.configuration.setupMultiplatformModule
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("native.cocoapods")
 }
 
-setupMultiplatformModule(withUtils = true) {
+setupMultiplatformModule {
     android()
     iosCompat()
 }
 
 kotlin {
-    cocoapods {
-        version = "1.0"
-
-        ios.deploymentTarget = "14.1"
-
-        pod("FirebaseAuth") {
-            version = "~> 10.3.0"
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinx.coroutines)
-            }
-        }
-
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.firebase.auth)
             }
         }
 

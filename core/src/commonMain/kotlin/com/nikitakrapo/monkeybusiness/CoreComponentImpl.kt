@@ -1,10 +1,8 @@
 package com.nikitakrapo.monkeybusiness
 
-import com.nikitakrapo.account.AccountManager
+import com.nikitakrapo.account.FirebaseAccountManager
 import com.nikitakrapo.component.ComponentContext
-import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
-import com.nikitakrapo.monkeybusiness.profile.ProfileComponent
 import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +14,7 @@ class CoreComponentImpl(
     private val analytics: CoreScreenAnalytics
 ) : CoreComponent, ComponentContext by componentContext {
 
-    private val accountManager = AccountManager()
+    private val accountManager = FirebaseAccountManager()
 
     private val childFlow = MutableStateFlow(createChildForScreen(initialScreen))
     override val child: StateFlow<CoreComponent.Child> get() = childFlow.asStateFlow()

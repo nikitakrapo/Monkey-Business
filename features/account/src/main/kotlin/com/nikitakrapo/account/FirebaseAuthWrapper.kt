@@ -10,13 +10,11 @@ import kotlinx.coroutines.tasks.await
 class FirebaseAuthWrapper(
     private val firebaseAuth: FirebaseAuth,
 ) {
-    private val authStateListener = AuthStateListener { onAuthStateChanged(it) }
-
     val currentAccountFlow: MutableStateFlow<Account?> =
         MutableStateFlow(firebaseAuth.currentUser?.toDomainModel())
 
     init {
-        firebaseAuth.addAuthStateListener(authStateListener)
+        firebaseAuth.addAuthStateListener(::onAuthStateChanged)
     }
 
     suspend fun createUserWithEmailAndPassword(
@@ -35,10 +33,6 @@ class FirebaseAuthWrapper(
         return awaitAndFetchAccount {
             firebaseAuth.signInWithEmailAndPassword(email, password)
         }
-    }
-
-    fun destroy() {
-        firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
     private suspend fun awaitAndFetchAccount(
