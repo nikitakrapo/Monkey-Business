@@ -16,13 +16,12 @@ import kotlinx.coroutines.flow.StateFlow
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     component: ProfileComponent,
-    onBackPressed: () -> Unit,
 ) {
     val state by component.state.collectAsState()
 
     Column(modifier = modifier) {
         TopNavigationBar(
-            navigationAction = onBackPressed
+            navigationAction = component::onBackArrowClicked
         )
 
         when (val child = state.child) {
@@ -40,7 +39,15 @@ fun ProfileScreen(
 
 fun PreviewProfileComponent() = object : ProfileComponent {
     override val state: StateFlow<ProfileComponent.State> =
-        MutableStateFlow(ProfileComponent.State(ProfileComponent.Child.LoggedOut(
-            PreviewAuthComponent()
-        )))
+        MutableStateFlow(
+            ProfileComponent.State(
+                ProfileComponent.Child.LoggedOut(
+                    PreviewAuthComponent()
+                )
+            )
+        )
+
+    override fun onBackArrowClicked() {
+        /* no-op */
+    }
 }

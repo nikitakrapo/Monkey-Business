@@ -1,45 +1,55 @@
 package com.nikitakrapo.monkeybusiness
 
-import com.nikitakrapo.account.FirebaseAccountManager
-import com.nikitakrapo.component.ComponentContext
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
+import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.nikitakrapo.navigation.stack.childFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class CoreComponentImpl(
     componentContext: ComponentContext,
     initialScreen: CoreScreen = CoreScreen.Home,
-    private val analytics: CoreScreenAnalytics
+    private val analytics: CoreScreenAnalytics,
+    private val accountManager: AccountManager,
 ) : CoreComponent, ComponentContext by componentContext {
 
-    private val accountManager = FirebaseAccountManager()
+    private val navigation = StackNavigation<CoreScreen>()
 
-    private val childFlow = MutableStateFlow(createChildForScreen(initialScreen))
-    override val child: StateFlow<CoreComponent.Child> get() = childFlow.asStateFlow()
+    override val child: StateFlow<CoreComponent.Child> = childFlow(
+        source = navigation,
+        initialConfiguration = initialScreen,
+        handleBackButton = true,
+        childFactory = ::createChildForScreen,
+    )
 
     override fun onHomeClicked() {
-        childFlow.value = createChildForScreen(CoreScreen.Home)
+        navigation.bringToFront(CoreScreen.Home)
         analytics.onHomeClicked()
     }
 
     override fun onMoreClicked() {
-        childFlow.value = createChildForScreen(CoreScreen.More)
+        navigation.bringToFront(CoreScreen.More)
         analytics.onMoreClicked()
     }
 
     private fun navigateToProfile() {
-        childFlow.value = createChildForScreen(CoreScreen.Profile)
+        navigation.bringToFront(CoreScreen.Profile)
     }
 
-    sealed class CoreScreen {
+    @Parcelize
+    sealed class CoreScreen : Parcelable {
         object Home : CoreScreen()
         object More : CoreScreen()
         object Profile : CoreScreen()
     }
 
-    private fun createChildForScreen(screen: CoreScreen) = when (screen) {
+    private fun createChildForScreen(screen: CoreScreen, componentContext: ComponentContext) = when (screen) {
         CoreScreen.Home -> CoreComponent.Child.Home(
             HomeComponentImpl(
                 navigateToSearch = {},
@@ -48,7 +58,10 @@ class CoreComponentImpl(
         )
         CoreScreen.More -> CoreComponent.Child.More(Unit)
         CoreScreen.Profile -> CoreComponent.Child.Profile(
-            ProfileComponentImpl(accountManager)
+            ProfileComponentImpl(
+                onBackClicked = navigation::pop,
+                accountManager = accountManager
+            )
         )
     }
 }

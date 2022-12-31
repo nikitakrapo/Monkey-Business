@@ -12,10 +12,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ProfileComponentImpl(
+    private val onBackClicked: () -> Unit,
     private val accountManager: AccountManager,
 ) : ProfileComponent {
 
-    //TODO: fix
+    // TODO: fix
     private val scope = CoroutineScope(Dispatchers.Main)
 
     private val stateFlow = MutableStateFlow(
@@ -24,6 +25,10 @@ class ProfileComponentImpl(
         )
     )
     override val state: StateFlow<ProfileComponent.State> get() = stateFlow.asStateFlow()
+
+    override fun onBackArrowClicked() {
+        onBackClicked()
+    }
 
     init {
         scope.launch {

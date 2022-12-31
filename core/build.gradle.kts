@@ -6,6 +6,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("kotlin-parcelize")
 }
 
 version = "1.0"
@@ -43,8 +44,9 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                api(projects.features.navigation.test)
                 implementation(projects.features.mvi.featureLogging)
+                implementation(projects.features.navigation.test)
+                implementation(projects.features.account.test)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
             }

@@ -1,7 +1,8 @@
 package com.nikitakrapo.monkeybusiness
 
 import app.cash.turbine.test
-import com.nikitakrapo.component.TestComponentContext
+import com.nikitakrapo.account.testAccountManager
+import com.nikitakrapo.decompose.TestComponentContext
 import com.nikitakrapo.monkeybusiness.CoreComponentImpl.CoreScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -85,7 +86,8 @@ class CoreComponentTests {
         return CoreComponentImpl(
             componentContext = TestComponentContext(),
             initialScreen = initialChild,
-            analytics = FakeCoreScreenAnalytics()
+            analytics = FakeCoreScreenAnalytics(),
+            accountManager = testAccountManager()
         )
     }
 }

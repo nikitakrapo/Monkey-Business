@@ -20,7 +20,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.features.account)
+                api(projects.features.account.core)
                 implementation(projects.features.mvi.feature)
             }
         }

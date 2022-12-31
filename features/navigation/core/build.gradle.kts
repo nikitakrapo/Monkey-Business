@@ -12,8 +12,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.kotlinx.coroutines)
+                api(libs.decompose)
             }
         }
+        val commonTest by getting
+
         val androidMain by getting {
             dependencies {
                 implementation(libs.androidx.activity.ktx)

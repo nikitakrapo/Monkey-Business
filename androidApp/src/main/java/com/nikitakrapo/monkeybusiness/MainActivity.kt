@@ -2,28 +2,23 @@ package com.nikitakrapo.monkeybusiness
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.view.WindowCompat
+import androidx.fragment.app.FragmentActivity
+import com.arkivanov.decompose.defaultComponentContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.nikitakrapo.account.FirebaseAccountManager
 import com.nikitakrapo.analytics.FirebaseAnalyticsManager
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
-import com.nikitakrapo.monkeybusiness.navigation.defaultComponentContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : FragmentActivity() {
 
     private lateinit var mainActivityComponent: MainActivityComponent
     private lateinit var coreComponent: CoreComponent
@@ -32,13 +27,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         mainActivityComponent = MainActivityComponent(
-            analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this))
+            analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this)),
+            accountManager = FirebaseAccountManager(),
         )
 
-        // TODO: make proper dependency management (at least component factory)
+        val componentContext = defaultComponentContext()
+
         coreComponent = CoreComponentImpl(
-            componentContext = defaultComponentContext(),
-            analytics = CoreScreenAnalytics(mainActivityComponent.analyticsManager)
+            componentContext = componentContext,
+            analytics = CoreScreenAnalytics(mainActivityComponent.analyticsManager),
+            accountManager = mainActivityComponent.accountManager,
         )
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             MonkeyTheme {
-                Surface(color = MaterialTheme.colorScheme.surface) {
+                Surface {
                     ConstraintLayout(
                         modifier = Modifier
                             .fillMaxSize()

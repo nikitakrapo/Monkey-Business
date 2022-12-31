@@ -102,7 +102,6 @@ fun CoreScreen(
                 ProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     component = child.component,
-                    onBackPressed = component::onHomeClicked //TODO: make proper navigation
                 )
             }
         }

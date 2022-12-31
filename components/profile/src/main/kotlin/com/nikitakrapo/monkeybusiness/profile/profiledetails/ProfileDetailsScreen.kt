@@ -64,9 +64,11 @@ fun ProfileDetailsScreen(
 fun ProfileDetailsScreen_Preview() {
     MonkeyTheme {
         Surface {
-            ProfileDetailsScreen(component = PreviewProfileDetailsComponent(
-                email = "sample@email.com"
-            ))
+            ProfileDetailsScreen(
+                component = PreviewProfileDetailsComponent(
+                    email = "sample@email.com"
+                )
+            )
         }
     }
 }

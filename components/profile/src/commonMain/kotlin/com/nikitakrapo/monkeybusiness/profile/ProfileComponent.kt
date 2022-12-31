@@ -1,13 +1,14 @@
 package com.nikitakrapo.monkeybusiness.profile
 
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponent
-import com.nikitakrapo.monkeybusiness.profile.auth.login.LoginComponent
 import com.nikitakrapo.monkeybusiness.profile.profiledetails.ProfileDetailsComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface ProfileComponent {
 
     val state: StateFlow<State>
+
+    fun onBackArrowClicked()
 
     data class State(
         val child: Child,

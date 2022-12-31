@@ -46,6 +46,10 @@ androidx-activity-compose = "1.6.0" # https://developer.android.com/jetpack/andr
 
 ktor = "2.1.2" # https://github.com/ktorio/ktor/releases
 
+# Decompose
+
+decompose = "1.0.0-beta-02" # https://github.com/arkivanov/Decompose/releases
+
 # Utils
 
 napier = "2.6.1" # https://github.com/AAkira/Napier/releases
@@ -99,6 +103,10 @@ ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+
+# Decompose
+
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 
 # AndroidX
 
