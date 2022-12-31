@@ -1,5 +1,7 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.register
 
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.statekeeper.consume
 import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.mvi.feature.FeatureFactory
 import kotlinx.coroutines.flow.StateFlow
@@ -7,19 +9,31 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 class RegistrationComponentImpl(
+    componentContext: ComponentContext,
     featureFactory: FeatureFactory = FeatureFactory(),
     private val accountManager: AccountManager,
-) : RegistrationComponent {
+) : RegistrationComponent, ComponentContext by componentContext {
+
+    init {
+        stateKeeper.register(key = STATE_KEY) {
+            feature.state.value.copy(
+                isLoading = false,
+            )
+        }
+    }
+
+    private var preservedState = stateKeeper.consume(STATE_KEY) ?: RegistrationComponent.State(
+        username = "",
+        email = "",
+        password = "",
+        isLoading = false,
+        error = null,
+    )
+
     private val feature =
         featureFactory.create<Intent, Intent, Effect, RegistrationComponent.State, Nothing>(
             name = "RegistrationFeature",
-            initialState = RegistrationComponent.State(
-                username = "",
-                email = "",
-                password = "",
-                isLoading = false,
-                error = null,
-            ),
+            initialState = preservedState,
             intentToAction = { it },
             actor = { action, state ->
                 when (action) {
@@ -98,5 +112,9 @@ class RegistrationComponentImpl(
         class PasswordChanged(val text: String) : Effect()
         object StartLoading : Effect()
         class FinishLoading(val result: Result<Unit>) : Effect()
+    }
+
+    companion object {
+        private const val STATE_KEY = "RegisterState"
     }
 }

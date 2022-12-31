@@ -1,5 +1,7 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.login
 
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.statekeeper.consume
 import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.mvi.feature.FeatureFactory
 import kotlinx.coroutines.flow.StateFlow
@@ -7,19 +9,31 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 class LoginComponentImpl(
+    componentContext: ComponentContext,
     private val navigateToRegistration: () -> Unit,
     private val accountManager: AccountManager,
     featureFactory: FeatureFactory = FeatureFactory(),
-) : LoginComponent {
+) : LoginComponent, ComponentContext by componentContext {
+
+    init {
+        stateKeeper.register(key = STATE_KEY) {
+            feature.state.value.copy(
+                isLoading = false,
+            )
+        }
+    }
+
+    private var persistedState: LoginComponent.State = stateKeeper.consume(key = STATE_KEY)
+        ?: LoginComponent.State(
+            emailText = "",
+            passwordText = "",
+            isLoading = false
+        )
 
     private val feature =
         featureFactory.create<Intent, Intent, Effect, LoginComponent.State, Nothing>(
             name = "LoginFeature",
-            initialState = LoginComponent.State(
-                emailText = "",
-                passwordText = "",
-                isLoading = false
-            ),
+            initialState = persistedState,
             intentToAction = { it },
             actor = { action, state ->
                 when (action) {
@@ -28,11 +42,14 @@ class LoginComponentImpl(
                     Intent.Login -> flow {
                         emit(Effect.StartLoading)
                         accountManager.login(email = state.emailText, password = state.passwordText)
-                            .fold(onSuccess = {
-                                emit(Effect.FinishLoading(Result.success(Unit)))
-                            }, onFailure = {
-                                emit(Effect.FinishLoading(Result.failure(it)))
-                            })
+                            .fold(
+                                onSuccess = {
+                                    emit(Effect.FinishLoading(Result.success(Unit)))
+                                },
+                                onFailure = {
+                                    emit(Effect.FinishLoading(Result.failure(it)))
+                                }
+                            )
                     }
                 }
             },
@@ -87,5 +104,9 @@ class LoginComponentImpl(
         class PasswordChanged(val text: String) : Effect()
         object StartLoading : Effect()
         class FinishLoading(val result: Result<Unit>) : Effect()
+    }
+
+    companion object {
+        private const val STATE_KEY = "LoginState"
     }
 }
