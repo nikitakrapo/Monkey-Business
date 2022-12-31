@@ -1,5 +1,6 @@
 package com.nikitakrapo.monkeybusiness.design.components
 
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,6 +28,8 @@ fun PasswordOutlinedTextField(
     enabled: Boolean = true,
     value: String,
     onValueChange: (String) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     label: @Composable (() -> Unit)? = null,
     isError: Boolean = false,
 ) {
@@ -37,7 +40,8 @@ fun PasswordOutlinedTextField(
         enabled = enabled,
         isError = isError,
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         trailingIcon = {
             val image = if (passwordVisible) {
                 Icons.Default.Visibility

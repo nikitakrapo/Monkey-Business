@@ -48,6 +48,7 @@ ktor = "2.1.2" # https://github.com/ktorio/ktor/releases
 
 # Decompose
 
+essenty = "0.7.1" # https://github.com/arkivanov/Essenty/releases
 decompose = "1.0.0-beta-02" # https://github.com/arkivanov/Decompose/releases
 
 # Utils
@@ -106,6 +107,7 @@ ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 
 # Decompose
 
+essenty-parcelable = { module = "com.arkivanov.essenty:parcelable", version.ref = "essenty" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 
 # AndroidX

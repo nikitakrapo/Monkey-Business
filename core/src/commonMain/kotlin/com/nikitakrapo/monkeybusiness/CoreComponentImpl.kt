@@ -59,6 +59,7 @@ class CoreComponentImpl(
         CoreScreen.More -> CoreComponent.Child.More(Unit)
         CoreScreen.Profile -> CoreComponent.Child.Profile(
             ProfileComponentImpl(
+                componentContext = componentContext,
                 onBackClicked = navigation::pop,
                 accountManager = accountManager
             )

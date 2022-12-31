@@ -4,6 +4,7 @@ import com.nikitakrapo.configuration.setupMultiplatformModule
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlin-parcelize")
     kotlin("native.cocoapods")
 }
 
@@ -28,6 +29,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinx.coroutines)
+                implementation(libs.essenty.parcelable)
             }
         }
 

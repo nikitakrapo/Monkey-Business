@@ -5,6 +5,7 @@ import com.nikitakrapo.configuration.setupMultiplatformModule
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlin-parcelize")
 }
 
 version = "1.0"
@@ -21,6 +22,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.account.core)
+                api(projects.features.navigation.core)
                 implementation(projects.features.mvi.feature)
             }
         }

@@ -6,13 +6,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface ProfileComponent {
 
-    val state: StateFlow<State>
+    val child: StateFlow<Child>
 
     fun onBackArrowClicked()
-
-    data class State(
-        val child: Child,
-    )
 
     sealed class Child {
         class LoggedIn(val component: ProfileDetailsComponent) : Child()

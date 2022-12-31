@@ -17,14 +17,14 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     component: ProfileComponent,
 ) {
-    val state by component.state.collectAsState()
+    val state by component.child.collectAsState()
 
     Column(modifier = modifier) {
         TopNavigationBar(
             navigationAction = component::onBackArrowClicked
         )
 
-        when (val child = state.child) {
+        when (val child = state) {
             is ProfileComponent.Child.LoggedIn -> ProfileDetailsScreen(
                 modifier = modifier,
                 component = child.component
@@ -38,12 +38,10 @@ fun ProfileScreen(
 }
 
 fun PreviewProfileComponent() = object : ProfileComponent {
-    override val state: StateFlow<ProfileComponent.State> =
+    override val child: StateFlow<ProfileComponent.Child> =
         MutableStateFlow(
-            ProfileComponent.State(
-                ProfileComponent.Child.LoggedOut(
-                    PreviewAuthComponent()
-                )
+            ProfileComponent.Child.LoggedOut(
+                PreviewAuthComponent()
             )
         )
 

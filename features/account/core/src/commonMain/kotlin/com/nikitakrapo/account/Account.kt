@@ -1,14 +1,18 @@
 package com.nikitakrapo.account
 
-sealed class Account(
-    val uid: String,
-) {
-    class Emailish(
-        uid: String,
-        val email: String,
-    ) : Account(uid)
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
 
+@Parcelize
+sealed class Account : Parcelable {
+    @Parcelize
+    class Emailish(
+        val uid: String,
+        val email: String,
+    ) : Account(), Parcelable
+
+    @Parcelize
     class Anonymous(
-        uid: String,
-    ) : Account(uid)
+        val uid: String,
+    ) : Account(), Parcelable
 }

@@ -1,13 +1,18 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.login
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -20,13 +25,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -36,6 +45,7 @@ import com.nikitakrapo.monkeybusiness.profile.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+// TODO: unite with RegistrationScreen as it has too many common ui
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
@@ -60,6 +70,23 @@ fun LoginScreen(
     ) {
         val (email, inputsSpacer, password, buttonsSpacer, buttonsRow, error) = createRefs()
 
+        val progressSpinner = createRef()
+
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .constrainAs(progressSpinner) {
+                        centerTo(parent)
+                    }
+                    .zIndex(Float.MAX_VALUE)
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.scrim),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
         createVerticalChain(
             email,
             inputsSpacer,
@@ -77,6 +104,10 @@ fun LoginScreen(
                     centerHorizontallyTo(parent)
                 }
                 .focusRequester(focusRequester),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
             enabled = !state.isLoading,
             value = state.emailText,
             onValueChange = component::onEmailTextChanged,
@@ -100,6 +131,12 @@ fun LoginScreen(
             enabled = !state.isLoading,
             value = state.passwordText,
             onValueChange = component::onPasswordTextChanged,
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                    component.onLoginClicked()
+                }
+            ),
             label = { Text(stringResource(R.string.password_hint)) }
         )
 
@@ -155,9 +192,34 @@ fun LoginScreen_Preview() {
     }
 }
 
-fun PreviewLoginComponent() = object : LoginComponent {
+@Preview(
+    widthDp = 360,
+    heightDp = 720,
+)
+@Composable
+fun LoginScreen_Preview_Loading() {
+    MonkeyTheme {
+        Surface {
+            LoginScreen(
+                component = PreviewLoginComponent(
+                    isLoading = true,
+                )
+            )
+        }
+    }
+}
+
+fun PreviewLoginComponent(
+    isLoading: Boolean = false,
+) = object : LoginComponent {
     override val state: StateFlow<LoginComponent.State>
-        get() = MutableStateFlow(LoginComponent.State("", "", false))
+        get() = MutableStateFlow(
+            LoginComponent.State(
+                emailText = "",
+                passwordText = "",
+                isLoading = isLoading
+            )
+        )
 
     override fun onEmailTextChanged(text: String) {}
     override fun onPasswordTextChanged(text: String) {}

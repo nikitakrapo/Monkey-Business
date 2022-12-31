@@ -6,14 +6,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface AuthComponent {
 
-    val state: StateFlow<State>
+    val child: StateFlow<Child>
 
     fun openLogin()
     fun openRegistration()
-
-    data class State(
-        val child: Child,
-    )
 
     sealed class Child {
         class Login(val component: LoginComponent) : Child()

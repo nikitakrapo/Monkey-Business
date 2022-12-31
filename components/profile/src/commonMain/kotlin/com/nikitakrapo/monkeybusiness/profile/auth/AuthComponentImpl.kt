@@ -1,44 +1,63 @@
 package com.nikitakrapo.monkeybusiness.profile.auth
 
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.childContext
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
+import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.monkeybusiness.profile.auth.login.LoginComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.register.RegistrationComponentImpl
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.nikitakrapo.navigation.stack.childFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class AuthComponentImpl(
-    initialConfig: Config = Config.Login,
+    componentContext: ComponentContext,
+    initialScreen: AuthScreen = AuthScreen.Login,
     private val accountManager: AccountManager,
-) : AuthComponent {
+) : AuthComponent, ComponentContext by componentContext {
 
-    private val stateFlow = MutableStateFlow(AuthComponent.State(createChildForConfig(initialConfig)))
-    override val state: StateFlow<AuthComponent.State> get() = stateFlow.asStateFlow()
+    private val navigation = StackNavigation<AuthScreen>()
+
+    override val child: StateFlow<AuthComponent.Child> = childFlow(
+        source = navigation,
+        initialConfiguration = initialScreen,
+        handleBackButton = true,
+        childFactory = ::child,
+    )
 
     override fun openLogin() {
-        stateFlow.value = AuthComponent.State(createChildForConfig(Config.Login))
+        navigation.bringToFront(AuthScreen.Login)
     }
 
     override fun openRegistration() {
-        stateFlow.value = AuthComponent.State(createChildForConfig(Config.Registration))
+        navigation.bringToFront(AuthScreen.Registration)
     }
 
-    sealed class Config {
-        object Login : Config()
-        object Registration : Config()
+    @Parcelize
+    sealed class AuthScreen : Parcelable {
+        object Login : AuthScreen()
+        object Registration : AuthScreen()
     }
 
-    private fun createChildForConfig(config: Config): AuthComponent.Child =
-        when (config) {
-            Config.Login -> {
+    private fun child(
+        screen: AuthScreen,
+        componentContext: ComponentContext
+    ): AuthComponent.Child =
+        when (screen) {
+            AuthScreen.Login -> {
                 val component = LoginComponentImpl(
                     navigateToRegistration = ::openRegistration,
                     accountManager = accountManager,
                 )
                 AuthComponent.Child.Login(component)
             }
-            Config.Registration -> {
-                val component = RegistrationComponentImpl(accountManager = accountManager)
+            AuthScreen.Registration -> {
+                val component = RegistrationComponentImpl(
+                    accountManager = accountManager
+                )
                 AuthComponent.Child.Registration(component)
             }
         }

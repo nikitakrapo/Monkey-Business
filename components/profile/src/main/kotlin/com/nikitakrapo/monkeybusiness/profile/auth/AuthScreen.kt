@@ -15,9 +15,9 @@ fun AuthScreen(
     modifier: Modifier = Modifier,
     component: AuthComponent,
 ) {
-    val state by component.state.collectAsState()
+    val state by component.child.collectAsState()
 
-    when (val child = state.child) {
+    when (val child = state) {
         is AuthComponent.Child.Login -> LoginScreen(
             modifier = modifier,
             component = child.component
@@ -30,8 +30,8 @@ fun AuthScreen(
 }
 
 fun PreviewAuthComponent() = object : AuthComponent {
-    override val state: StateFlow<AuthComponent.State>
-        get() = MutableStateFlow(AuthComponent.State(AuthComponent.Child.Login(PreviewLoginComponent())))
+    override val child: StateFlow<AuthComponent.Child>
+        get() = MutableStateFlow(AuthComponent.Child.Login(PreviewLoginComponent()))
 
     override fun openLogin() {}
     override fun openRegistration() {}
