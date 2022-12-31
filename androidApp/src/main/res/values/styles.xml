@@ -1,6 +1,6 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowSplashScreenBackground">#FFFFDBC9</item>
+        <item name="android:windowSplashScreenBackground">@color/background</item>
         <item name="android:windowSplashScreenAnimatedIcon">@mipmap/monkey_icon_foreground</item>
         <item name="android:windowSplashScreenBrandingImage">@drawable/nikitakrapo_branding_image</item>
     </style>
