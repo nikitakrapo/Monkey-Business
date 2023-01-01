@@ -5,23 +5,17 @@ plugins {
     id("com.android.library")
 }
 
+version = "1.0"
+
 setupMultiplatformModule()
 
 kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(libs.kotlinx.coroutines)
-                api(libs.decompose)
                 api(projects.features.mvi.feature)
-                api(projects.features.mvi.decomposeExt)
-            }
-        }
-        val commonTest by getting
-
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.activity.ktx)
+                api(libs.decompose)
+                api(libs.kotlinx.coroutines)
             }
         }
     }

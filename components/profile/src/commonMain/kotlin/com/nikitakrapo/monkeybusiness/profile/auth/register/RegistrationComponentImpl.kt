@@ -1,9 +1,10 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.register
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.essenty.statekeeper.consume
 import com.nikitakrapo.account.AccountManager
+import com.nikitakrapo.mvi.createFeature
 import com.nikitakrapo.mvi.feature.FeatureFactory
+import com.nikitakrapo.mvi.getValue
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -14,26 +15,16 @@ class RegistrationComponentImpl(
     private val accountManager: AccountManager,
 ) : RegistrationComponent, ComponentContext by componentContext {
 
-    init {
-        stateKeeper.register(key = STATE_KEY) {
-            feature.state.value.copy(
-                isLoading = false,
-            )
-        }
-    }
-
-    private var preservedState = stateKeeper.consume(STATE_KEY) ?: RegistrationComponent.State(
-        username = "",
-        email = "",
-        password = "",
-        isLoading = false,
-        error = null,
-    )
-
-    private val feature =
+    private val feature by createFeature {
         featureFactory.create<Intent, Intent, Effect, RegistrationComponent.State, Nothing>(
             name = "RegistrationFeature",
-            initialState = preservedState,
+            initialState = RegistrationComponent.State(
+                username = "",
+                email = "",
+                password = "",
+                isLoading = false,
+                error = null,
+            ),
             intentToAction = { it },
             actor = { action, state ->
                 when (action) {
@@ -47,11 +38,14 @@ class RegistrationComponentImpl(
                             password = state.password,
                             username = state.username
                         )
-                            .fold(onSuccess = {
-                                emit(Effect.FinishLoading(Result.success(Unit)))
-                            }, onFailure = {
-                                emit(Effect.FinishLoading(Result.failure(it)))
-                            })
+                            .fold(
+                                onSuccess = {
+                                    emit(Effect.FinishLoading(Result.success(Unit)))
+                                },
+                                onFailure = {
+                                    emit(Effect.FinishLoading(Result.failure(it)))
+                                }
+                            )
                     }
                 }
             },
@@ -81,6 +75,8 @@ class RegistrationComponentImpl(
             }
         )
 
+    }
+
     override val state: StateFlow<RegistrationComponent.State> get() = feature.state
 
     override fun onUsernameTextChanged(text: String) {
@@ -99,22 +95,18 @@ class RegistrationComponentImpl(
         feature.accept(Intent.Register)
     }
 
-    sealed class Intent {
+    private sealed class Intent {
         class ChangeUsernameText(val text: String) : Intent()
         class ChangeEmailText(val text: String) : Intent()
         class ChangePasswordText(val text: String) : Intent()
         object Register : Intent()
     }
 
-    sealed class Effect {
+    private sealed class Effect {
         class UsernameChanged(val text: String) : Effect()
         class EmailChanged(val text: String) : Effect()
         class PasswordChanged(val text: String) : Effect()
         object StartLoading : Effect()
         class FinishLoading(val result: Result<Unit>) : Effect()
-    }
-
-    companion object {
-        private const val STATE_KEY = "RegisterState"
     }
 }

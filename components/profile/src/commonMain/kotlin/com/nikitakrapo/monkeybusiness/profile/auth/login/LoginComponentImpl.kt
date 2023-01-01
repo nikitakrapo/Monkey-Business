@@ -1,9 +1,10 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.login
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.essenty.statekeeper.consume
 import com.nikitakrapo.account.AccountManager
+import com.nikitakrapo.mvi.createFeature
 import com.nikitakrapo.mvi.feature.FeatureFactory
+import com.nikitakrapo.mvi.getValue
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -15,25 +16,14 @@ class LoginComponentImpl(
     featureFactory: FeatureFactory = FeatureFactory(),
 ) : LoginComponent, ComponentContext by componentContext {
 
-    init {
-        stateKeeper.register(key = STATE_KEY) {
-            feature.state.value.copy(
-                isLoading = false,
-            )
-        }
-    }
-
-    private var persistedState: LoginComponent.State = stateKeeper.consume(key = STATE_KEY)
-        ?: LoginComponent.State(
-            emailText = "",
-            passwordText = "",
-            isLoading = false
-        )
-
-    private val feature =
+    private val feature by createFeature {
         featureFactory.create<Intent, Intent, Effect, LoginComponent.State, Nothing>(
             name = "LoginFeature",
-            initialState = persistedState,
+            initialState = LoginComponent.State(
+                emailText = "",
+                passwordText = "",
+                isLoading = false
+            ),
             intentToAction = { it },
             actor = { action, state ->
                 when (action) {
@@ -74,6 +64,7 @@ class LoginComponentImpl(
                 }
             }
         )
+    }
 
     override val state: StateFlow<LoginComponent.State> get() = feature.state
 
@@ -93,20 +84,16 @@ class LoginComponentImpl(
         navigateToRegistration()
     }
 
-    sealed class Intent {
+    private sealed class Intent {
         class ChangeEmailText(val text: String) : Intent()
         class ChangePasswordText(val text: String) : Intent()
         object Login : Intent()
     }
 
-    sealed class Effect {
+    private sealed class Effect {
         class EmailChanged(val text: String) : Effect()
         class PasswordChanged(val text: String) : Effect()
         object StartLoading : Effect()
         class FinishLoading(val result: Result<Unit>) : Effect()
-    }
-
-    companion object {
-        private const val STATE_KEY = "LoginState"
     }
 }
