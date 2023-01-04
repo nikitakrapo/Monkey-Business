@@ -2,6 +2,8 @@ import SwiftUI
 import core
 
 struct CoreContentView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     private var accountManager: AccountManager
     private var analyticsManager: AnalyticsManager
     private var analytics: CoreScreenAnalytics

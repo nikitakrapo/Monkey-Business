@@ -14,6 +14,7 @@
 		644C036571B62C9097A3DC1E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 644C01C797AF5D807C8A3C6B /* GoogleService-Info.plist */; };
 		7555FF83242A565900829871 /* CoreContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* CoreContentView.swift */; };
 		BC237B85C817E33AB9161843 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3745A61EB43FDD7F013EE8D /* Pods_iosApp.framework */; };
+		C2A108BD2965B6C000B4267D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108BC2965B6C000B4267D /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		7555FF82242A565900829871 /* CoreContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC80FB413AEB2E4D1EF1104C /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
+		C2A108BC2965B6C000B4267D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E3745A61EB43FDD7F013EE8D /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				C2A108BB2965B6B000B4267D /* Theming */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* CoreContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
@@ -97,6 +100,14 @@
 				0286770559001A671B845E98 /* Pods-iosApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C2A108BB2965B6B000B4267D /* Theming */ = {
+			isa = PBXGroup;
+			children = (
+				C2A108BC2965B6C000B4267D /* Colors.swift */,
+			);
+			path = Theming;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				C2A108BD2965B6C000B4267D /* Colors.swift in Sources */,
 				7555FF83242A565900829871 /* CoreContentView.swift in Sources */,
 				644C02D9E2920FB215F9AA44 /* HomeScreen.swift in Sources */,
 			);
