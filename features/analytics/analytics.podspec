@@ -10,6 +10,7 @@ Pod::Spec.new do |spec|
     spec.libraries                = 'c++'
     spec.ios.deployment_target = '14.1'
     spec.dependency 'FirebaseAnalytics', '~> 10.3.0'
+    spec.dependency 'FirebaseCrashlytics', '~> 10.3.0'
                 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':features:analytics',

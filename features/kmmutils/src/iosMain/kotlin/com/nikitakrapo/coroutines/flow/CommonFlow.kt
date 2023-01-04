@@ -1,4 +1,4 @@
-package com.nikitakrapo.swift.interop
+package com.nikitakrapo.coroutines.flow
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

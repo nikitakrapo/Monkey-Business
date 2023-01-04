@@ -2,12 +2,14 @@ import SwiftUI
 import core
 
 struct CoreContentView: View {
+    private var accountManager: AccountManager
     private var analyticsManager: AnalyticsManager
     private var analytics: CoreScreenAnalytics
 
     @State var activeScreen = "Home"
 
     init() {
+        accountManager = AccountManagerFactoryKt.FirebaseAccountManager()
         analyticsManager = FirebaseAnalyticsManager()
         analytics = CoreScreenAnalytics(analytics: analyticsManager)
     }

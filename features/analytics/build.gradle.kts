@@ -22,6 +22,9 @@ kotlin {
         pod("FirebaseAnalytics") {
             version = "~> 10.3.0"
         }
+        pod("FirebaseCrashlytics") {
+            version = "~> 10.3.0"
+        }
     }
 
     sourceSets {

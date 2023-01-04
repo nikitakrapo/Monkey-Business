@@ -28,6 +28,8 @@ kotlin {
             isStatic = true
             baseName = "core"
             export(projects.features.analytics)
+            export(projects.features.account.core)
+            export(projects.features.kmmutils)
             transitiveExport = true
         }
     }
@@ -37,6 +39,8 @@ kotlin {
             dependencies {
                 api(projects.features.navigation.core)
                 api(projects.features.analytics)
+                api(projects.features.account.core)
+                api(projects.features.kmmutils)
                 implementation(projects.features.mvi.feature)
                 implementation(projects.components.home)
                 implementation(projects.components.profile)
