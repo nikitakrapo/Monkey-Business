@@ -16,7 +16,9 @@
 		BC237B85C817E33AB9161843 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3745A61EB43FDD7F013EE8D /* Pods_iosApp.framework */; };
 		C2A108BD2965B6C000B4267D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108BC2965B6C000B4267D /* Colors.swift */; };
 		C2A108C22965F16500B4267D /* FlowPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108C12965F16500B4267D /* FlowPublisher.swift */; };
-		C2A108C92966C3B400B4267D /* BottomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108C82966C3B400B4267D /* BottomNavigationView.swift */; };
+		C2A108C92966C3B400B4267D /* BottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108C82966C3B400B4267D /* BottomNavigation.swift */; };
+		C2A108CF2966D3EB00B4267D /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108CE2966D3EB00B4267D /* UserAvatar.swift */; };
+		C2A108D12966D9F200B4267D /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108D02966D9F200B4267D /* SearchBarButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +34,9 @@
 		AC80FB413AEB2E4D1EF1104C /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		C2A108BC2965B6C000B4267D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		C2A108C12965F16500B4267D /* FlowPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowPublisher.swift; sourceTree = "<group>"; };
-		C2A108C82966C3B400B4267D /* BottomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationView.swift; sourceTree = "<group>"; };
+		C2A108C82966C3B400B4267D /* BottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigation.swift; sourceTree = "<group>"; };
+		C2A108CE2966D3EB00B4267D /* UserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
+		C2A108D02966D9F200B4267D /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
 		E3745A61EB43FDD7F013EE8D /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -85,16 +89,15 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				C2A108CC2966D23D00B4267D /* UIComponents */,
+				C2A108CB2966D21900B4267D /* Core */,
 				C2A108BE2965DB7100B4267D /* KmmUtils */,
 				C2A108BB2965B6B000B4267D /* Theming */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* CoreContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				644C03F4BC5E23C7D9EE6325 /* HomeScreen.swift */,
 				644C01C797AF5D807C8A3C6B /* GoogleService-Info.plist */,
-				C2A108C82966C3B400B4267D /* BottomNavigationView.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -122,6 +125,33 @@
 				C2A108C12965F16500B4267D /* FlowPublisher.swift */,
 			);
 			path = KmmUtils;
+			sourceTree = "<group>";
+		};
+		C2A108CB2966D21900B4267D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C2A108CD2966D26700B4267D /* Home */,
+				7555FF82242A565900829871 /* CoreContentView.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		C2A108CC2966D23D00B4267D /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				C2A108C82966C3B400B4267D /* BottomNavigation.swift */,
+				C2A108CE2966D3EB00B4267D /* UserAvatar.swift */,
+				C2A108D02966D9F200B4267D /* SearchBarButton.swift */,
+			);
+			name = UIComponents;
+			sourceTree = "<group>";
+		};
+		C2A108CD2966D26700B4267D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				644C03F4BC5E23C7D9EE6325 /* HomeScreen.swift */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,7 +292,9 @@
 				7555FF83242A565900829871 /* CoreContentView.swift in Sources */,
 				644C02D9E2920FB215F9AA44 /* HomeScreen.swift in Sources */,
 				C2A108C22965F16500B4267D /* FlowPublisher.swift in Sources */,
-				C2A108C92966C3B400B4267D /* BottomNavigationView.swift in Sources */,
+				C2A108CF2966D3EB00B4267D /* UserAvatar.swift in Sources */,
+				C2A108C92966C3B400B4267D /* BottomNavigation.swift in Sources */,
+				C2A108D12966D9F200B4267D /* SearchBarButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

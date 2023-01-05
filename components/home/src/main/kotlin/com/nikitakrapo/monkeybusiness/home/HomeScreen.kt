@@ -20,8 +20,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.monkeybusiness.design.SearchBarButton
-import com.nikitakrapo.monkeybusiness.design.UserAvatar
+import com.nikitakrapo.monkeybusiness.design.components.SearchBarButton
+import com.nikitakrapo.monkeybusiness.design.components.UserAvatar
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount

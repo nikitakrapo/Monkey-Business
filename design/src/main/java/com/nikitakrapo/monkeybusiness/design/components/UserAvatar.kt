@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.design
+package com.nikitakrapo.monkeybusiness.design.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable

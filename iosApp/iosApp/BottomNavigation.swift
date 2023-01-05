@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct BottomNavigationView: View {
+struct BottomNavigation: View {
     
     let items: Array<BottomNavigationItem>
     
@@ -45,7 +45,7 @@ struct BottomNavigationView: View {
 
 struct BottomNavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        BottomNavigationView(items: [BottomNavigationItem]())
+        BottomNavigation(items: [BottomNavigationItem]())
     }
 }
 

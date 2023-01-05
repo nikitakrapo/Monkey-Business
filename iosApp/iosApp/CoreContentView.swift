@@ -19,10 +19,13 @@ struct CoreContentView: View {
             Color.surface.ignoresSafeArea()
             if child is CoreComponentChild.Home || child is CoreComponentChild.More {
                 VStack {
+                    if child is CoreComponentChild.Home {
+                        HomeScreen(component: (child as! CoreComponentChild.Home).component)
+                    }
                     Spacer()
-                    BottomNavigationView(items: [
+                    BottomNavigation(items: [
                         BottomNavigationItem(
-                            iconSystemName: "house",
+                            iconSystemName: "house.fill",
                             isSelected: child is CoreComponentChild.Home,
                             onClick: { component.onHomeClicked() }
                         ),

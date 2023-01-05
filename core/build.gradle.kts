@@ -31,6 +31,8 @@ kotlin {
             export(projects.features.analytics)
             export(projects.features.account.core)
             export(projects.features.kmmutils)
+            export(projects.components.home)
+            export(projects.components.profile)
             transitiveExport = true
         }
     }
@@ -43,8 +45,8 @@ kotlin {
                 api(projects.features.account.core)
                 api(projects.features.kmmutils)
                 implementation(projects.features.mvi.feature)
-                implementation(projects.components.home)
-                implementation(projects.components.profile)
+                api(projects.components.home)
+                api(projects.components.profile)
             }
         }
         val commonTest by getting {
