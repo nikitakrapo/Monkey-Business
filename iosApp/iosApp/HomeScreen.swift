@@ -22,14 +22,15 @@ struct HomeScreen: View {
     var body: some View {
         VStack {
             HStack {
-                SearchBarButton(onClick: {
+                SearchBarButton(action: {
                     component.onSearchBarClicked()
                 })
                 .frame(maxWidth: .infinity, maxHeight: 48)
                 Spacer().frame(width: 16)
-                UserAvatar(size: 48, onClick: {
+                UserAvatar(action: {
                     component.onAvatarClicked()
                 })
+                .frame(width: 48, height: 48)
             }
             .frame(maxWidth: .infinity)
             .padding(16)

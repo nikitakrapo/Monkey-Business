@@ -9,41 +9,38 @@
 import SwiftUI
 
 struct UserAvatar: View {
-    private let size: CGFloat
-    private let onClick: () -> Void
+    private let action: () -> Void
     
-    init(size: CGFloat, onClick: @escaping () -> Void) {
-        self.size = size
-        self.onClick = onClick
+    init(action: @escaping () -> Void) {
+        self.action = action
     }
     
     var body: some View {
         Button(action: {
-            onClick()
+            action()
         }, label: {
-            ZStack {
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .foregroundColor(.outline)
-                    .frame(width: size / 2, height: size / 2)
-                Circle()
-                    .stroke(Color.outline, lineWidth: 1)
-                    .frame(width: size, height: size)
+            GeometryReader { geometry in
+                ZStack {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .frame(width: geometry.size.width / 2, height: geometry.size.height / 2)
+                        .foregroundColor(.outline)
+                    Circle()
+                        .stroke(Color.outline, lineWidth: 1)
+                        .frame(width: .infinity, height: .infinity)
+                }
             }
         })
         .aspectRatio(1, contentMode: .fill)
         .frame(
-            maxWidth: size,
-            maxHeight: size
+            maxWidth: .infinity,
+            maxHeight: .infinity
         )
     }
 }
 
 struct UserAvatar_Previews: PreviewProvider {
     static var previews: some View {
-        UserAvatar(
-            size: 48,
-            onClick: {}
-        )
+        UserAvatar(action: {})
     }
 }

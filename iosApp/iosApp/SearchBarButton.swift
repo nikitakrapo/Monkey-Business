@@ -9,15 +9,15 @@
 import SwiftUI
 
 struct SearchBarButton: View {
-    private let onClick: () -> Void
+    private let action: () -> Void
     
-    init(onClick: @escaping () -> Void) {
-        self.onClick = onClick
+    init(action: @escaping () -> Void) {
+        self.action = action
     }
     
     var body: some View {
         Button(action: {
-            onClick()
+            action()
         }, label: {
             HStack {
                 Spacer().frame(maxWidth: 10)
@@ -38,6 +38,6 @@ struct SearchBarButton: View {
 
 struct SearchBarButton_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarButton(onClick: {})
+        SearchBarButton(action: {})
     }
 }
