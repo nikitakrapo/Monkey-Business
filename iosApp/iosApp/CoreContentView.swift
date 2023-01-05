@@ -22,6 +22,9 @@ struct CoreContentView: View {
                     if child is CoreComponentChild.Home {
                         HomeScreen(component: (child as! CoreComponentChild.Home).component)
                     }
+                    if child is CoreComponentChild.More {
+                        Text("More")
+                    }
                     Spacer()
                     BottomNavigation(items: [
                         BottomNavigationItem(
@@ -36,8 +39,25 @@ struct CoreContentView: View {
                         )
                     ])
                 }
-            } else {
-                Text("Profile")
+            } else if child is CoreComponentChild.Profile {
+                VStack {
+                    HStack {
+                        Button(action: { (child as! CoreComponentChild.Profile).component.onBackArrowClicked() }) {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(.onSurface)
+                                Text("Back")
+                                    .foregroundColor(.onSurface)
+                            }
+                        }
+                        .padding()
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    Spacer()
+                    Text("Profile")
+                    Spacer()
+                }
             }
         }
         .onReceive(createPublisher(childFlow)) { child in

@@ -16,9 +16,7 @@ struct SearchBarButton: View {
     }
     
     var body: some View {
-        Button(action: {
-            action()
-        }, label: {
+        Button(action: action) {
             HStack {
                 Spacer().frame(maxWidth: 10)
                 Image(systemName: "magnifyingglass")
@@ -28,7 +26,7 @@ struct SearchBarButton: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        })
+        }
         .overlay(
             RoundedRectangle(cornerRadius: 25)
                 .stroke(Color.outline, lineWidth: 1)

@@ -16,9 +16,7 @@ struct UserAvatar: View {
     }
     
     var body: some View {
-        Button(action: {
-            action()
-        }, label: {
+        Button(action: action) {
             GeometryReader { geometry in
                 ZStack {
                     Image(systemName: "person.fill")
@@ -30,7 +28,7 @@ struct UserAvatar: View {
                         .frame(width: .infinity, height: .infinity)
                 }
             }
-        })
+        }
         .aspectRatio(1, contentMode: .fill)
         .frame(
             maxWidth: .infinity,
