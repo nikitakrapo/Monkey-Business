@@ -19,6 +19,7 @@
 		C2A108C92966C3B400B4267D /* BottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108C82966C3B400B4267D /* BottomNavigation.swift */; };
 		C2A108CF2966D3EB00B4267D /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108CE2966D3EB00B4267D /* UserAvatar.swift */; };
 		C2A108D12966D9F200B4267D /* SearchBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108D02966D9F200B4267D /* SearchBarButton.swift */; };
+		C2A108D32967563500B4267D /* ScaleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A108D22967563500B4267D /* ScaleButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		C2A108C82966C3B400B4267D /* BottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigation.swift; sourceTree = "<group>"; };
 		C2A108CE2966D3EB00B4267D /* UserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
 		C2A108D02966D9F200B4267D /* SearchBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarButton.swift; sourceTree = "<group>"; };
+		C2A108D22967563500B4267D /* ScaleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleButtonStyle.swift; sourceTree = "<group>"; };
 		E3745A61EB43FDD7F013EE8D /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 				C2A108C82966C3B400B4267D /* BottomNavigation.swift */,
 				C2A108CE2966D3EB00B4267D /* UserAvatar.swift */,
 				C2A108D02966D9F200B4267D /* SearchBarButton.swift */,
+				C2A108D22967563500B4267D /* ScaleButtonStyle.swift */,
 			);
 			name = UIComponents;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2A108D32967563500B4267D /* ScaleButtonStyle.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				C2A108BD2965B6C000B4267D /* Colors.swift in Sources */,
 				7555FF83242A565900829871 /* CoreContentView.swift in Sources */,

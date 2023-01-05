@@ -19,25 +19,20 @@ struct BottomNavigation: View {
                 Button(action: {
                     item.onClick()
                 }, label: {
-                    ZStack {
-                        if item.isSelected {
-                            Capsule()
-                                .fill(Color.surfaceTint.opacity(0.25))
-                                .frame(width: 72, height: 36)
-                        }
-                        Image(systemName: item.iconSystemName)
-                            .foregroundColor(item.isSelected ? .onSecondaryContainer : .onSurfaceVariant)
-                            .frame(
-                                maxWidth: .infinity,
-                                maxHeight: 80
-                            )
-                    }
+                    Image(systemName: item.iconSystemName)
+                        .imageScale(.large)
+                        .foregroundColor(item.isSelected ? .onSecondaryContainer : .onSurfaceVariant.opacity(0.5))
+                        .frame(
+                            maxWidth: .infinity,
+                            maxHeight: .infinity
+                        )
                 })
+                .buttonStyle(ScaleButtonStyle(pressedScale: 1.25))
             }
         }
         .frame(
             maxWidth: .infinity,
-            maxHeight: 80
+            maxHeight: 58
         )
         .background(Color.surfaceVariant.ignoresSafeArea())
     }
