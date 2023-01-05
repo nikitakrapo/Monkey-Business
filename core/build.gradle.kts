@@ -27,6 +27,7 @@ kotlin {
         framework {
             isStatic = true
             baseName = "core"
+            export(projects.features.navigation.core)
             export(projects.features.analytics)
             export(projects.features.account.core)
             export(projects.features.kmmutils)

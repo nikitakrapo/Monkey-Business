@@ -7,11 +7,8 @@ import SwiftUI
 import core
 
 struct HomeScreen: View {
-    @Environment(\.colorScheme) private var colorScheme
-
     var body: some View {
         VStack {
-            Text(colorScheme == .dark ? "dark" : "light")
             Text("203141 GBP")
             HStack {
                 Button(action: {}) {

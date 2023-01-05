@@ -35,7 +35,7 @@ class MainActivity : FragmentActivity() {
 
         coreComponent = CoreComponentImpl(
             componentContext = componentContext,
-            analytics = CoreScreenAnalytics(mainActivityComponent.analyticsManager),
+            analyticsManager = mainActivityComponent.analyticsManager,
             accountManager = mainActivityComponent.accountManager,
         )
 

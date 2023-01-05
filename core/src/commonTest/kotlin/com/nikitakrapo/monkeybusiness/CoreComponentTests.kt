@@ -2,6 +2,8 @@ package com.nikitakrapo.monkeybusiness
 
 import app.cash.turbine.test
 import com.nikitakrapo.account.testAccountManager
+import com.nikitakrapo.analytics.AnalyticsManager
+import com.nikitakrapo.analytics.AttributeSet
 import com.nikitakrapo.decompose.TestComponentContext
 import com.nikitakrapo.monkeybusiness.CoreComponentImpl.CoreScreen
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +25,8 @@ class CoreComponentTests {
     }
 
     @Test
-    fun `correct initial state WHEN more initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.More)
+    fun `correct initial state`() = runTest {
+        val component = component()
 
         component.child.test {
             assertTrue { awaitItem() is CoreComponent.Child.More }
@@ -32,17 +34,8 @@ class CoreComponentTests {
     }
 
     @Test
-    fun `correct initial state WHEN Home initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.Home)
-
-        component.child.test {
-            assertTrue { awaitItem() is CoreComponent.Child.Home }
-        }
-    }
-
-    @Test
-    fun `navigate home WHEN home clicked and more initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.More)
+    fun `navigate home WHEN home clicked`() = runTest {
+        val component = component()
         component.onHomeClicked()
 
         component.child.test {
@@ -51,18 +44,8 @@ class CoreComponentTests {
     }
 
     @Test
-    fun `navigate home WHEN home clicked and Home initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.Home)
-        component.onHomeClicked()
-
-        component.child.test {
-            assertTrue { awaitItem() is CoreComponent.Child.Home }
-        }
-    }
-
-    @Test
-    fun `navigate more WHEN more clicked and more initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.More)
+    fun `navigate more WHEN more clicked`() = runTest {
+        val component = component()
         component.onMoreClicked()
 
         component.child.test {
@@ -70,23 +53,13 @@ class CoreComponentTests {
         }
     }
 
-    @Test
-    fun `navigate more WHEN more clicked and Home initial child`() = runTest {
-        val component = component(initialChild = CoreScreen.Home)
-        component.onMoreClicked()
-
-        component.child.test {
-            assertTrue { awaitItem() is CoreComponent.Child.More }
-        }
-    }
-
-    private fun component(
-        initialChild: CoreScreen = CoreScreen.Home
-    ): CoreComponent {
+    private fun component(): CoreComponent {
         return CoreComponentImpl(
             componentContext = TestComponentContext(),
-            initialScreen = initialChild,
-            analytics = FakeCoreScreenAnalytics(),
+            analyticsManager = object : AnalyticsManager {
+                override fun reportEvent(event: String) {}
+                override fun reportAttributedEvent(event: String, attributeBuilder: AttributeSet.() -> Unit) {}
+            },
             accountManager = testAccountManager()
         )
     }

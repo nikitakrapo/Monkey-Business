@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.AccountManager
+import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
 import com.nikitakrapo.navigation.stack.childFlow
@@ -14,16 +15,17 @@ import kotlinx.coroutines.flow.StateFlow
 
 class CoreComponentImpl(
     componentContext: ComponentContext,
-    initialScreen: CoreScreen = CoreScreen.Home,
-    private val analytics: CoreScreenAnalytics,
+    analyticsManager: AnalyticsManager,
     private val accountManager: AccountManager,
 ) : CoreComponent, ComponentContext by componentContext {
+
+    private val analytics = CoreScreenAnalytics(analyticsManager)
 
     private val navigation = StackNavigation<CoreScreen>()
 
     override val child: StateFlow<CoreComponent.Child> = childFlow(
         source = navigation,
-        initialConfiguration = initialScreen,
+        initialConfiguration = CoreScreen.Home,
         handleBackButton = true,
         childFactory = ::createChildForScreen,
     )

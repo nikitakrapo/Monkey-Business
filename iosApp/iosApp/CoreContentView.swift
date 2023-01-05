@@ -2,44 +2,45 @@ import SwiftUI
 import core
 
 struct CoreContentView: View {
-    @Environment(\.colorScheme) private var colorScheme
+    private let component: CoreComponent
+    private let childFlow: CommonStateFlow<CoreComponentChild>
     
-    private var accountManager: AccountManager
-    private var analyticsManager: AnalyticsManager
-    private var analytics: CoreScreenAnalytics
-
-    @State var activeScreen = "Home"
-
-    init() {
-        accountManager = AccountManagerFactoryKt.FirebaseAccountManager()
-        analyticsManager = FirebaseAnalyticsManager()
-        analytics = CoreScreenAnalytics(analytics: analyticsManager)
+    @State private var child: CoreComponentChild
+    
+    init(_ component: CoreComponent) {
+        self.component = component
+        
+        childFlow = CommonStateFlow<CoreComponentChild>.init(origin: component.child)
+        child = childFlow.value
     }
-
+    
     var body: some View {
-        TabView(selection: $activeScreen) {
-            HomeScreen().tag("Home")
-                    .tabItem {
-                        Label("Home", systemImage: "house")
-                    }
-                    .onTapGesture {
-                        activeScreen = "More"
-                        analytics.onMoreClicked()
-                    }
-            Text("More").tag("More")
-                    .tabItem {
-                        Label("More", systemImage: "ellipsis")
-                    }
-                    .onTapGesture {
-                        activeScreen = "Home"
-                        analytics.onHomeClicked()
-                    }
+        ZStack {
+            Color.surface.ignoresSafeArea()
+            if child is CoreComponentChild.Home || child is CoreComponentChild.More {
+                VStack {
+                    Spacer()
+                    BottomNavigationView(items: [
+                        BottomNavigationItem(
+                            iconSystemName: "house",
+                            isSelected: child is CoreComponentChild.Home,
+                            onClick: { component.onHomeClicked() }
+                        ),
+                        BottomNavigationItem(
+                            iconSystemName: "ellipsis",
+                            isSelected: child is CoreComponentChild.More,
+                            onClick: { component.onMoreClicked() }
+                        )
+                    ])
+                }
+            } else {
+                Text("Profile")
+            }
+        }
+        .onReceive(createPublisher(childFlow)) { child in
+            self.child = child
         }
     }
 }
 
-struct CoreContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        CoreContentView()
-    }
-}
+//TODO: add previews
