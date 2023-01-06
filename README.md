@@ -2,13 +2,17 @@
 
 ## Features
 ### Multiplatform
-- Firebase Analytics and Crashlytics
+- Navigation
+- Custom MVI module
+- Material color system with Dark theme (Platform-specific)
+- Account Manager (Firebase Auth)
+- Analytics (Firebase Analytics & Crashlytics)
 ### iOS
-- Basic SwiftUI skeleton
+- Fully on SwiftUI
 ### Android
+- Fully on Compose
 - Baseline Profiles
 - Per-app language settings
-- Dark theme
 - Cool floating debug panel
 
 ## How to build & start project
