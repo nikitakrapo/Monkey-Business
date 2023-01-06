@@ -3,6 +3,7 @@ package com.nikitakrapo.monkeybusiness.profile
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -43,6 +44,9 @@ fun ProfileScreen(
             )
         }
         item {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+        item {
             FilledTonalButton(onClick = component::onLogoutClicked) {
                 Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
@@ -61,12 +65,12 @@ fun ProfileScreen(
     heightDp = 720
 )
 @Composable
-fun ProfileDetailsScreen_Preview() {
+fun ProfileDetailsScreen_Preview_Username() {
     MonkeyTheme {
         Surface {
             ProfileScreen(
                 component = PreviewProfileComponent(
-                    email = "sample@email.com"
+                    email = "nikitakrapo"
                 )
             )
         }
@@ -75,9 +79,16 @@ fun ProfileDetailsScreen_Preview() {
 
 fun PreviewProfileComponent(
     email: String = "",
+    username: String? = null,
 ) = object : ProfileComponent {
     override val state: StateFlow<ProfileComponent.State>
-        get() = MutableStateFlow(ProfileComponent.State(email, null, null))
+        get() = MutableStateFlow(
+            ProfileComponent.State(
+                email,
+                username,
+                null
+            )
+        )
 
     override fun onLogoutClicked() {}
 }

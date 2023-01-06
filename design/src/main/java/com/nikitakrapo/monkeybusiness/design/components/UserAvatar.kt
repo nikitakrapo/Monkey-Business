@@ -25,7 +25,8 @@ import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 @Composable
 fun UserAvatar(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    imageUrl: String?,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -36,14 +37,14 @@ fun UserAvatar(
             containerColor = colorScheme.background
         ),
         shape = CircleShape,
-        border = BorderStroke(1.dp, colorScheme.outline)
+        border = BorderStroke(1.dp, colorScheme.onSurface)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Icon(
                 modifier = Modifier
                     .align(Alignment.Center),
                 imageVector = Icons.Default.Person,
-                tint = colorScheme.outline,
+                tint = colorScheme.onSurface,
                 contentDescription = null
             )
         }
@@ -57,6 +58,7 @@ fun UserAvatar_Preview() {
         Surface {
             UserAvatar(
                 modifier = Modifier.size(92.dp),
+                imageUrl = null,
                 onClick = {}
             )
         }
