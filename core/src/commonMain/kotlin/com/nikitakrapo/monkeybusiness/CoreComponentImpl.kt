@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.pop
@@ -11,6 +12,7 @@ import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
 import com.nikitakrapo.navigation.stack.childFlow
+import com.nikitakrapo.navigation.stack.childStackFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class CoreComponentImpl(
@@ -23,7 +25,7 @@ class CoreComponentImpl(
 
     private val navigation = StackNavigation<CoreScreen>()
 
-    override val child: StateFlow<CoreComponent.Child> = childFlow(
+    override val childStack: StateFlow<ChildStack<CoreScreen, CoreComponent.Child>> = childStackFlow(
         source = navigation,
         initialConfiguration = CoreScreen.Home,
         handleBackButton = true,

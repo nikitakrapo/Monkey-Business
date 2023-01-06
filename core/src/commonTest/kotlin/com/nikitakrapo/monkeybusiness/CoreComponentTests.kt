@@ -5,7 +5,6 @@ import com.nikitakrapo.account.testAccountManager
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.analytics.AttributeSet
 import com.nikitakrapo.decompose.TestComponentContext
-import com.nikitakrapo.monkeybusiness.CoreComponentImpl.CoreScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -28,7 +27,7 @@ class CoreComponentTests {
     fun `correct initial state`() = runTest {
         val component = component()
 
-        component.child.test {
+        component.childStack.test {
             assertTrue { awaitItem() is CoreComponent.Child.More }
         }
     }
@@ -38,7 +37,7 @@ class CoreComponentTests {
         val component = component()
         component.onHomeClicked()
 
-        component.child.test {
+        component.childStack.test {
             assertTrue { awaitItem() is CoreComponent.Child.Home }
         }
     }
@@ -48,7 +47,7 @@ class CoreComponentTests {
         val component = component()
         component.onMoreClicked()
 
-        component.child.test {
+        component.childStack.test {
             assertTrue { awaitItem() is CoreComponent.Child.More }
         }
     }

@@ -3,15 +3,18 @@ import core
 
 struct CoreContentView: View {
     private let component: CoreComponent
-    private let childFlow: CommonStateFlow<CoreComponentChild>
+    private let childStackFlow: CommonStateFlow<ChildStack<CoreComponentImpl.CoreScreen, CoreComponentChild>>
     
-    @State private var child: CoreComponentChild
+    @State private var childStack: ChildStack<CoreComponentImpl.CoreScreen, CoreComponentChild>
+    private var child: CoreComponentChild {
+        childStack.active.instance
+    }
     
     init(_ component: CoreComponent) {
         self.component = component
         
-        childFlow = CommonStateFlow<CoreComponentChild>.init(origin: component.child)
-        child = childFlow.value
+        childStackFlow = CommonStateFlow<ChildStack<CoreComponentImpl.CoreScreen, CoreComponentChild>>.init(origin: component.childStack)
+        childStack = childStackFlow.value
     }
     
     var body: some View {
@@ -60,8 +63,8 @@ struct CoreContentView: View {
                 }
             }
         }
-        .onReceive(createPublisher(childFlow)) { child in
-            self.child = child
+        .onReceive(createPublisher(childStackFlow)) { childStack in
+            self.childStack = childStack
         }
     }
 }

@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.core.R
 import com.nikitakrapo.monkeybusiness.design.components.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.components.NavigationBarItemModel
@@ -36,14 +37,14 @@ fun CoreScreen(
     modifier: Modifier = Modifier,
     component: CoreComponent
 ) {
-    val childState by component.child.collectAsState()
+    val childStack by component.childStack.collectAsState()
 
     Column(
         modifier = modifier
             .imePadding(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        when (val child = childState) {
+        when (val child = childStack.active.instance) {
             is CoreComponent.Child.Home -> Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
@@ -118,7 +119,7 @@ fun CoreScreen_Preview_Home() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponent.Child.Home(PreviewHomeComponent()))
+                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Home)
             )
         }
     }
@@ -134,17 +135,36 @@ fun CoreScreen_Preview_Profile() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponent.Child.Profile(PreviewProfileComponent()))
+                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Profile)
             )
         }
     }
 }
 
 internal fun PreviewCoreComponent(
-    child: CoreComponent.Child
+    child: CoreComponentImpl.CoreScreen
 ) = object : CoreComponent {
-    override val child: StateFlow<CoreComponent.Child>
-        get() = MutableStateFlow(child)
+    override val childStack: StateFlow<ChildStack<CoreComponentImpl.CoreScreen, CoreComponent.Child>>
+        get() = MutableStateFlow(
+            ChildStack<CoreComponentImpl.CoreScreen, CoreComponent.Child>(
+                configuration = CoreComponentImpl.CoreScreen.Home,
+                instance = when (child) {
+                    CoreComponentImpl.CoreScreen.Home -> {
+                        CoreComponent.Child.Home(
+                            PreviewHomeComponent()
+                        )
+                    }
+                    CoreComponentImpl.CoreScreen.More -> {
+                        CoreComponent.Child.More(Unit)
+                    }
+                    CoreComponentImpl.CoreScreen.Profile -> {
+                        CoreComponent.Child.Profile(
+                            PreviewProfileComponent()
+                        )
+                    }
+                }
+            )
+        )
 
     override fun onHomeClicked() {}
     override fun onMoreClicked() {}
