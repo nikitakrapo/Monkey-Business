@@ -1,18 +1,18 @@
 package com.nikitakrapo.monkeybusiness.home
 
-import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
+import com.nikitakrapo.monkeybusiness.finances.FinancesComponent
+import com.nikitakrapo.monkeybusiness.profile.ProfileComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface HomeComponent {
 
-    val state: StateFlow<State>
+    val child: StateFlow<Child>
 
-    fun onSearchBarClicked()
-    fun onAvatarClicked()
-    fun onTopupClicked()
-    fun onWithdrawClicked()
+    fun onFinancesClicked()
+    fun onProfileClicked()
 
-    data class State(
-        val balance: MoneyAmount
-    )
+    sealed class Child {
+        class Finances(val component: FinancesComponent) : Child()
+        class Profile(val component: ProfileComponent) : Child()
+    }
 }

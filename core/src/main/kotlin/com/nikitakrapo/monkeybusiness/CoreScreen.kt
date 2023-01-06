@@ -29,6 +29,8 @@ import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
 import com.nikitakrapo.monkeybusiness.profile.PreviewProfileComponent
 import com.nikitakrapo.monkeybusiness.profile.ProfileScreen
+import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
+import com.nikitakrapo.monkeybusiness.profile.auth.PreviewAuthComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -41,70 +43,13 @@ fun CoreScreen(
 
     Column(
         modifier = modifier
-            .imePadding(),
+            .imePadding()
+            .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         when (val child = childStack.active.instance) {
-            is CoreComponent.Child.Home -> Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                HomeScreen(
-                    modifier = Modifier.fillMaxWidth(),
-                    component = child.component
-                )
-                BottomNavigationBar(
-                    items = listOf(
-                        NavigationBarItemModel(
-                            selected = true,
-                            onClick = component::onHomeClicked,
-                            icon = Icons.Default.Home,
-                            iconContentDescription = stringResource(R.string.cd_home_screen)
-                        ),
-                        NavigationBarItemModel(
-                            selected = false,
-                            onClick = component::onMoreClicked,
-                            icon = Icons.Default.MoreVert,
-                            iconContentDescription = stringResource(R.string.cd_more)
-                        )
-                    ),
-                    windowInsets = WindowInsets.navigationBars
-                )
-            }
-            is CoreComponent.Child.More -> Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.statusBars),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("More")
-                BottomNavigationBar(
-                    items = listOf(
-                        NavigationBarItemModel(
-                            selected = false,
-                            onClick = component::onHomeClicked,
-                            icon = Icons.Default.Home,
-                            iconContentDescription = stringResource(R.string.cd_home_screen)
-                        ),
-                        NavigationBarItemModel(
-                            selected = true,
-                            onClick = component::onMoreClicked,
-                            icon = Icons.Default.MoreVert,
-                            iconContentDescription = stringResource(R.string.cd_more)
-                        )
-                    ),
-                    windowInsets = WindowInsets.navigationBars
-                )
-            }
-            is CoreComponent.Child.Profile -> Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                ProfileScreen(
-                    modifier = Modifier.fillMaxWidth(),
-                    component = child.component,
-                )
-            }
+            is CoreComponent.Child.Home -> HomeScreen(component = child.component)
+            is CoreComponent.Child.Authentication -> AuthScreen(component = child.component)
         }
     }
 }
@@ -130,12 +75,12 @@ fun CoreScreen_Preview_Home() {
     heightDp = 720
 )
 @Composable
-fun CoreScreen_Preview_Profile() {
+fun CoreScreen_Preview_Authentication() {
     MonkeyTheme {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Profile)
+                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Authentication)
             )
         }
     }
@@ -146,26 +91,16 @@ internal fun PreviewCoreComponent(
 ) = object : CoreComponent {
     override val childStack: StateFlow<ChildStack<CoreComponentImpl.CoreScreen, CoreComponent.Child>>
         get() = MutableStateFlow(
-            ChildStack<CoreComponentImpl.CoreScreen, CoreComponent.Child>(
-                configuration = CoreComponentImpl.CoreScreen.Home,
+            ChildStack(
+                configuration = child,
                 instance = when (child) {
-                    CoreComponentImpl.CoreScreen.Home -> {
-                        CoreComponent.Child.Home(
-                            PreviewHomeComponent()
-                        )
-                    }
-                    CoreComponentImpl.CoreScreen.More -> {
-                        CoreComponent.Child.More(Unit)
-                    }
-                    CoreComponentImpl.CoreScreen.Profile -> {
-                        CoreComponent.Child.Profile(
-                            PreviewProfileComponent()
-                        )
-                    }
+                    CoreComponentImpl.CoreScreen.Home -> CoreComponent.Child.Home(
+                        PreviewHomeComponent()
+                    )
+                    CoreComponentImpl.CoreScreen.Authentication -> CoreComponent.Child.Authentication(
+                        PreviewAuthComponent()
+                    )
                 }
             )
         )
-
-    override fun onHomeClicked() {}
-    override fun onMoreClicked() {}
 }

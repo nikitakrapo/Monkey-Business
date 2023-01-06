@@ -66,7 +66,7 @@ private val DarkColors = darkColorScheme(
     inverseSurface = md_theme_dark_inverseSurface,
     inversePrimary = md_theme_dark_inversePrimary,
     surfaceTint = md_theme_dark_surfaceTint,
-    scrim = Color.White.copy(alpha = 0.2f)
+    scrim = Color.Black.copy(alpha = 0.2f)
 )
 
 @Composable

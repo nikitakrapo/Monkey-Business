@@ -5,6 +5,7 @@ import com.nikitakrapo.configuration.setupMultiplatformModule
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlin-parcelize")
 }
 
 version = "1.0"
@@ -20,7 +21,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(projects.components.finances)
+                api(projects.components.profile)
                 api(projects.features.finance.models)
+                api(projects.features.analytics)
                 implementation(projects.features.mvi.feature)
             }
         }

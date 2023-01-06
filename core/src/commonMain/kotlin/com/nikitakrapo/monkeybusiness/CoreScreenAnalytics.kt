@@ -6,16 +6,16 @@ class CoreScreenAnalytics(
     private val analytics: AnalyticsManager
 ) {
 
-    fun onHomeClicked() {
-        analytics.reportEvent(HOME_CLICKED)
+    fun onHomeShown() {
+        analytics.reportEvent(HOME_SHOWN)
     }
 
-    fun onMoreClicked() {
-        analytics.reportEvent(MORE_CLICKED)
+    fun onAuthenticationShown() {
+        analytics.reportEvent(AUTHENTICATION_SHOWN)
     }
 
     private companion object {
-        const val HOME_CLICKED = "core_home_clicked"
-        const val MORE_CLICKED = "core_more_clicked"
+        const val HOME_SHOWN = "core_home_shown"
+        const val AUTHENTICATION_SHOWN = "core_authentication_shown"
     }
 }

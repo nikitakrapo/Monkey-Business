@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_common">Login</string>
+    <string name="create_account">Create account?</string>
+    <string name="register_common">Register</string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint" translatable="false">Email</string>
+    <string name="password_hint">Password</string>
+</resources>

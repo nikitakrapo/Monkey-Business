@@ -1,43 +1,60 @@
 package com.nikitakrapo.monkeybusiness.home
 
-import com.nikitakrapo.monkeybusiness.finance.models.Currency
-import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
+import com.nikitakrapo.monkeybusiness.finances.FinancesComponentImpl
+import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
+import com.nikitakrapo.navigation.stack.childFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class HomeComponentImpl(
-    private val navigateToSearch: () -> Unit,
-    private val navigateToProfile: () -> Unit
-) : HomeComponent {
+    componentContext: ComponentContext,
+    private val dependencies: HomeDependencies
+) : HomeComponent, ComponentContext by componentContext {
 
-    private val stateFlow = MutableStateFlow(
-        HomeComponent.State(
-            balance = MoneyAmount(203141, Currency.GBP)
-        )
+    private val analytics = HomeScreenAnalytics(dependencies.analyticsManager)
+
+    private val navigation = StackNavigation<HomeScreen>()
+
+    override val child: StateFlow<HomeComponent.Child> = childFlow(
+        source = navigation,
+        initialConfiguration = HomeScreen.Finances,
+        handleBackButton = true,
+        childFactory = ::createChild,
     )
-    override val state: StateFlow<HomeComponent.State> get() = stateFlow.asStateFlow()
 
-    override fun onSearchBarClicked() {
-        navigateToSearch()
+    override fun onFinancesClicked() {
+        analytics.onFinancesClicked()
+        navigation.bringToFront(HomeScreen.Finances)
     }
 
-    override fun onAvatarClicked() {
-        navigateToProfile()
+    override fun onProfileClicked() {
+        analytics.onProfileClicked()
+        navigation.bringToFront(HomeScreen.Profile)
     }
 
-    override fun onTopupClicked() {
-        changeMoneyAmount(1)
+    @Parcelize
+    sealed class HomeScreen : Parcelable {
+        object Finances : HomeScreen()
+        object Profile : HomeScreen()
     }
 
-    override fun onWithdrawClicked() {
-        changeMoneyAmount(-1)
-    }
-
-    private fun changeMoneyAmount(diff: Int) {
-        stateFlow.value = state.value.copy(
-            balance = state.value.balance.copy(
-                amount = state.value.balance.amount + diff
+    private fun createChild(
+        screen: HomeScreen,
+        componentContext: ComponentContext,
+    ): HomeComponent.Child = when (screen) {
+        HomeScreen.Finances -> HomeComponent.Child.Finances(
+            FinancesComponentImpl(
+                componentContext = componentContext,
+            )
+        )
+        HomeScreen.Profile -> HomeComponent.Child.Profile(
+            ProfileComponentImpl(
+                componentContext = componentContext,
+                dependencies = dependencies.profileDependencies(),
             )
         )
     }

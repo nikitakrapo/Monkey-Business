@@ -10,9 +10,4 @@ sealed class Account : Parcelable {
         val uid: String,
         val email: String,
     ) : Account(), Parcelable
-
-    @Parcelize
-    class Anonymous(
-        val uid: String,
-    ) : Account(), Parcelable
 }

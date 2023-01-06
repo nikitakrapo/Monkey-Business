@@ -23,7 +23,9 @@ include(":androidApp")
 include(":core")
 include(":design")
 
+include(":components:authentication")
 include(":components:home")
+include(":components:finances")
 include(":components:profile")
 
 include(":features:kmmutils")

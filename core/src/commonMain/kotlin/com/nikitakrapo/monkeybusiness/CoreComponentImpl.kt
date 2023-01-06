@@ -3,70 +3,86 @@ package com.nikitakrapo.monkeybusiness
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.bringToFront
-import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
-import com.nikitakrapo.account.AccountManager
-import com.nikitakrapo.analytics.AnalyticsManager
+import com.nikitakrapo.account.Account
+import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
-import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
-import com.nikitakrapo.navigation.stack.childFlow
+import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
 import com.nikitakrapo.navigation.stack.childStackFlow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class CoreComponentImpl(
     componentContext: ComponentContext,
-    analyticsManager: AnalyticsManager,
-    private val accountManager: AccountManager,
+    private val dependencies: CoreDependencies
 ) : CoreComponent, ComponentContext by componentContext {
 
-    private val analytics = CoreScreenAnalytics(analyticsManager)
+    private val scope = coroutineScope(Dispatchers.Main)
+
+    init {
+        scope.launch {
+            dependencies.accountManager.currentAccount.collect { account ->
+                navigateAuthIfNeeded(account)
+            }
+        }
+    }
+
+    private val analytics = CoreScreenAnalytics(dependencies.analyticsManager)
 
     private val navigation = StackNavigation<CoreScreen>()
 
-    override val childStack: StateFlow<ChildStack<CoreScreen, CoreComponent.Child>> = childStackFlow(
-        source = navigation,
-        initialConfiguration = CoreScreen.Home,
-        handleBackButton = true,
-        childFactory = ::createChildForScreen,
-    )
-
-    override fun onHomeClicked() {
-        navigation.bringToFront(CoreScreen.Home)
-        analytics.onHomeClicked()
-    }
-
-    override fun onMoreClicked() {
-        navigation.bringToFront(CoreScreen.More)
-        analytics.onMoreClicked()
-    }
-
-    private fun navigateToProfile() {
-        navigation.bringToFront(CoreScreen.Profile)
-    }
+    override val childStack: StateFlow<ChildStack<CoreScreen, CoreComponent.Child>> =
+        childStackFlow(
+            source = navigation,
+            initialConfiguration = getScreenForAuthState(
+                dependencies.accountManager.currentAccount.value
+            ),
+            handleBackButton = true,
+            childFactory = ::createChild,
+        )
 
     @Parcelize
     sealed class CoreScreen : Parcelable {
         object Home : CoreScreen()
-        object More : CoreScreen()
-        object Profile : CoreScreen()
+        object Authentication : CoreScreen()
     }
 
-    private fun createChildForScreen(screen: CoreScreen, componentContext: ComponentContext) = when (screen) {
-        CoreScreen.Home -> CoreComponent.Child.Home(
-            HomeComponentImpl(
-                navigateToSearch = {},
-                navigateToProfile = ::navigateToProfile
+    private fun createChild(
+        screen: CoreScreen,
+        componentContext: ComponentContext
+    ): CoreComponent.Child = when (screen) {
+        CoreScreen.Home -> {
+            analytics.onHomeShown()
+            CoreComponent.Child.Home(
+                HomeComponentImpl(
+                    componentContext = componentContext,
+                    dependencies = dependencies.homeDependencies()
+                )
             )
-        )
-        CoreScreen.More -> CoreComponent.Child.More(Unit)
-        CoreScreen.Profile -> CoreComponent.Child.Profile(
-            ProfileComponentImpl(
-                componentContext = componentContext,
-                onBackClicked = navigation::pop,
-                accountManager = accountManager
+        }
+        CoreScreen.Authentication -> {
+            analytics.onAuthenticationShown()
+            CoreComponent.Child.Authentication(
+                AuthComponentImpl(
+                    componentContext = componentContext,
+                    dependencies = dependencies.authDependencies(),
+                )
             )
-        )
+        }
+    }
+
+    private fun navigateAuthIfNeeded(account: Account?) {
+        val currentScreen = childStack.value.active.configuration
+        val expectedScreen = getScreenForAuthState(account)
+        if (currentScreen != expectedScreen) {
+            navigation.replaceAll(expectedScreen)
+        }
+    }
+
+    private fun getScreenForAuthState(account: Account?): CoreScreen {
+        return if (account == null) CoreScreen.Authentication else CoreScreen.Home
     }
 }

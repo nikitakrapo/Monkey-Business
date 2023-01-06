@@ -35,8 +35,10 @@ class MainActivity : FragmentActivity() {
 
         coreComponent = CoreComponentImpl(
             componentContext = componentContext,
-            analyticsManager = mainActivityComponent.analyticsManager,
-            accountManager = mainActivityComponent.accountManager,
+            dependencies = CoreDependencies(
+                analyticsManager = mainActivityComponent.analyticsManager,
+                accountManager = mainActivityComponent.accountManager,
+            )
         )
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
