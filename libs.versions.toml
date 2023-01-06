@@ -109,6 +109,7 @@ ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 
 essenty-parcelable = { module = "com.arkivanov.essenty:parcelable", version.ref = "essenty" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-jetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
 
 # AndroidX
 

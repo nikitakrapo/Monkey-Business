@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.StateFlow
 
 class ProfileComponentImpl(
     componentContext: ComponentContext,
+    private val account: Account.Emailish,
     private val dependencies: ProfileDependencies,
 ) : ProfileComponent, ComponentContext by componentContext {
     override val state: StateFlow<ProfileComponent.State>
         get() = MutableStateFlow(
             ProfileComponent.State(
-                //TODO: somehow make account determined at this state
-                email = (dependencies.accountManager.currentAccount.value as Account.Emailish).email,
+                email = account.email,
                 username = null,
                 profileImageUrl = null
             )

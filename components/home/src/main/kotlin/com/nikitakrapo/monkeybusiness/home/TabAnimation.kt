@@ -1,0 +1,46 @@
+package com.nikitakrapo.monkeybusiness.home
+
+import androidx.compose.runtime.Composable
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.Direction
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimation
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimator
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.isEnter
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.slide
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
+
+@OptIn(ExperimentalDecomposeApi::class)
+@Composable
+internal fun tabAnimation(): StackAnimation<Any, HomeComponent.Child> =
+    stackAnimation { child, otherChild, direction ->
+        val index = child.instance.index
+        val otherIndex = otherChild.instance.index
+        val anim = slide()
+        if ((index > otherIndex) == direction.isEnter) anim else anim.flipSide()
+    }
+
+private val HomeComponent.Child.index: Int
+    get() =
+        when (this) {
+            is HomeComponent.Child.Finances -> 0
+            is HomeComponent.Child.Profile -> 1
+        }
+
+@OptIn(ExperimentalDecomposeApi::class)
+private fun StackAnimator.flipSide(): StackAnimator =
+    StackAnimator { direction, onFinished, content ->
+        invoke(
+            direction = direction.flipSide(),
+            onFinished = onFinished,
+            content = content,
+        )
+    }
+
+@OptIn(ExperimentalDecomposeApi::class)
+private fun Direction.flipSide(): Direction =
+    when (this) {
+        Direction.ENTER_FRONT -> Direction.ENTER_BACK
+        Direction.EXIT_FRONT -> Direction.EXIT_BACK
+        Direction.ENTER_BACK -> Direction.ENTER_FRONT
+        Direction.EXIT_BACK -> Direction.EXIT_FRONT
+    }
