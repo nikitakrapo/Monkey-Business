@@ -49,7 +49,7 @@ fun HomeScreen(
         Children(
             stack = childStack,
             modifier = Modifier.fillMaxWidth(),
-            animation = tabAnimation()
+            animation = homeTabAnimation()
         ) { createdChild ->
             when (val child = createdChild.instance) {
                 is HomeComponent.Child.Finances -> FinancesScreen(

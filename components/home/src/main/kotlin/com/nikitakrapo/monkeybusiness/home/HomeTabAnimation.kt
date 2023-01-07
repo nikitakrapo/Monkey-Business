@@ -5,18 +5,18 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.Direction
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimation
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimator
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.isEnter
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.isBack
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-internal fun tabAnimation(): StackAnimation<Any, HomeComponent.Child> =
+internal fun homeTabAnimation(): StackAnimation<Any, HomeComponent.Child> =
     stackAnimation { child, otherChild, direction ->
         val index = child.instance.index
         val otherIndex = otherChild.instance.index
         val anim = slide()
-        if ((index > otherIndex) == direction.isEnter) anim else anim.flipSide()
+        if ((index > otherIndex) == !direction.isBack) anim else anim.flipSide()
     }
 
 private val HomeComponent.Child.index: Int
