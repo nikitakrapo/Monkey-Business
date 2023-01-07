@@ -21,12 +21,13 @@ class HomeComponentImpl(
 
     private val navigation = StackNavigation<HomeScreen>()
 
-    override val childStack: StateFlow<ChildStack<HomeScreen, HomeComponent.Child>> = childStackFlow(
-        source = navigation,
-        initialConfiguration = HomeScreen.Finances,
-        handleBackButton = true,
-        childFactory = ::createChild,
-    )
+    override val childStack: StateFlow<ChildStack<HomeScreen, HomeComponent.Child>> =
+        childStackFlow(
+            source = navigation,
+            initialConfiguration = HomeScreen.Finances,
+            handleBackButton = true,
+            childFactory = ::createChild,
+        )
 
     override fun onFinancesClicked() {
         analytics.onFinancesClicked()
@@ -44,7 +45,11 @@ class HomeComponentImpl(
     @Parcelize
     sealed class HomeScreen : Parcelable {
         object Finances : HomeScreen()
-        class Profile(val account: Account.Emailish) : HomeScreen()
+
+        @Parcelize
+        data class Profile(
+            val account: Account.Emailish
+        ) : HomeScreen(), Parcelable
     }
 
     private fun createChild(

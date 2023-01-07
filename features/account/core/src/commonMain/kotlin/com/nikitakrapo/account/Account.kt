@@ -6,7 +6,7 @@ import com.arkivanov.essenty.parcelable.Parcelize
 @Parcelize
 sealed class Account : Parcelable {
     @Parcelize
-    class Emailish(
+    data class Emailish(
         val uid: String,
         val email: String,
     ) : Account(), Parcelable
