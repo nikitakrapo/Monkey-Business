@@ -24,6 +24,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.account.Account
 import com.nikitakrapo.monkeybusiness.design.components.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.components.NavigationBarItemModel
+import com.nikitakrapo.monkeybusiness.design.icons.Wallet
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finances.FinancesScreen
 import com.nikitakrapo.monkeybusiness.finances.PreviewFinancesComponent
@@ -67,7 +68,7 @@ fun HomeScreen(
                 NavigationBarItemModel(
                     selected = childStack.active.instance is HomeComponent.Child.Finances,
                     onClick = component::onFinancesClicked,
-                    icon = Icons.Default.Home,
+                    icon = Icons.Default.Wallet,
                     iconContentDescription = stringResource(R.string.cd_finances)
                 ),
                 NavigationBarItemModel(
