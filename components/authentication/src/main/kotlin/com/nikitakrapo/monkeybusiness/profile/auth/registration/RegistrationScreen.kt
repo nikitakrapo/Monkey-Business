@@ -1,5 +1,8 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.registration
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -8,7 +11,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -55,9 +60,23 @@ fun RegistrationScreen(
     val focusManager = LocalFocusManager.current
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding()
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                onClick = {
+                    focusManager.clearFocus()
+                },
+                indication = null
+            )
     ) {
-        if (state.isLoading) {
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.Center),
+            enter = fadeIn(),
+            exit = fadeOut(),
+            visible = state.isLoading
+        ) {
             Box(
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -72,14 +91,8 @@ fun RegistrationScreen(
 
         Column(
             modifier = modifier
-                .fillMaxSize()
-                .clickable(
-                    interactionSource = MutableInteractionSource(),
-                    onClick = {
-                        focusManager.clearFocus()
-                    },
-                    indication = null
-                ),
+                .width(TextFieldDefaults.MinWidth)
+                .align(Alignment.Center),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -89,7 +102,7 @@ fun RegistrationScreen(
             ) {
                 OutlinedTextField(
                     modifier = Modifier
-                        .width(TextFieldDefaults.MinWidth)
+                        .fillMaxWidth()
                         .focusRequester(focusRequester),
                     enabled = !state.isLoading,
                     value = state.username,
@@ -105,7 +118,7 @@ fun RegistrationScreen(
 
                 OutlinedTextField(
                     modifier = Modifier
-                        .width(TextFieldDefaults.MinWidth)
+                        .fillMaxWidth()
                         .focusRequester(focusRequester),
                     enabled = !state.isLoading,
                     value = state.email,
@@ -122,7 +135,7 @@ fun RegistrationScreen(
 
                 PasswordOutlinedTextField(
                     modifier = Modifier
-                        .width(TextFieldDefaults.MinWidth)
+                        .fillMaxWidth()
                         .focusRequester(focusRequester),
                     enabled = !state.isLoading,
                     value = state.password,
@@ -136,21 +149,26 @@ fun RegistrationScreen(
                     label = { Text(stringResource(R.string.password_hint)) }
                 )
 
-                state.error?.let {
-                    Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+
+                AnimatedVisibility(
+                    visible = state.error?.isNotEmpty() == true
+                ) {
                     Text(
-                        modifier = Modifier.width(TextFieldDefaults.MinWidth),
-                        text = it,
+                        modifier = Modifier.fillMaxWidth(),
+                        text = state.error.orEmpty(),
                         color = MaterialTheme.colorScheme.error,
                     )
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
-
-                Spacer(modifier = Modifier.height(12.dp))
 
                 ElevatedButton(
                     modifier = Modifier.align(Alignment.End),
                     enabled = !state.isLoading,
-                    onClick = component::onRegisterClicked
+                    onClick = {
+                        focusManager.clearFocus()
+                        component.onRegisterClicked()
+                    }
                 ) {
                     Text(stringResource(R.string.register_common))
                 }
@@ -183,8 +201,23 @@ fun RegistrationScreen_Preview_Loading() {
     }
 }
 
+@Preview
+@Composable
+fun RegistrationScreen_Preview_Error() {
+    MonkeyTheme {
+        Surface {
+            RegistrationScreen(
+                component = PreviewRegistrationComponent(
+                    error = "This email is already in use"
+                )
+            )
+        }
+    }
+}
+
 fun PreviewRegistrationComponent(
     isLoading: Boolean = false,
+    error: String? = null,
 ) = object : RegistrationComponent {
     override val state: StateFlow<RegistrationComponent.State>
         get() = MutableStateFlow(
@@ -193,7 +226,7 @@ fun PreviewRegistrationComponent(
                 email = "email@email.com",
                 password = "samplepass",
                 isLoading = isLoading,
-                error = "General error"
+                error = error
             )
         )
 

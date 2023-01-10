@@ -22,7 +22,8 @@ class LoginComponentImpl(
             initialState = LoginComponent.State(
                 emailText = "",
                 passwordText = "",
-                isLoading = false
+                isLoading = false,
+                error = null
             ),
             intentToAction = { it },
             actor = { action, state ->

@@ -18,6 +18,6 @@ interface LoginComponent {
         val emailText: String,
         val passwordText: String,
         val isLoading: Boolean,
-        val error: String? = null,
+        val error: String?,
     ) : Parcelable
 }

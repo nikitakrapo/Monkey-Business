@@ -1,14 +1,21 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.login
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -57,27 +64,27 @@ fun LoginScreen(
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    ConstraintLayout(
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
+            .imePadding()
             .clickable(
                 interactionSource = MutableInteractionSource(),
                 onClick = {
                     focusManager.clearFocus()
                 },
                 indication = null
-            ),
+            )
     ) {
-        val (email, inputsSpacer, password, buttonsSpacer, buttonsRow, error) = createRefs()
-
-        val progressSpinner = createRef()
-
-        if (state.isLoading) {
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.Center),
+            enter = fadeIn(),
+            exit = fadeOut(),
+            visible = state.isLoading
+        ) {
             Box(
                 modifier = Modifier
-                    .constrainAs(progressSpinner) {
-                        centerTo(parent)
-                    }
+                    .align(Alignment.Center)
                     .zIndex(Float.MAX_VALUE)
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.scrim),
@@ -87,93 +94,91 @@ fun LoginScreen(
             }
         }
 
-        createVerticalChain(
-            email,
-            inputsSpacer,
-            password,
-            buttonsSpacer,
-            buttonsRow,
-            error,
-            chainStyle = ChainStyle.Packed
-        )
-
-        OutlinedTextField(
-            modifier = Modifier
+        Column(
+            modifier = modifier
                 .width(TextFieldDefaults.MinWidth)
-                .constrainAs(email) {
-                    centerHorizontallyTo(parent)
-                }
-                .focusRequester(focusRequester),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            ),
-            enabled = !state.isLoading,
-            value = state.emailText,
-            onValueChange = component::onEmailTextChanged,
-            label = { Text(stringResource(R.string.email_hint)) },
-            singleLine = true,
-        )
-
-        Spacer(
-            modifier = Modifier
-                .constrainAs(inputsSpacer) {}
-                .height(4.dp)
-        )
-
-        PasswordOutlinedTextField(
-            modifier = Modifier
-                .width(TextFieldDefaults.MinWidth)
-                .constrainAs(password) {
-                    centerHorizontallyTo(parent)
-                }
-                .focusRequester(focusRequester),
-            enabled = !state.isLoading,
-            value = state.passwordText,
-            onValueChange = component::onPasswordTextChanged,
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    focusManager.clearFocus()
-                    component.onLoginClicked()
-                }
-            ),
-            label = { Text(stringResource(R.string.password_hint)) }
-        )
-
-        Spacer(
-            modifier = Modifier
-                .constrainAs(buttonsSpacer) {}
-                .height(12.dp)
-        )
-
-        Row(
-            modifier = Modifier
-                .constrainAs(buttonsRow) {
-                    start.linkTo(password.start)
-                    end.linkTo(password.end)
-                    width = Dimension.fillToConstraints
-                },
-            horizontalArrangement = Arrangement.SpaceBetween
+                .align(Alignment.Center)
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    onClick = {
+                        focusManager.clearFocus()
+                    },
+                    indication = null
+                ),
         ) {
-            TextButton(onClick = component::onRegistrationClicked) {
-                Text(stringResource(R.string.create_account))
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                enabled = !state.isLoading,
+                value = state.emailText,
+                onValueChange = component::onEmailTextChanged,
+                label = { Text(stringResource(R.string.email_hint)) },
+                singleLine = true,
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            PasswordOutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                enabled = !state.isLoading,
+                value = state.passwordText,
+                onValueChange = component::onPasswordTextChanged,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                        component.onLoginClicked()
+                    }
+                ),
+                label = { Text(stringResource(R.string.password_hint)) }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            AnimatedVisibility(
+                visible = state.error?.isNotEmpty() == true
+            ) {
+                Row {
+                    Text(
+                        text = state.error.orEmpty(),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
 
-            ElevatedButton(
-                enabled = !state.isLoading,
-                onClick = component::onLoginClicked
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(stringResource(R.string.login_common))
+                TextButton(
+                    enabled = !state.isLoading,
+                    onClick = {
+                        focusManager.clearFocus()
+                        component.onRegistrationClicked()
+                    }
+                ) {
+                    Text(stringResource(R.string.create_account))
+                }
+
+                ElevatedButton(
+                    enabled = !state.isLoading,
+                    onClick = {
+                        focusManager.clearFocus()
+                        component.onLoginClicked()
+                    }
+                ) {
+                    Text(stringResource(R.string.login_common))
+                }
             }
         }
-
-        Text(
-            modifier = Modifier.constrainAs(error) {
-                start.linkTo(password.start)
-            },
-            text = state.error.orEmpty(),
-            color = MaterialTheme.colorScheme.error,
-        )
     }
 }
 
@@ -209,15 +214,34 @@ fun LoginScreen_Preview_Loading() {
     }
 }
 
+@Preview(
+    widthDp = 360,
+    heightDp = 720,
+)
+@Composable
+fun LoginScreen_Preview_Error() {
+    MonkeyTheme {
+        Surface {
+            LoginScreen(
+                component = PreviewLoginComponent(
+                    error = "Your email is badly formatted"
+                )
+            )
+        }
+    }
+}
+
 fun PreviewLoginComponent(
     isLoading: Boolean = false,
+    error: String? = null,
 ) = object : LoginComponent {
     override val state: StateFlow<LoginComponent.State>
         get() = MutableStateFlow(
             LoginComponent.State(
                 emailText = "",
                 passwordText = "",
-                isLoading = isLoading
+                isLoading = isLoading,
+                error = error
             )
         )
 
