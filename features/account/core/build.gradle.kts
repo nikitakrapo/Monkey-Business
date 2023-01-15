@@ -28,6 +28,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(projects.features.analytics)
                 implementation(libs.kotlinx.coroutines)
                 implementation(libs.essenty.parcelable)
             }

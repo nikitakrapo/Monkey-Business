@@ -38,7 +38,7 @@ class HomeComponentImpl(
     override fun onProfileClicked() {
         analytics.onProfileClicked()
         val currentAccount = dependencies.accountManager.currentAccount
-        (currentAccount as? Account.Emailish)?.let { account ->
+        currentAccount?.let { account ->
             navigation.bringToFront(HomeScreen.Profile(account))
         } ?: run { /* TODO: log error */ }
     }
@@ -49,7 +49,7 @@ class HomeComponentImpl(
 
         @Parcelize
         data class Profile(
-            val account: Account.Emailish
+            val account: Account
         ) : HomeScreen(), Parcelable
     }
 

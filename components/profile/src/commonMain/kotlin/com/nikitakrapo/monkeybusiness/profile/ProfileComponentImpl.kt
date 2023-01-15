@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class ProfileComponentImpl(
     componentContext: ComponentContext,
-    private val account: Account.Emailish,
+    private val account: Account,
     private val dependencies: ProfileDependencies,
 ) : ProfileComponent, ComponentContext by componentContext {
     override val state: StateFlow<ProfileComponent.State>

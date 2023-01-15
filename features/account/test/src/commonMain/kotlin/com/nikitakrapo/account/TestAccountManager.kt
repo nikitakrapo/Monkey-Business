@@ -12,12 +12,16 @@ fun testAccountManager(
     private val accountFlow = MutableStateFlow(defaultAccount)
     override val account: StateFlow<Account?> get() = accountFlow.asStateFlow()
 
+    override suspend fun getToken(): Result<String?> {
+        return Result.success("")
+    }
+
     override suspend fun createAccount(
         email: String,
         password: String,
         username: String
     ): Result<Account> {
-        val newAccount = Account.Emailish(
+        val newAccount = Account(
             uid = "uid",
             email = "sample@email.com"
         )
@@ -26,7 +30,7 @@ fun testAccountManager(
     }
 
     override suspend fun login(email: String, password: String): Result<Account> {
-        val newAccount = Account.Emailish(
+        val newAccount = Account(
             uid = "uid",
             email = email
         )
@@ -34,8 +38,8 @@ fun testAccountManager(
         return Result.success(newAccount)
     }
 
-    override fun logout(): Result<Unit> {
+    override fun logout(): Result<Boolean> {
         accountFlow.value = null
-        return Result.success(Unit)
+        return Result.success(true)
     }
 }

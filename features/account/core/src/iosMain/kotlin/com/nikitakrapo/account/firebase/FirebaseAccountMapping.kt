@@ -5,7 +5,7 @@ import com.nikitakrapo.account.models.Account
 
 fun FIRUser.toDomainModel(): Account? {
     return email?.let {
-        Account.Emailish(
+        Account(
             uid = uid,
             email = it,
         )

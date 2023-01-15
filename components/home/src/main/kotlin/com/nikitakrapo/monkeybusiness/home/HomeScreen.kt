@@ -110,9 +110,9 @@ fun HomeScreen_Preview_Profile() {
                 modifier = Modifier.fillMaxSize(),
                 component = PreviewHomeComponent(
                     HomeComponentImpl.HomeScreen.Profile(
-                        Account.Emailish(
+                        Account(
                             uid = "",
-                            email = "sample@email.com"
+                            email = "sample@email.com",
                         )
                     )
                 )

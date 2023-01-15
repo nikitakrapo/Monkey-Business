@@ -26,9 +26,10 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this))
         mainActivityComponent = MainActivityComponent(
-            analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this)),
-            accountManager = AccountManagerImpl(),
+            analyticsManager = analyticsManager,
+            accountManager = AccountManagerImpl(analyticsManager),
         )
 
         val componentContext = defaultComponentContext()

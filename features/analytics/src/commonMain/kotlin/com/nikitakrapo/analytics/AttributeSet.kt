@@ -25,6 +25,7 @@ class AttributeSet internal constructor() {
         class String(val string: kotlin.String) : AttributeValue()
         class Int(val int: kotlin.Int) : AttributeValue()
         class Float(val float: kotlin.Float) : AttributeValue()
+        //TODO: Check this. I genuinely doubt that it works :)
         class Serializable(val obj: @kotlinx.serialization.Serializable Any) : AttributeValue()
     }
 }
