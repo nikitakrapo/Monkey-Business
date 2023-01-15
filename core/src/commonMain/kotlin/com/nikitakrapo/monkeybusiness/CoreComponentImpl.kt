@@ -3,7 +3,10 @@ package com.nikitakrapo.monkeybusiness
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.replaceAll
+import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.currentAccount
@@ -38,6 +41,7 @@ class CoreComponentImpl(
     override val childStack: StateFlow<ChildStack<CoreScreen, CoreComponent.Child>> =
         childStackFlow(
             source = navigation,
+            key = "CoreChildStack",
             initialConfiguration = getScreenForAuthState(
                 dependencies.accountManager.currentAccount
             ),
@@ -49,6 +53,23 @@ class CoreComponentImpl(
     sealed class CoreScreen : Parcelable {
         object Home : CoreScreen()
         object Authentication : CoreScreen()
+    }
+
+    private val modalNavigation = StackNavigation<CoreModalScreen>()
+
+    override val modalChildStack: StateFlow<ChildStack<*, CoreComponent.ModalChild>> =
+        childStackFlow(
+            source = modalNavigation,
+            key = "CoreModalChildStack",
+            initialConfiguration = CoreModalScreen.None,
+            handleBackButton = true,
+            childFactory = ::createModalChild
+        )
+
+    @Parcelize
+    sealed class CoreModalScreen : Parcelable {
+        object None : CoreModalScreen()
+        object ProfileEdit : CoreModalScreen()
     }
 
     private fun createChild(
@@ -85,5 +106,13 @@ class CoreComponentImpl(
 
     private fun getScreenForAuthState(account: Account?): CoreScreen {
         return if (account == null) CoreScreen.Authentication else CoreScreen.Home
+    }
+
+    private fun createModalChild(
+        screen: CoreModalScreen,
+        componentContext: ComponentContext
+    ): CoreComponent.ModalChild = when (screen) {
+        CoreModalScreen.None -> CoreComponent.ModalChild.None
+        CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(Unit)
     }
 }

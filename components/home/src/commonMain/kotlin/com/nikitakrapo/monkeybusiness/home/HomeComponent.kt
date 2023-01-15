@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface HomeComponent {
 
-    val childStack: StateFlow<ChildStack<HomeComponentImpl.HomeScreen, Child>>
+    val childStack: StateFlow<ChildStack<*, Child>>
 
     fun onFinancesClicked()
     fun onProfileClicked()

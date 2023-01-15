@@ -1,11 +1,21 @@
 package com.nikitakrapo.monkeybusiness
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
@@ -15,6 +25,8 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
+import com.nikitakrapo.monkeybusiness.modals.ModalViewsContainer
+import com.nikitakrapo.monkeybusiness.modals.slideVertically
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
 import com.nikitakrapo.monkeybusiness.profile.auth.PreviewAuthComponent
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,15 +39,47 @@ fun CoreScreen(
     component: CoreComponent
 ) {
     val childStack by component.childStack.collectAsState()
+    val modalChildStack by component.modalChildStack.collectAsState()
 
-    Children(
-        stack = childStack,
+    Box(
         modifier = modifier,
-        animation = stackAnimation(fade())
-    ) { createdChild ->
-        when (val child = createdChild.instance) {
-            is CoreComponent.Child.Home -> HomeScreen(component = child.component)
-            is CoreComponent.Child.Authentication -> AuthScreen(component = child.component)
+    ) {
+        Children(
+            stack = childStack,
+            modifier = Modifier
+                .fillMaxSize(),
+            animation = stackAnimation(fade())
+        ) { createdChild ->
+            when (val child = createdChild.instance) {
+                is CoreComponent.Child.Home -> HomeScreen(component = child.component)
+                is CoreComponent.Child.Authentication -> AuthScreen(component = child.component)
+            }
+        }
+
+        //TODO: Add scrim to modal bg.
+        Children(
+            stack = modalChildStack,
+            modifier = Modifier,
+            animation = stackAnimation(slideVertically())
+        ) { createdModalChild ->
+            ModalViewsContainer(
+                modifier = Modifier
+                    .fillMaxSize(),
+            ) {
+                when (val child = createdModalChild.instance) {
+                    is CoreComponent.ModalChild.ProfileEdit ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(0.75f)
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .align(Alignment.BottomCenter),
+                        ) {
+                            Text("Modal view")
+                        }
+                    CoreComponent.ModalChild.None -> {}
+                }
+            }
         }
     }
 }
@@ -87,6 +131,13 @@ internal fun PreviewCoreComponent(
                         PreviewAuthComponent()
                     )
                 }
+            )
+        )
+    override val modalChildStack: StateFlow<ChildStack<*, CoreComponent.ModalChild>>
+        get() = MutableStateFlow(
+            ChildStack(
+                configuration = CoreComponentImpl.CoreModalScreen.ProfileEdit,
+                instance = CoreComponent.ModalChild.ProfileEdit(Unit)
             )
         )
 }
