@@ -113,6 +113,8 @@ fun HomeScreen_Preview_Profile() {
                         Account(
                             uid = "",
                             email = "sample@email.com",
+                            username = null,
+                            photoUrl = null,
                         )
                     )
                 )

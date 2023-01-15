@@ -7,4 +7,6 @@ import com.arkivanov.essenty.parcelable.Parcelize
 data class Account(
     val uid: String,
     val email: String,
+    val username: String?,
+    val photoUrl: String?,
 ) : Parcelable

@@ -8,6 +8,8 @@ fun FirebaseUser.toDomainModel(): Account? {
         Account(
             uid = uid,
             email = it,
+            username = displayName?.takeIf(String::isNotEmpty),
+            photoUrl = photoUrl.toString().takeIf(String::isNotEmpty)
         )
     }
 }

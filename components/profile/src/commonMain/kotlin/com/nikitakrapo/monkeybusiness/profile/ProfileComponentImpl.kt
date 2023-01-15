@@ -14,8 +14,8 @@ class ProfileComponentImpl(
         get() = MutableStateFlow(
             ProfileComponent.State(
                 email = account.email,
-                username = null,
-                profileImageUrl = null
+                username = account.username,
+                profileImageUrl = account.photoUrl,
             )
         )
 

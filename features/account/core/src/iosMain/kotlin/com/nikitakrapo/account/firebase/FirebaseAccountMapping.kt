@@ -8,6 +8,8 @@ fun FIRUser.toDomainModel(): Account? {
         Account(
             uid = uid,
             email = it,
+            username = displayName?.takeIf(String::isNotEmpty),
+            photoUrl = photoURL?.absoluteString?.takeIf(String::isNotEmpty),
         )
     }
 }

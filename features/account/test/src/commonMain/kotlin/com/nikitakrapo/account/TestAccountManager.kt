@@ -23,7 +23,9 @@ fun testAccountManager(
     ): Result<Account> {
         val newAccount = Account(
             uid = "uid",
-            email = "sample@email.com"
+            email = "sample@email.com",
+            username = null,
+            photoUrl = null,
         )
         accountFlow.value = newAccount
         return Result.success(newAccount)
@@ -32,7 +34,9 @@ fun testAccountManager(
     override suspend fun login(email: String, password: String): Result<Account> {
         val newAccount = Account(
             uid = "uid",
-            email = email
+            email = email,
+            username = null,
+            photoUrl = null,
         )
         accountFlow.value = newAccount
         return Result.success(newAccount)
