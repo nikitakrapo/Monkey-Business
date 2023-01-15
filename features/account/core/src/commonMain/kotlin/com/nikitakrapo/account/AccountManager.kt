@@ -1,9 +1,13 @@
 package com.nikitakrapo.account
 
+import com.nikitakrapo.account.models.Account
 import kotlinx.coroutines.flow.StateFlow
 
 interface AccountManager {
-    val currentAccount: StateFlow<Account?>
+
+    val account: StateFlow<Account?>
+
+    suspend fun getToken(): Result<String?>
 
     suspend fun createAccount(
         email: String,
@@ -16,5 +20,5 @@ interface AccountManager {
         password: String
     ): Result<Account>
 
-    fun logout(): Result<Unit>
+    fun logout(): Result<Boolean>
 }

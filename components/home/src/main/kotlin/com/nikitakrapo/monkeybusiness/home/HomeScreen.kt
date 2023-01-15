@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
-import com.nikitakrapo.account.Account
+import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.monkeybusiness.design.components.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.components.NavigationBarItemModel
 import com.nikitakrapo.monkeybusiness.design.icons.Wallet

@@ -6,7 +6,8 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
-import com.nikitakrapo.account.Account
+import com.nikitakrapo.account.currentAccount
+import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
@@ -24,7 +25,7 @@ class CoreComponentImpl(
 
     init {
         scope.launch {
-            dependencies.accountManager.currentAccount.collect { account ->
+            dependencies.accountManager.account.collect { account ->
                 navigateAuthIfNeeded(account)
             }
         }
@@ -38,7 +39,7 @@ class CoreComponentImpl(
         childStackFlow(
             source = navigation,
             initialConfiguration = getScreenForAuthState(
-                dependencies.accountManager.currentAccount.value
+                dependencies.accountManager.currentAccount
             ),
             handleBackButton = true,
             childFactory = ::createChild,

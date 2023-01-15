@@ -1,7 +1,7 @@
 package com.nikitakrapo.monkeybusiness.profile
 
 import com.arkivanov.decompose.ComponentContext
-import com.nikitakrapo.account.Account
+import com.nikitakrapo.account.models.Account
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

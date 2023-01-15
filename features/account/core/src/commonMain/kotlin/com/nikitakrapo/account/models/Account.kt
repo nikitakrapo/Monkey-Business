@@ -1,4 +1,4 @@
-package com.nikitakrapo.account
+package com.nikitakrapo.account.models
 
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize

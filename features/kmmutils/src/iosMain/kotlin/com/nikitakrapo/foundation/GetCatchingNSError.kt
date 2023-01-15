@@ -8,12 +8,12 @@ import kotlinx.cinterop.ptr
 import kotlinx.cinterop.value
 import platform.Foundation.NSError
 
-inline fun <T> getCatchingNSError(block: (errorPointer: CPointer<ObjCObjectVar<NSError?>>) -> T): Result<T> {
+@Throws(NSErrorException::class)
+inline fun <T> getCatchingNSError(block: (errorPointer: CPointer<ObjCObjectVar<NSError?>>) -> T): T {
     memScoped {
         val errorPointed: ObjCObjectVar<NSError?> = alloc()
         val result: T = block(errorPointed.ptr)
-        return errorPointed.value?.let {
-            Result.failure(it.toException())
-        } ?: Result.success(result)
+        errorPointed.value?.let { throw it.toException() }
+        return result
     }
 }

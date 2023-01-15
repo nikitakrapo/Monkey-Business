@@ -1,5 +1,6 @@
 package com.nikitakrapo.account
 
+import com.nikitakrapo.account.models.Account
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +10,7 @@ fun testAccountManager(
 ) = object : AccountManager {
 
     private val accountFlow = MutableStateFlow(defaultAccount)
-    override val currentAccount: StateFlow<Account?> get() = accountFlow.asStateFlow()
+    override val account: StateFlow<Account?> get() = accountFlow.asStateFlow()
 
     override suspend fun createAccount(
         email: String,

@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import com.arkivanov.decompose.defaultComponentContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.nikitakrapo.account.FirebaseAccountManager
+import com.nikitakrapo.account.AccountManagerImpl
 import com.nikitakrapo.analytics.FirebaseAnalyticsManager
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 
@@ -28,7 +28,7 @@ class MainActivity : FragmentActivity() {
 
         mainActivityComponent = MainActivityComponent(
             analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this)),
-            accountManager = FirebaseAccountManager(),
+            accountManager = AccountManagerImpl(),
         )
 
         val componentContext = defaultComponentContext()
