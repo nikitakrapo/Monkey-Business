@@ -3,6 +3,7 @@ package com.nikitakrapo.monkeybusiness
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponent
+import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface CoreComponent {
@@ -17,6 +18,6 @@ interface CoreComponent {
 
     sealed class ModalChild {
         object None : ModalChild()
-        class ProfileEdit(val component: Unit) : ModalChild()
+        class ProfileEdit(val component: ProfileEditComponent) : ModalChild()
     }
 }

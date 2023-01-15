@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cd_profile_image">Profile image</string>
+    <string name="cd_edit_account">Edit account</string>
+    <string name="cd_save_changes">Save changes</string>
+    <string name="username_hint">Username</string>
 </resources>

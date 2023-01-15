@@ -1,11 +1,11 @@
 package com.nikitakrapo.monkeybusiness.profile
 
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.ButtonDefaults
@@ -13,6 +13,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,32 +31,26 @@ fun ProfileScreen(
 ) {
     val state by component.state.collectAsState()
 
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = PaddingValues(top = 12.dp, start = 12.dp, end = 12.dp)
+    Column(
+        modifier = modifier
+            .padding(12.dp),
     ) {
-        item {
-            ProfileHeader(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                emailText = state.email,
-                usernameText = state.username,
-                profileImageUrl = state.profileImageUrl
+        ProfileHeader(
+            modifier = Modifier
+                .fillMaxWidth(),
+            displayName = state.displayName,
+            profileImageUrl = state.profileImageUrl,
+            onEditClick = component::onEditClicked
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        FilledTonalButton(onClick = component::onLogoutClicked) {
+            Icon(
+                modifier = Modifier.size(ButtonDefaults.IconSize),
+                imageVector = Icons.Default.ExitToApp,
+                contentDescription = null
             )
-        }
-        item {
-            Spacer(modifier = Modifier.height(12.dp))
-        }
-        item {
-            FilledTonalButton(onClick = component::onLogoutClicked) {
-                Icon(
-                    modifier = Modifier.size(ButtonDefaults.IconSize),
-                    imageVector = Icons.Default.ExitToApp,
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-                Text("Logout")
-            }
+            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+            Text("Logout")
         }
     }
 }
@@ -70,7 +65,7 @@ fun ProfileDetailsScreen_Preview_Username() {
         Surface {
             ProfileScreen(
                 component = PreviewProfileComponent(
-                    email = "nikitakrapo"
+                    displayName = "nikitakrapo"
                 )
             )
         }
@@ -78,17 +73,16 @@ fun ProfileDetailsScreen_Preview_Username() {
 }
 
 fun PreviewProfileComponent(
-    email: String = "",
-    username: String? = null,
+    displayName: String = "username",
 ) = object : ProfileComponent {
     override val state: StateFlow<ProfileComponent.State>
         get() = MutableStateFlow(
             ProfileComponent.State(
-                email,
-                username,
+                displayName = displayName,
                 null
             )
         )
 
+    override fun onEditClicked() {}
     override fun onLogoutClicked() {}
 }

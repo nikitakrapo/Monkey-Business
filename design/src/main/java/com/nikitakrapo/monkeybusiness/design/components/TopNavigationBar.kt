@@ -15,19 +15,17 @@ import com.nikitakrapo.monkeybusiness.design.R
 @Composable
 fun TopNavigationBar(
     modifier: Modifier = Modifier,
-    navigationAction: (() -> Unit)? = null,
+    navigationAction: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
         title = {},
         navigationIcon = {
-            navigationAction?.let { onClickAction ->
-                IconButton(onClick = onClickAction) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(R.string.cd_navigate_back)
-                    )
-                }
+            IconButton(onClick = navigationAction) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = stringResource(R.string.cd_navigate_back)
+                )
             }
         }
     )

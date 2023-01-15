@@ -1,21 +1,12 @@
 package com.nikitakrapo.monkeybusiness
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
@@ -29,6 +20,7 @@ import com.nikitakrapo.monkeybusiness.modals.ModalViewsContainer
 import com.nikitakrapo.monkeybusiness.modals.slideVertically
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
 import com.nikitakrapo.monkeybusiness.profile.auth.PreviewAuthComponent
+import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -67,16 +59,9 @@ fun CoreScreen(
                     .fillMaxSize(),
             ) {
                 when (val child = createdModalChild.instance) {
-                    is CoreComponent.ModalChild.ProfileEdit ->
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(0.75f)
-                                .background(MaterialTheme.colorScheme.surfaceVariant)
-                                .align(Alignment.BottomCenter),
-                        ) {
-                            Text("Modal view")
-                        }
+                    is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
+                        component = child.component,
+                    )
                     CoreComponent.ModalChild.None -> {}
                 }
             }
@@ -136,8 +121,8 @@ internal fun PreviewCoreComponent(
     override val modalChildStack: StateFlow<ChildStack<*, CoreComponent.ModalChild>>
         get() = MutableStateFlow(
             ChildStack(
-                configuration = CoreComponentImpl.CoreModalScreen.ProfileEdit,
-                instance = CoreComponent.ModalChild.ProfileEdit(Unit)
+                configuration = CoreComponentImpl.CoreModalScreen.None,
+                instance = CoreComponent.ModalChild.None
             )
         )
 }

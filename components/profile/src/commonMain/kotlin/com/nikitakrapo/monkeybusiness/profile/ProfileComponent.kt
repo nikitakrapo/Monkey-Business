@@ -6,11 +6,11 @@ interface ProfileComponent {
 
     val state: StateFlow<State>
 
+    fun onEditClicked()
     fun onLogoutClicked()
 
     data class State(
-        val email: String,
-        val username: String?,
+        val displayName: String,
         val profileImageUrl: String?,
     )
 }

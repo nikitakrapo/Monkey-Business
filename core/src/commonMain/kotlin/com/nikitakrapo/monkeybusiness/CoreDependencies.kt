@@ -4,14 +4,18 @@ import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.monkeybusiness.home.HomeDependencies
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthDependencies
+import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditRouter
 
 class CoreDependencies(
     val analyticsManager: AnalyticsManager,
     val accountManager: AccountManager,
 ) {
-    fun homeDependencies() = HomeDependencies(
+    fun homeDependencies(
+        profileEditRouter: ProfileEditRouter
+    ) = HomeDependencies(
         analyticsManager = analyticsManager,
         accountManager = accountManager,
+        profileEditRouter = profileEditRouter,
     )
 
     fun authDependencies() = AuthDependencies(

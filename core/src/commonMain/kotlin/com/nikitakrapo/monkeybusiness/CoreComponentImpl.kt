@@ -14,6 +14,7 @@ import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
+import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditComponentImpl
 import com.nikitakrapo.navigation.stack.childStackFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
@@ -81,7 +82,11 @@ class CoreComponentImpl(
             CoreComponent.Child.Home(
                 HomeComponentImpl(
                     componentContext = componentContext,
-                    dependencies = dependencies.homeDependencies()
+                    dependencies = dependencies.homeDependencies(
+                        profileEditRouter = {
+                            modalNavigation.bringToFront(CoreModalScreen.ProfileEdit)
+                        }
+                    )
                 )
             )
         }
@@ -113,6 +118,18 @@ class CoreComponentImpl(
         componentContext: ComponentContext
     ): CoreComponent.ModalChild = when (screen) {
         CoreModalScreen.None -> CoreComponent.ModalChild.None
-        CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(Unit)
+        CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
+            component = ProfileEditComponentImpl(
+                componentContext = componentContext,
+                navigateBack = {
+                    modalNavigation.navigate(
+                        transformer = { stack ->
+                            stack.filterNot { it is CoreModalScreen.ProfileEdit }
+                        },
+                        onComplete = { _, _ -> }
+                    )
+                }
+            )
+        )
     }
 }
