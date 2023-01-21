@@ -11,6 +11,7 @@ applyCompose()
 
 dependencies {
     api(libs.compose.ui)
+    api(libs.compose.material)
     api(libs.compose.material3)
     api(libs.compose.foundation)
     api(libs.compose.ui.tooling)

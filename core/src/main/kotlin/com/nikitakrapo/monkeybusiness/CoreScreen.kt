@@ -6,17 +6,22 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
+import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetParams
+import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetType
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
-import com.nikitakrapo.monkeybusiness.modals.ModalViewsContainer
 import com.nikitakrapo.monkeybusiness.modals.slideVertically
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
 import com.nikitakrapo.monkeybusiness.profile.auth.PreviewAuthComponent
@@ -48,22 +53,25 @@ fun CoreScreen(
             }
         }
 
-        //TODO: Add scrim to modal bg.
-        Children(
-            stack = modalChildStack,
-            modifier = Modifier,
-            animation = stackAnimation(slideVertically())
-        ) { createdModalChild ->
-            ModalViewsContainer(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                when (val child = createdModalChild.instance) {
-                    is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
-                        component = child.component,
-                    )
-                    CoreComponent.ModalChild.None -> {}
-                }
+        val hasModal = remember(modalChildStack.active.instance) {
+            modalChildStack.active.instance !is CoreComponent.ModalChild.None
+        }
+        BottomSheet(
+            modifier = Modifier
+                .fillMaxSize(),
+            params = BottomSheetParams(
+                type = BottomSheetType.Modal,
+                offsetAnchors = mapOf(0.dp to 0, 300.dp to 1),
+                initialState = if (hasModal) 0 else 1
+            ),
+            enabled = hasModal,
+            onDismiss = component::dismissModal,
+        ) {
+            when (val child = modalChildStack.active.instance) {
+                is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
+                    component = child.component,
+                )
+                CoreComponent.ModalChild.None -> {}
             }
         }
     }
@@ -125,4 +133,6 @@ internal fun PreviewCoreComponent(
                 instance = CoreComponent.ModalChild.None
             )
         )
+
+    override fun dismissModal() {}
 }

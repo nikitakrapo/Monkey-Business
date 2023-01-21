@@ -73,6 +73,10 @@ class CoreComponentImpl(
         object ProfileEdit : CoreModalScreen()
     }
 
+    override fun dismissModal() {
+        modalNavigation.pop()
+    }
+
     private fun createChild(
         screen: CoreScreen,
         componentContext: ComponentContext
