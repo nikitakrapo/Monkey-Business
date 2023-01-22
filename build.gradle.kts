@@ -9,6 +9,7 @@ buildscript {
         classpath(libs.agp.bundle.gradle)
         classpath(libs.google.services)
         classpath(libs.firebase.crashlytics.gradle)
+        classpath(libs.sqldelight.gradle)
     }
 }
 

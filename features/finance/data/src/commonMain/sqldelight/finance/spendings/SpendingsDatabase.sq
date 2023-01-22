@@ -1,0 +1,25 @@
+CREATE TABLE Spending (
+    id TEXT NOT NULL,
+    amount INTEGER NOT NULL,
+    currency TEXT NOT NULL,
+    timestamp INTEGER NOT NULL,
+    description TEXT
+);
+
+insertSpending:
+INSERT INTO Spending(id, amount, currency, timestamp, description)
+VALUES (?, ?, ?, ?, ?);
+
+removeSpending:
+DELETE FROM Spending
+WHERE id = ?;
+
+removeAllSpendings:
+DELETE FROM Spending;
+
+selectSpendingById:
+SELECT * FROM Spending
+WHERE id = ?;
+
+selectAllSpendings:
+SELECT * FROM Spending;

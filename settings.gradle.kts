@@ -39,5 +39,6 @@ include(":features:analytics")
 include(":features:account:core")
 include(":features:account:test")
 include(":features:finance:models")
+include(":features:finance:data")
 
 include(":macrobenchmark")

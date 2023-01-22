@@ -46,6 +46,8 @@ kotlin {
                 api(projects.features.account.core)
                 api(projects.features.kmmutils)
                 implementation(projects.features.mvi.feature)
+                //FIXME: remove
+                implementation(projects.features.finance.data)
                 api(projects.components.authentication)
                 api(projects.components.home)
                 api(projects.components.profile)

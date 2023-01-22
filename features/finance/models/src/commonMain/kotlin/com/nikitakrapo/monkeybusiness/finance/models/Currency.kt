@@ -8,5 +8,14 @@ enum class Currency(val code: String) {
     EUR("EUR"),
     GBP("GBP"),
     RUB("RUB"),
-    HUF("HUF")
+    HUF("HUF");
+
+    companion object {
+        fun fromCode(code: String): Currency {
+            val currency = Currency.values().firstOrNull {
+                it.code == code
+            } ?: throw IllegalArgumentException("No Currency with code $code")
+            return currency
+        }
+    }
 }
