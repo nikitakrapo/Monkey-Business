@@ -2,12 +2,9 @@ package com.nikitakrapo.monkeybusiness.finance.db
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import app.cash.turbine.test
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Spending
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import org.junit.After
 import org.junit.Before
@@ -15,7 +12,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class SpendingsDatabaseProviderTests {
 
@@ -29,23 +25,45 @@ class SpendingsDatabaseProviderTests {
     }
 
     @Test
-    fun initialEmpty() = runTest {
-        dbProvider.getAllSpendingsFlow().test {
-            assert(awaitItem().isEmpty()) { "Non empty initial spendings" }
-        }
+    fun initialEmpty() {
+        val spendings = dbProvider.getAllSpendings()
+        assert(spendings.isEmpty()) { "Non empty initial spendings" }
     }
 
     @Test
-    fun emitsSpendings_whenInserted() = runTest {
+    fun correctSpending_whenInserted() {
+        val spending = spending()
+
+        dbProvider.addSpending(spending)
+
+        assertEquals(spending, dbProvider.getSpendingById(id = spending.id))
+    }
+
+    @Test
+    fun emptySpending_whenDeleted() {
+        val spending = spending()
+
+        dbProvider.addSpending(spending)
+
+        dbProvider.removeSpending(id = spending.id)
+
+        assertEquals(null, dbProvider.getSpendingById(id = spending.id))
+    }
+
+    @Test
+    fun correctSpendings_whenInserted() {
         val spending1 = spending(id = "sp1")
         val spending2 = spending(id = "sp2")
+        val spending3 = spending(id = "sp3")
 
         dbProvider.addSpending(spending1)
         dbProvider.addSpending(spending2)
+        dbProvider.addSpending(spending3)
 
-        dbProvider.getAllSpendingsFlow().test {
-            assertEquals(awaitItem(), listOf(spending1, spending2))
-        }
+        val expectedSpendings = listOf(spending1, spending2, spending3)
+
+        val spendings = dbProvider.getAllSpendings()
+        assertEquals(spendings, expectedSpendings)
     }
 
     @After

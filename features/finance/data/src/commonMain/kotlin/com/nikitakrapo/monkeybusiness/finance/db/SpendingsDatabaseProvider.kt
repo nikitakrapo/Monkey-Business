@@ -1,7 +1,6 @@
 package com.nikitakrapo.monkeybusiness.finance.db
 
 import com.nikitakrapo.monkeybusiness.finance.models.Spending
-import com.nikitakrapo.monkeybusiness.finance.db.mapToList
 import finance.spendings.SpendingsDatabase
 import kotlinx.coroutines.flow.Flow
 
@@ -19,6 +18,14 @@ class SpendingsDatabaseProvider(
             timestamp = spending.timestamp.toEpochMilliseconds(),
             description = spending.description,
         )
+    }
+
+    fun getSpendingById(id: String): Spending? {
+        return queries.selectSpendingById(id).executeAsOneOrNull()?.mapToDomainModel()
+    }
+
+    fun getAllSpendings(): List<Spending> {
+        return queries.selectAllSpendings(::mapToSpending).executeAsList()
     }
 
     fun getAllSpendingsFlow(): Flow<List<Spending>> {
