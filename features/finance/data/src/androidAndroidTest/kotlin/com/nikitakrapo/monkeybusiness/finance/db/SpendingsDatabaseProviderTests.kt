@@ -77,6 +77,6 @@ class SpendingsDatabaseProviderTests {
         id = id,
         moneyAmount = MoneyAmount(amount = 1000, currency = Currency.HUF),
         timestamp = Instant.fromEpochSeconds(1674415617),
-        description = "sample desc",
+        name = "sample desc",
     )
 }

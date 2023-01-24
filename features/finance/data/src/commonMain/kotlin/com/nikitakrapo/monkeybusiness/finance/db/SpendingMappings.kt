@@ -11,7 +11,7 @@ internal fun SpendingModel.mapToDomainModel() = mapToSpending(
     amount = amount,
     currency = currency,
     timestamp = timestamp,
-    description = description,
+    name = name,
 )
 
 internal fun mapToSpending(
@@ -19,11 +19,11 @@ internal fun mapToSpending(
     amount: Long,
     currency: String,
     timestamp: Long,
-    description: String?,
+    name: String,
 ): Spending =
     Spending(
         id = id,
         moneyAmount = MoneyAmount(amount = amount, currency = Currency.fromCode(currency)),
         timestamp = Instant.Companion.fromEpochMilliseconds(timestamp),
-        description = description,
+        name = name,
     )

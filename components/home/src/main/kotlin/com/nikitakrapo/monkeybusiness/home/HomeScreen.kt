@@ -1,12 +1,11 @@
 package com.nikitakrapo.monkeybusiness.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -17,6 +16,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
@@ -40,15 +41,22 @@ fun HomeScreen(
 ) {
     val childStack by component.childStack.collectAsState()
 
-    Column(
+    ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.statusBars),
-        verticalArrangement = Arrangement.SpaceBetween
     ) {
+        val (child, bottomNav) = createRefs()
+
         Children(
+            modifier = Modifier
+                .constrainAs(child) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(bottomNav.top)
+                    centerHorizontallyTo(parent)
+                    height = Dimension.fillToConstraints
+                },
             stack = childStack,
-            modifier = Modifier.fillMaxWidth(),
             animation = homeTabAnimation()
         ) { createdChild ->
             when (val child = createdChild.instance) {
@@ -63,6 +71,11 @@ fun HomeScreen(
             }
         }
         BottomNavigationBar(
+            modifier = Modifier
+                .constrainAs(bottomNav) {
+                    centerHorizontallyTo(parent)
+                    bottom.linkTo(parent.bottom)
+                },
             items = listOf(
                 NavigationBarItemModel(
                     selected = childStack.active.instance is HomeComponent.Child.Finances,

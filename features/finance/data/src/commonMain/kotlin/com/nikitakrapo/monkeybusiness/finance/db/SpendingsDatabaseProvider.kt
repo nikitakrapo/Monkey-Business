@@ -16,7 +16,7 @@ class SpendingsDatabaseProvider(
             amount = spending.moneyAmount.amount,
             currency = spending.moneyAmount.currency.code,
             timestamp = spending.timestamp.toEpochMilliseconds(),
-            description = spending.description,
+            name = spending.name,
         )
     }
 
