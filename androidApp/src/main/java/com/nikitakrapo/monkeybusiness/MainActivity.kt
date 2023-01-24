@@ -16,6 +16,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.nikitakrapo.account.AccountManagerImpl
 import com.nikitakrapo.analytics.FirebaseAnalyticsManager
+import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 
 class MainActivity : FragmentActivity() {
@@ -39,6 +40,7 @@ class MainActivity : FragmentActivity() {
             dependencies = CoreDependencies(
                 analyticsManager = mainActivityComponent.analyticsManager,
                 accountManager = mainActivityComponent.accountManager,
+                platformContext = PlatformContext(context = applicationContext),
             )
         )
 
