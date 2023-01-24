@@ -30,6 +30,7 @@ kotlin {
             dependencies {
                 implementation(projects.design)
                 implementation(libs.coil.compose)
+                implementation(libs.decompose.jetpack)
             }
         }
     }

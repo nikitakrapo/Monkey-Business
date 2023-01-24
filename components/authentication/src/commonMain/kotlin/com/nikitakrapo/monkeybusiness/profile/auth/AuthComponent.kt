@@ -1,12 +1,13 @@
 package com.nikitakrapo.monkeybusiness.profile.auth
 
+import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.profile.auth.login.LoginComponent
 import com.nikitakrapo.monkeybusiness.profile.auth.register.RegistrationComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface AuthComponent {
 
-    val child: StateFlow<Child>
+    val childStack: StateFlow<ChildStack<*, Child>>
 
     fun openLogin()
     fun openRegistration()

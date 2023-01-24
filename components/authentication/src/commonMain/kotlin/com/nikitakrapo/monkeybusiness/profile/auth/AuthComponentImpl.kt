@@ -1,13 +1,14 @@
 package com.nikitakrapo.monkeybusiness.profile.auth
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.monkeybusiness.profile.auth.login.LoginComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.register.RegistrationComponentImpl
-import com.nikitakrapo.navigation.stack.childFlow
+import com.nikitakrapo.navigation.stack.childStackFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class AuthComponentImpl(
@@ -18,7 +19,7 @@ class AuthComponentImpl(
 
     private val navigation = StackNavigation<AuthScreen>()
 
-    override val child: StateFlow<AuthComponent.Child> = childFlow(
+    override val childStack: StateFlow<ChildStack<*, AuthComponent.Child>> = childStackFlow(
         source = navigation,
         initialConfiguration = initialScreen,
         handleBackButton = true,
