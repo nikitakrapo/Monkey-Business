@@ -1,4 +1,3 @@
-import com.nikitakrapo.configuration.iosCompat
 import com.nikitakrapo.configuration.setupMultiplatformModule
 
 plugins {
@@ -6,10 +5,7 @@ plugins {
     id("com.android.library")
 }
 
-setupMultiplatformModule {
-    android()
-    iosCompat()
-}
+setupMultiplatformModule()
 
 kotlin {
     sourceSets {
