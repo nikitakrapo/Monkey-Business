@@ -43,10 +43,11 @@ class FinancesComponentImpl(
 
 private val fakeSpendings = buildList {
     for (i in 0..25) {
+        val amount = (1000 + i.toLong()) * if (i % 5 == 0) -1 else 1
         add(
             Spending(
                 id = "$i",
-                moneyAmount = MoneyAmount(1000 + i.toLong(), Currency.RUB),
+                moneyAmount = MoneyAmount(amount, Currency.RUB),
                 timestamp = Instant.fromEpochSeconds(0),
                 name = "some expenses",
             )

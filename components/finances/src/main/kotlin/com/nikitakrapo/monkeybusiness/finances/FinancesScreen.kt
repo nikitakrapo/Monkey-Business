@@ -1,9 +1,11 @@
 package com.nikitakrapo.monkeybusiness.finances
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.Instant
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FinancesScreen(
     modifier: Modifier = Modifier,
@@ -24,21 +27,24 @@ fun FinancesScreen(
 ) {
     val state by component.state.collectAsState()
 
-    Column(
-        modifier = modifier,
-    ) {
-        BalanceCard(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp),
-            balance = state.moneyAmount,
-            onDepositClicked = component::onDepositClicked,
-            onWithdrawClicked = component::onWithdrawClicked
-        )
-        SpendingsList(
-            modifier = Modifier,
-            spendings = state.spendingsList,
-        )
+    CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+        LazyColumn(
+            modifier = modifier,
+        ) {
+            item {
+                BalanceCard(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
+                    balance = state.moneyAmount,
+                    onDepositClicked = component::onDepositClicked,
+                    onWithdrawClicked = component::onWithdrawClicked
+                )
+            }
+            SpendingsList(
+                spendings = state.spendingsList,
+            )
+        }
     }
 }
 
