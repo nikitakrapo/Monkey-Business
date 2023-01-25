@@ -1,0 +1,25 @@
+CREATE TABLE TransactionItem ( -- Transaction is reserved in SQLite
+    id TEXT NOT NULL,
+    amount INTEGER NOT NULL,
+    currency TEXT NOT NULL,
+    timestamp INTEGER NOT NULL,
+    name TEXT NOT NULL
+);
+
+insertTransaction:
+INSERT INTO TransactionItem(id, amount, currency, timestamp, name)
+VALUES (?, ?, ?, ?, ?);
+
+removeTransaction:
+DELETE FROM TransactionItem
+WHERE id = ?;
+
+removeAllTransactions:
+DELETE FROM TransactionItem;
+
+selectTransactionById:
+SELECT * FROM TransactionItem
+WHERE id = ?;
+
+selectAllTransactions:
+SELECT * FROM TransactionItem;

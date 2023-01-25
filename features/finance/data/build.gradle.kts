@@ -12,8 +12,8 @@ version = "1.0"
 setupMultiplatformModule()
 
 sqldelight {
-    database("SpendingsDatabase") {
-        packageName = "finance.spendings"
+    database("TransactionsDatabase") {
+        packageName = "finance.transactions"
     }
 }
 

@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
-import com.nikitakrapo.monkeybusiness.finance.models.Spending
+import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import com.nikitakrapo.monkeybusiness.finances.balance.BalanceCard
-import com.nikitakrapo.monkeybusiness.finances.spendings.SpendingsList
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionsList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.Instant
@@ -41,9 +41,9 @@ fun FinancesScreen(
                     onWithdrawClicked = component::onWithdrawClicked
                 )
             }
-            SpendingsList(
-                spendings = state.spendingsList,
-                onSpendingClick = {}
+            TransactionsList(
+                transactions = state.transactionsList,
+                onTransactionClick = {}
             )
         }
     }
@@ -57,8 +57,8 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
                     amount = 123456,
                     currency = Currency.GBP
                 ),
-                spendingsList = listOf(
-                    Spending(
+                transactionsList = listOf(
+                    Transaction(
                         id = "30fb18274",
                         moneyAmount = MoneyAmount(1000, Currency.RUB),
                         timestamp = Instant.fromEpochSeconds(0),

@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.finances.spendings
+package com.nikitakrapo.monkeybusiness.finances.transactions
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -27,21 +27,21 @@ import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
-import com.nikitakrapo.monkeybusiness.finance.models.Spending
+import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import com.nikitakrapo.monkeybusiness.finances.MoneyAmountTextProvider.createText
 import kotlinx.datetime.Instant
 
 @Composable
-fun SpendingCard(
+fun TransactionCard(
     modifier: Modifier = Modifier,
-    spending: Spending,
-    onClick: (Spending) -> Unit,
+    transaction: Transaction,
+    onClick: (Transaction) -> Unit,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(72.dp)
-            .clickable { onClick(spending) }
+            .clickable { onClick(transaction) }
             .padding(vertical = 8.dp)
             .padding(end = 24.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -57,24 +57,24 @@ fun SpendingCard(
         }
         Column {
             Text(
-                text = spending.name,
+                text = transaction.name,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = spending.id,
+                text = transaction.id,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         Column {
-            val color = remember(spending.moneyAmount.amount) {
-                if (spending.moneyAmount.amount > 0) Color(0xFF388E3C) else null
+            val color = remember(transaction.moneyAmount.amount) {
+                if (transaction.moneyAmount.amount > 0) Color(0xFF388E3C) else null
             }
-            val moneyText = remember(spending.moneyAmount) {
-                spending.moneyAmount.createText().asString()
+            val moneyText = remember(transaction.moneyAmount) {
+                transaction.moneyAmount.createText().asString()
             }
             Text(
                 text = moneyText,
@@ -88,12 +88,12 @@ fun SpendingCard(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun SpendingCard_Preview() {
+fun TransactionCard_Preview() {
     MonkeyTheme {
         Surface {
-            SpendingCard(
+            TransactionCard(
                 modifier = Modifier.width(360.dp),
-                spending = Spending(
+                transaction = Transaction(
                     id = "1",
                     moneyAmount = MoneyAmount(1001, Currency.RUB),
                     timestamp = Instant.fromEpochSeconds(0),

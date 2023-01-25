@@ -2,11 +2,11 @@ package com.nikitakrapo.monkeybusiness.finance.db
 
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
-import com.nikitakrapo.monkeybusiness.finance.models.Spending
-import finance.spendings.Spending as SpendingModel
+import com.nikitakrapo.monkeybusiness.finance.models.Transaction
+import finance.transactions.TransactionItem as TransactionModel
 import kotlinx.datetime.Instant
 
-internal fun SpendingModel.mapToDomainModel() = mapToSpending(
+internal fun TransactionModel.mapToDomainModel() = mapToTransaction(
     id = id,
     amount = amount,
     currency = currency,
@@ -14,14 +14,14 @@ internal fun SpendingModel.mapToDomainModel() = mapToSpending(
     name = name,
 )
 
-internal fun mapToSpending(
+internal fun mapToTransaction(
     id: String,
     amount: Long,
     currency: String,
     timestamp: Long,
     name: String,
-): Spending =
-    Spending(
+): Transaction =
+    Transaction(
         id = id,
         moneyAmount = MoneyAmount(amount = amount, currency = Currency.fromCode(currency)),
         timestamp = Instant.Companion.fromEpochMilliseconds(timestamp),

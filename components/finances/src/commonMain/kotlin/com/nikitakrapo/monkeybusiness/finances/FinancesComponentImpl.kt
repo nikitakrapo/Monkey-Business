@@ -3,7 +3,7 @@ package com.nikitakrapo.monkeybusiness.finances
 import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
-import com.nikitakrapo.monkeybusiness.finance.models.Spending
+import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +18,7 @@ class FinancesComponentImpl(
                 amount = 123456,
                 currency = Currency.GBP
             ),
-            spendingsList = fakeSpendings
+            transactionsList = fakeTransactions
         )
     )
     override val state: StateFlow<FinancesComponent.State> get() = stateFlow.asStateFlow()
@@ -36,16 +36,16 @@ class FinancesComponentImpl(
         val newAmount = currentAmount.copy(amount = currentAmount.amount + delta)
         stateFlow.value = FinancesComponent.State(
             moneyAmount = newAmount,
-            spendingsList = fakeSpendings,
+            transactionsList = fakeTransactions,
         )
     }
 }
 
-private val fakeSpendings = buildList {
+private val fakeTransactions = buildList {
     for (i in 0..25) {
         val amount = (1000 + i.toLong()) * if (i % 5 == 0) -1 else 1
         add(
-            Spending(
+            Transaction(
                 id = "$i",
                 moneyAmount = MoneyAmount(amount, Currency.RUB),
                 timestamp = Instant.fromEpochSeconds(0),
