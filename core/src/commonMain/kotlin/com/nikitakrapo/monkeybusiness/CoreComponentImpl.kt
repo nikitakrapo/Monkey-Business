@@ -70,6 +70,7 @@ class CoreComponentImpl(
     @Parcelize
     sealed class CoreModalScreen : Parcelable {
         object None : CoreModalScreen()
+        object TransactionAdd : CoreModalScreen()
         object ProfileEdit : CoreModalScreen()
     }
 
@@ -87,6 +88,9 @@ class CoreComponentImpl(
                 HomeComponentImpl(
                     componentContext = componentContext,
                     dependencies = dependencies.homeDependencies(
+                        transactionAddRouter = {
+                            modalNavigation.bringToFront(CoreModalScreen.TransactionAdd)
+                        },
                         profileEditRouter = {
                             modalNavigation.bringToFront(CoreModalScreen.ProfileEdit)
                         }
@@ -122,6 +126,7 @@ class CoreComponentImpl(
         componentContext: ComponentContext
     ): CoreComponent.ModalChild = when (screen) {
         CoreModalScreen.None -> CoreComponent.ModalChild.None
+        CoreModalScreen.TransactionAdd -> CoreComponent.ModalChild.TransactionAdd()
         CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
             component = ProfileEditComponentImpl(
                 componentContext = componentContext,

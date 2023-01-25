@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="deposit">Anzahlung</string>
-    <string name="withdraw">Аbheben</string>
+    <string name="add_transaction">Transaktion hinzufügen</string>
 </resources>

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -18,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
+import com.nikitakrapo.monkeybusiness.finances.MoneyAmountTextProvider.createText
 import com.nikitakrapo.monkeybusiness.finances.R
 
 @Composable
 fun BalanceCard(
     modifier: Modifier = Modifier,
     balance: MoneyAmount,
-    onDepositClicked: () -> Unit,
-    onWithdrawClicked: () -> Unit
+    onAddTransactionClicked: () -> Unit,
 ) {
     ElevatedCard(
         modifier = modifier.fillMaxWidth(),
@@ -37,29 +36,17 @@ fun BalanceCard(
             ) {
                 Text(
                     modifier = Modifier.alignByBaseline(),
-                    text = balance.amount.toString(),
+                    text = balance.createText().asString(skipPositiveSign = true),
                     style = MaterialTheme.typography.titleLarge
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    modifier = Modifier.alignByBaseline(),
-                    text = balance.currency.name,
-                    style = MaterialTheme.typography.titleMedium
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                FilledTonalButton(onClick = onDepositClicked) {
+                FilledTonalButton(onClick = onAddTransactionClicked) {
                     Text(
-                        text = stringResource(R.string.deposit),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-                FilledTonalButton(onClick = onWithdrawClicked) {
-                    Text(
-                        text = stringResource(R.string.withdraw),
+                        text = stringResource(R.string.add_transaction),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }

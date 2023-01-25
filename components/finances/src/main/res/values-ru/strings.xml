@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="deposit">Пополнить</string>
-    <string name="withdraw">Снять</string>
+    <string name="add_transaction">Добавить транзакцию</string>
 </resources>

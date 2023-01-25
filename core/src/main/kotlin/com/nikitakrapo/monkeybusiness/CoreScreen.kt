@@ -68,6 +68,7 @@ fun CoreScreen(
             onDismiss = component::dismissModal,
         ) {
             when (val child = modalChildStack.active.instance) {
+                is CoreComponent.ModalChild.TransactionAdd -> {}
                 is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
                     component = child.component,
                 )

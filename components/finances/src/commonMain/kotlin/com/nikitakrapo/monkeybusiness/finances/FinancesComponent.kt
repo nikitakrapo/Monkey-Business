@@ -8,8 +8,7 @@ interface FinancesComponent {
 
     val state: StateFlow<State>
 
-    fun onDepositClicked()
-    fun onWithdrawClicked()
+    fun onAddTransactionClicked()
 
     data class State(
         val moneyAmount: MoneyAmount,

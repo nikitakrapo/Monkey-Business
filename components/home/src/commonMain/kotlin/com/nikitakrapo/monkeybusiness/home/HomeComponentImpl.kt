@@ -60,6 +60,7 @@ class HomeComponentImpl(
         HomeScreen.Finances -> HomeComponent.Child.Finances(
             FinancesComponentImpl(
                 componentContext = componentContext,
+                dependencies = dependencies.financesDependencies(),
             )
         )
         is HomeScreen.Profile -> HomeComponent.Child.Profile(

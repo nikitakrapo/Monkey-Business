@@ -37,8 +37,7 @@ fun FinancesScreen(
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp),
                     balance = state.moneyAmount,
-                    onDepositClicked = component::onDepositClicked,
-                    onWithdrawClicked = component::onWithdrawClicked
+                    onAddTransactionClicked = component::onAddTransactionClicked
                 )
             }
             TransactionsList(
@@ -68,6 +67,5 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
             )
         )
 
-    override fun onDepositClicked() {}
-    override fun onWithdrawClicked() {}
+    override fun onAddTransactionClicked() {}
 }

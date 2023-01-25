@@ -6,21 +6,16 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
-import androidx.compose.material.Text
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.material3.MaterialTheme
@@ -93,16 +88,6 @@ fun BottomSheet(
                 alpha = bgAlpha,
             ) {
                 scope.launch { swipeableState.animateTo(anchorModalClosedValue) }
-            }
-            Column(
-                modifier = Modifier
-                    .windowInsetsPadding(WindowInsets.statusBars),
-            ) {
-                Text("offset: ${swipeableState.offset.value}")
-                Text("currentValue: ${swipeableState.currentValue}")
-                Text("fraction: ${swipeableState.progress.fraction}")
-                Text("isAnimationRunning: ${swipeableState.isAnimationRunning}")
-                Text("isClosed: ${isClosed}")
             }
         }
 

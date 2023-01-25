@@ -20,6 +20,7 @@ interface CoreComponent {
 
     sealed class ModalChild {
         object None : ModalChild()
+        class TransactionAdd : ModalChild()
         class ProfileEdit(val component: ProfileEditComponent) : ModalChild()
     }
 }

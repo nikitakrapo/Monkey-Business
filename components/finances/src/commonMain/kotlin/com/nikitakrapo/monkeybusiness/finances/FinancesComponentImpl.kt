@@ -10,8 +10,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.datetime.Instant
 
 class FinancesComponentImpl(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
+    private val dependencies: FinancesDependencies,
 ) : FinancesComponent, ComponentContext by componentContext {
+
+    private val transactionAddRouter get() = dependencies.transactionAddRouter
+
     private val stateFlow = MutableStateFlow(
         FinancesComponent.State(
             moneyAmount = MoneyAmount(
@@ -23,21 +27,8 @@ class FinancesComponentImpl(
     )
     override val state: StateFlow<FinancesComponent.State> get() = stateFlow.asStateFlow()
 
-    override fun onDepositClicked() {
-        changeMoneyAmount(1)
-    }
-
-    override fun onWithdrawClicked() {
-        changeMoneyAmount(-1)
-    }
-
-    private fun changeMoneyAmount(delta: Int) {
-        val currentAmount = state.value.moneyAmount
-        val newAmount = currentAmount.copy(amount = currentAmount.amount + delta)
-        stateFlow.value = FinancesComponent.State(
-            moneyAmount = newAmount,
-            transactionsList = fakeTransactions,
-        )
+    override fun onAddTransactionClicked() {
+        transactionAddRouter.openTransactionAdd()
     }
 }
 

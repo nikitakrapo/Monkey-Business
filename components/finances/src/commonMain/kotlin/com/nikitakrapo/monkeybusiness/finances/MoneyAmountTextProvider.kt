@@ -21,5 +21,11 @@ data class MoneyAmountText(
     val amount: String,
     val currency: String,
 ) {
-    fun asString() = "$sign $amount $currency"
+    fun asString(skipPositiveSign: Boolean = false) = buildString {
+        if (!skipPositiveSign || sign != '+') {
+            append("$sign ")
+        }
+        append("$amount ")
+        append(currency)
+    }
 }
