@@ -2,7 +2,7 @@ package com.nikitakrapo.monkeybusiness.finances.spendings
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,17 +28,20 @@ import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Spending
+import com.nikitakrapo.monkeybusiness.finances.MoneyAmountTextProvider.createText
 import kotlinx.datetime.Instant
 
 @Composable
 fun SpendingCard(
     modifier: Modifier = Modifier,
     spending: Spending,
+    onClick: (Spending) -> Unit,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(72.dp)
+            .clickable { onClick(spending) }
             .padding(vertical = 8.dp)
             .padding(end = 24.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -71,10 +74,7 @@ fun SpendingCard(
                 if (spending.moneyAmount.amount > 0) Color(0xFF388E3C) else null
             }
             val moneyText = remember(spending.moneyAmount) {
-                val amount = spending.moneyAmount.amount
-                val sign = if (amount > 0) "+" else "-"
-                val currency = spending.moneyAmount.currency.code
-                "$sign$amount $currency"
+                spending.moneyAmount.createText().asString()
             }
             Text(
                 text = moneyText,
@@ -98,7 +98,8 @@ fun SpendingCard_Preview() {
                     moneyAmount = MoneyAmount(1001, Currency.RUB),
                     timestamp = Instant.fromEpochSeconds(0),
                     name = "taxi expenses",
-                )
+                ),
+                onClick = {}
             )
         }
     }

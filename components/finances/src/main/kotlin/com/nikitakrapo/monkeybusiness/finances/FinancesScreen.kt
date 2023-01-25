@@ -43,6 +43,7 @@ fun FinancesScreen(
             }
             SpendingsList(
                 spendings = state.spendingsList,
+                onSpendingClick = {}
             )
         }
     }
@@ -58,7 +59,7 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
                 ),
                 spendingsList = listOf(
                     Spending(
-                        id = "",
+                        id = "30fb18274",
                         moneyAmount = MoneyAmount(1000, Currency.RUB),
                         timestamp = Instant.fromEpochSeconds(0),
                         name = "taxi expenses",

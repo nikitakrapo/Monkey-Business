@@ -6,8 +6,12 @@ import com.nikitakrapo.monkeybusiness.finance.models.Spending
 
 fun LazyListScope.SpendingsList(
     spendings: List<Spending>,
+    onSpendingClick: (Spending) -> Unit,
 ) {
     items(spendings) { spending ->
-        SpendingCard(spending = spending)
+        SpendingCard(
+            spending = spending,
+            onClick = onSpendingClick,
+        )
     }
 }
