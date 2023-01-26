@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.ZeroCornerSize
@@ -119,7 +121,7 @@ fun BottomSheetContainer(
             .offset(y = yOffset)
             .fillMaxWidth()
             .height(height)
-            .systemBarsPadding(),
+            .statusBarsPadding(),
         color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.extraLarge.copy(
             bottomEnd = ZeroCornerSize,
@@ -131,7 +133,8 @@ fun BottomSheetContainer(
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null
-                ) {},
+                ) {}
+                .navigationBarsPadding(),
         ) {
             content()
             DragHandle(
