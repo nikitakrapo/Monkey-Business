@@ -60,7 +60,7 @@ fun CoreScreen(
                 .fillMaxSize(),
             params = BottomSheetParams(
                 type = BottomSheetType.Modal,
-                offsetAnchors = mapOf(0.dp to 0, 760.dp to 1),
+                offsetAnchors = mapOf(0.dp to 0, 360.dp to 1),
                 initialState = if (hasModal) 0 else 1
             ),
             enabled = hasModal,

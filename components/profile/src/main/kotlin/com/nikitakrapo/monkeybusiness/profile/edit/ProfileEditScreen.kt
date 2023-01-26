@@ -1,5 +1,6 @@
 package com.nikitakrapo.monkeybusiness.profile.edit
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -59,7 +61,7 @@ fun ProfileEditScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.6f)
+                .fillMaxHeight()
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .clickable(
                     interactionSource = MutableInteractionSource(),
@@ -75,43 +77,46 @@ fun ProfileEditScreen(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                IconButton(onClick = component::onNavigateBackClicked) {
+                IconButton(
+                    enabled = !state.isLoading,
+                    onClick = component::onNavigateBackClicked
+                ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = stringResource(R.string.cd_navigate_back)
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = component::onSaveChangesClicked) {
+                IconButton(
+                    enabled = !state.isLoading,
+                    onClick = component::onSaveChangesClicked
+                ) {
                     Icon(
                         imageVector = Icons.Default.Check,
                         contentDescription = stringResource(R.string.cd_save_changes)
                     )
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.Top,
+            OutlinedTextField(
+                modifier = Modifier
+                    .focusRequester(focusRequester)
+                    .align(Alignment.CenterHorizontally),
+                enabled = !state.isLoading,
+                value = state.username,
+                onValueChange = component::onUsernameTextChanged,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
+                label = { Text(stringResource(R.string.username_hint)) },
+                singleLine = true,
+            )
+            AnimatedVisibility(
+                visible = state.error?.isNotEmpty() == true
             ) {
-                UserAvatar(
-                    modifier = Modifier
-                        .size(70.dp),
-                    imageUrl = null,
-                    onClick = {}
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                OutlinedTextField(
-                    modifier = Modifier
-                        .weight(1f)
-                        .focusRequester(focusRequester),
-                    enabled = !state.isLoading,
-                    value = state.username,
-                    onValueChange = component::onUsernameTextChanged,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    label = { Text(stringResource(R.string.username_hint)) },
-                    singleLine = true,
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = state.error.orEmpty(),
+                    color = MaterialTheme.colorScheme.error,
                 )
             }
         }
