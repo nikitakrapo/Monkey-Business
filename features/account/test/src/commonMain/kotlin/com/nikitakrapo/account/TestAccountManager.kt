@@ -1,6 +1,7 @@
 package com.nikitakrapo.account
 
 import com.nikitakrapo.account.models.Account
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,7 +32,10 @@ fun testAccountManager(
         return Result.success(newAccount)
     }
 
-    override suspend fun login(email: String, password: String): Result<Account> {
+    override suspend fun login(
+        email: String,
+        password: String
+    ): Result<Account> {
         val newAccount = Account(
             uid = "uid",
             email = email,
@@ -45,5 +49,13 @@ fun testAccountManager(
     override fun logout(): Result<Boolean> {
         accountFlow.value = null
         return Result.success(true)
+    }
+
+    override suspend fun updateAccount(
+        configure: AccountUpdateRequest.() -> Unit
+    ): Result<Unit> {
+        val request = AccountUpdateRequest().apply(configure)
+        accountFlow.value = accountFlow.value?.copy(username = request.username)
+        return Result.success(Unit)
     }
 }

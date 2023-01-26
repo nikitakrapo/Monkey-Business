@@ -2,6 +2,7 @@ package com.nikitakrapo.account
 
 import com.nikitakrapo.account.firebase.FirebaseAuthProvider
 import com.nikitakrapo.account.models.Account
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import com.nikitakrapo.analytics.AnalyticsManager
 import kotlinx.coroutines.flow.StateFlow
 
@@ -68,6 +69,15 @@ class AccountManagerImpl(
         } catch (e: Exception) {
             analytics.onLogoutFailed(e.message)
             Result.failure(e)
+        }
+    }
+
+    override suspend fun updateAccount(
+        configure: AccountUpdateRequest.() -> Unit
+    ): Result<Unit> {
+        val request = AccountUpdateRequest().apply(configure)
+        return Result.runCatching {
+            authProvider.updateAccount(request)
         }
     }
 }

@@ -1,9 +1,8 @@
 package com.nikitakrapo.account.firebase
 
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import com.nikitakrapo.account.models.Account
-import com.nikitakrapo.account.exceptions.AuthException
 import kotlinx.coroutines.flow.StateFlow
-import kotlin.coroutines.cancellation.CancellationException
 
 //TODO: map exceptions to [AuthException]
 interface AuthProvider {
@@ -23,4 +22,6 @@ interface AuthProvider {
     ): Account?
 
     fun signOut(): Boolean
+
+    suspend fun updateAccount(request: AccountUpdateRequest)
 }

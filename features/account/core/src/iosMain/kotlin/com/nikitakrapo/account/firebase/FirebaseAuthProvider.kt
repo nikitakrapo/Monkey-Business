@@ -3,7 +3,9 @@ package com.nikitakrapo.account.firebase
 import cocoapods.FirebaseAuth.FIRAuth
 import cocoapods.FirebaseAuth.FIRUser
 import com.nikitakrapo.account.models.Account
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import com.nikitakrapo.coroutines.completionHandler
+import com.nikitakrapo.coroutines.noArgCompletionHandler
 import com.nikitakrapo.foundation.getCatchingNSError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -62,6 +64,17 @@ internal actual object FirebaseAuthProvider : AuthProvider {
     override fun signOut() = getCatchingNSError {
         firebaseAuth.signOut(it)
     }
+
+    override suspend fun updateAccount(request: AccountUpdateRequest) =
+        suspendCoroutine { continuation ->
+            val firebaseRequest = requireNotNull(firebaseAuth.currentUser?.profileChangeRequest())
+            firebaseRequest.apply {
+                request.username?.let { displayName = it }
+            }
+            firebaseRequest.commitChangesWithCompletion(
+                completion = continuation.noArgCompletionHandler()
+            )
+        }
 
     private fun onUserChanged(user: FIRUser) {
         accountFlow.value = user.toDomainModel()

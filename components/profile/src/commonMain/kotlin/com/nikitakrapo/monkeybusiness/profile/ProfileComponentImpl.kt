@@ -1,22 +1,40 @@
 package com.nikitakrapo.monkeybusiness.profile
 
 import com.arkivanov.decompose.ComponentContext
-import com.nikitakrapo.account.models.Account
+import com.nikitakrapo.account.currentAccount
+import com.nikitakrapo.account.models.getDisplayName
+import com.nikitakrapo.decompose.coroutines.coroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class ProfileComponentImpl(
     componentContext: ComponentContext,
-    private val account: Account,
     private val dependencies: ProfileDependencies,
 ) : ProfileComponent, ComponentContext by componentContext {
-    override val state: StateFlow<ProfileComponent.State>
-        get() = MutableStateFlow(
-            ProfileComponent.State(
-                displayName = account.getDisplayName(),
-                profileImageUrl = account.photoUrl,
-            )
+
+    private val account get() = dependencies.accountManager.currentAccount
+
+    private val scope = coroutineScope(Dispatchers.Main)
+
+    private val stateFlow = MutableStateFlow(
+        ProfileComponent.State(
+            displayName = account?.getDisplayName() ?: "ERROR",
+            profileImageUrl = account?.photoUrl,
         )
+    )
+    override val state: StateFlow<ProfileComponent.State>
+        get() = stateFlow.asStateFlow()
+
+    init {
+        scope.launch {
+            dependencies.accountManager.account.collect {
+                stateFlow.value = state.value.copy(displayName = it?.getDisplayName() ?: "")
+            }
+        }
+    }
 
     override fun onEditClicked() {
         dependencies.profileEditRouter.openProfileEdit()
@@ -24,11 +42,5 @@ class ProfileComponentImpl(
 
     override fun onLogoutClicked() {
         dependencies.accountManager.logout()
-    }
-
-    private fun Account.getDisplayName(): String {
-        username?.let { return it }
-        val atCharIndex = email.indexOf(char = '@')
-        return if (atCharIndex != -1) email.substring(0..atCharIndex) else email
     }
 }

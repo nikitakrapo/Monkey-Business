@@ -14,5 +14,6 @@ interface ProfileEditComponent {
     data class State(
         val username: String,
         val isLoading: Boolean,
+        val error: String?,
     )
 }

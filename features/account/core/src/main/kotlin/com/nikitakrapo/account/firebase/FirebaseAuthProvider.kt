@@ -1,7 +1,10 @@
 package com.nikitakrapo.account.firebase
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import com.nikitakrapo.account.models.Account
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,10 +21,7 @@ internal actual object FirebaseAuthProvider: AuthProvider {
     override val account: StateFlow<Account?> get() = accountFlow.asStateFlow()
 
     init {
-        firebaseAuth.addAuthStateListener { auth ->
-            val user = auth.currentUser?.toDomainModel()
-            accountFlow.value = user
-        }
+        firebaseAuth.addAuthStateListener(::updateUser)
     }
 
     override suspend fun getIdToken(): String? {
@@ -53,5 +53,18 @@ internal actual object FirebaseAuthProvider: AuthProvider {
     override fun signOut(): Boolean {
         firebaseAuth.signOut()
         return true
+    }
+
+    override suspend fun updateAccount(request: AccountUpdateRequest) {
+        val firebaseRequest = userProfileChangeRequest {
+            request.username?.let { displayName = it }
+        }
+        firebaseAuth.currentUser?.updateProfile(firebaseRequest)?.await()
+        updateUser(firebaseAuth)
+    }
+
+    private fun updateUser(firebaseAuth: FirebaseAuth) {
+        val user = firebaseAuth.currentUser?.toDomainModel()
+        accountFlow.value = user
     }
 }

@@ -1,6 +1,7 @@
 package com.nikitakrapo.account
 
 import com.nikitakrapo.account.models.Account
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import kotlinx.coroutines.flow.StateFlow
 
 interface AccountManager {
@@ -21,4 +22,8 @@ interface AccountManager {
     ): Result<Account>
 
     fun logout(): Result<Boolean>
+
+    suspend fun updateAccount(
+        configure: AccountUpdateRequest.() -> Unit
+    ): Result<Unit>
 }

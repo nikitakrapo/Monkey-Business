@@ -130,6 +130,7 @@ class CoreComponentImpl(
         CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
             component = ProfileEditComponentImpl(
                 componentContext = componentContext,
+                dependencies = dependencies.profileEditDependencies(),
                 navigateBack = {
                     modalNavigation.navigate(
                         transformer = { stack ->

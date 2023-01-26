@@ -37,20 +37,14 @@ class HomeComponentImpl(
 
     override fun onProfileClicked() {
         analytics.onProfileClicked()
-        val currentAccount = dependencies.accountManager.currentAccount
-        currentAccount?.let { account ->
-            navigation.bringToFront(HomeScreen.Profile(account))
-        } ?: run { /* TODO: log error */ }
+        navigation.bringToFront(HomeScreen.Profile)
     }
 
     @Parcelize
     sealed class HomeScreen : Parcelable {
         object Finances : HomeScreen()
 
-        @Parcelize
-        data class Profile(
-            val account: Account
-        ) : HomeScreen(), Parcelable
+        object Profile : HomeScreen()
     }
 
     private fun createChild(
@@ -66,7 +60,6 @@ class HomeComponentImpl(
         is HomeScreen.Profile -> HomeComponent.Child.Profile(
             ProfileComponentImpl(
                 componentContext = componentContext,
-                account = screen.account,
                 dependencies = dependencies.profileDependencies(),
             )
         )
