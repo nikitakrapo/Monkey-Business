@@ -24,8 +24,8 @@ internal actual object FirebaseAuthProvider: AuthProvider {
         firebaseAuth.addAuthStateListener(::updateUser)
     }
 
-    override suspend fun getIdToken(): String? {
-        return firebaseAuth.currentUser?.getIdToken(false)
+    override suspend fun getIdToken(forceRefresh: Boolean): String? {
+        return firebaseAuth.currentUser?.getIdToken(forceRefresh)
             ?.await()
             ?.token
     }

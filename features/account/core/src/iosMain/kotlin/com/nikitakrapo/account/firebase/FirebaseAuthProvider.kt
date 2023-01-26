@@ -27,8 +27,11 @@ internal actual object FirebaseAuthProvider : AuthProvider {
         }
     }
 
-    override suspend fun getIdToken(): String? = suspendCoroutine { continuation ->
-        firebaseAuth.currentUser?.getIDTokenResultWithCompletion(
+    override suspend fun getIdToken(
+        forceRefresh: Boolean
+    ): String? = suspendCoroutine { continuation ->
+        firebaseAuth.currentUser?.getIDTokenResultForcingRefresh(
+            forceRefresh = forceRefresh,
             completion = continuation.completionHandler { result ->
                 result?.token
             }

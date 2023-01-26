@@ -9,7 +9,7 @@ interface AuthProvider {
 
     val account: StateFlow<Account?>
 
-    suspend fun getIdToken(): String?
+    suspend fun getIdToken(forceRefresh: Boolean = false): String?
 
     suspend fun createUserWithEmailAndPassword(
         email: String,
