@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.ExperimentalMaterialApi
@@ -72,7 +74,8 @@ fun BottomSheet(
                 anchors = anchorsPx,
                 thresholds = { _, _ -> FractionalThreshold(DEFAULT_ANCHOR_THRESHOLD) },
                 orientation = Orientation.Vertical
-            ),
+            )
+            .imePadding(),
     ) {
         if (params.type == BottomSheetType.Modal) {
             val scrimAnchorOffsetPx = remember(params.offsetAnchors) {
@@ -121,13 +124,18 @@ fun BottomSheetContainer(
             )
             .fillMaxWidth()
             .height(height)
-            .background(MaterialTheme.colorScheme.surface)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null
-            ) {},
+            .systemBarsPadding()
+            .background(MaterialTheme.colorScheme.surface),
     ) {
-        content()
+        Box(
+            modifier = modifier
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null
+                ) {},
+        ) {
+            content()
+        }
         DragHandle(
             modifier = Modifier
                 .align(Alignment.TopCenter)

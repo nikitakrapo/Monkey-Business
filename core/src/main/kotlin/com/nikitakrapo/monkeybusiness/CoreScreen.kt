@@ -22,7 +22,6 @@ import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetT
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
-import com.nikitakrapo.monkeybusiness.modals.slideVertically
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
 import com.nikitakrapo.monkeybusiness.profile.auth.PreviewAuthComponent
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditScreen
@@ -61,7 +60,7 @@ fun CoreScreen(
                 .fillMaxSize(),
             params = BottomSheetParams(
                 type = BottomSheetType.Modal,
-                offsetAnchors = mapOf(0.dp to 0, 300.dp to 1),
+                offsetAnchors = mapOf(0.dp to 0, 760.dp to 1),
                 initialState = if (hasModal) 0 else 1
             ),
             enabled = hasModal,
