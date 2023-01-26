@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
+import androidx.compose.material.Surface
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.material3.MaterialTheme
@@ -113,19 +114,17 @@ fun BottomSheetContainer(
     content: @Composable () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    Box(
+    Surface(
         modifier = modifier
             .offset(y = yOffset)
-            .clip(
-                MaterialTheme.shapes.extraLarge.copy(
-                    bottomEnd = ZeroCornerSize,
-                    bottomStart = ZeroCornerSize
-                )
-            )
             .fillMaxWidth()
             .height(height)
-            .systemBarsPadding()
-            .background(MaterialTheme.colorScheme.surface),
+            .systemBarsPadding(),
+        color = MaterialTheme.colorScheme.surface,
+        shape = MaterialTheme.shapes.extraLarge.copy(
+            bottomEnd = ZeroCornerSize,
+            bottomStart = ZeroCornerSize
+        )
     ) {
         Box(
             modifier = modifier
@@ -135,12 +134,12 @@ fun BottomSheetContainer(
                 ) {},
         ) {
             content()
+            DragHandle(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 12.dp)
+            )
         }
-        DragHandle(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 12.dp)
-        )
     }
 }
 
