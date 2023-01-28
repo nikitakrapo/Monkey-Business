@@ -7,7 +7,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -34,7 +36,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun DebugButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onUuidClick: () -> Unit,
 ) {
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
@@ -51,7 +54,7 @@ fun DebugButton(
                     offsetY += dragAmount.y
                 }
             }
-            .clip(RoundedCornerShape(20))
+            .clip(MaterialTheme.shapes.medium)
             .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
             .animateContentSize()
     ) {
@@ -93,6 +96,12 @@ fun DebugButton(
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
             ) {
                 DebugItem(
+                    titleText = "UUID",
+                    subtitleText = "Copy UUID",
+                    onClick = onUuidClick
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                DebugItem(
                     titleText = "Crash app",
                     subtitleText = "Check crashlytics",
                     onClick = { throw Exception("Crash from debug panel") }
@@ -111,10 +120,10 @@ fun DebugItem(
 ) {
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(15))
+            .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.7f))
-            .padding(6.dp)
             .clickable(onClick = onClick)
+            .padding(6.dp)
     ) {
         Text(
             text = titleText,
