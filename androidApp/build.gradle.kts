@@ -1,6 +1,6 @@
-import com.nikitakrapo.configuration.applyCompose
-import com.nikitakrapo.configuration.createBenchmarkBuildType
-import com.nikitakrapo.configuration.setupAndroidApp
+import com.nikitakrapo.configuration.android.applyCompose
+import com.nikitakrapo.configuration.android.createBenchmarkBuildType
+import com.nikitakrapo.configuration.android.setupAndroidApp
 
 plugins {
     id("com.android.application")

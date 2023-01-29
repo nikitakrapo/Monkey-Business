@@ -1,11 +1,12 @@
-import com.nikitakrapo.configuration.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
+import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
 }
 
-setupMultiplatformModule()
+setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
 kotlin {
     sourceSets {

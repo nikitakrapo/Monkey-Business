@@ -1,11 +1,12 @@
-import com.nikitakrapo.configuration.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
+import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
 }
 
-setupMultiplatformModule()
+setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
 kotlin {
     sourceSets {
@@ -15,13 +16,6 @@ kotlin {
                 api(libs.decompose)
                 api(projects.features.mvi.feature)
                 api(projects.features.mvi.decomposeExt)
-            }
-        }
-        val commonTest by getting
-
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.activity.ktx)
             }
         }
     }

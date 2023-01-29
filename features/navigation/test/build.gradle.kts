@@ -1,11 +1,12 @@
-import com.nikitakrapo.configuration.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
+import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
 }
 
-setupMultiplatformModule()
+setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
 kotlin {
     sourceSets {
@@ -27,12 +28,9 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
         }
 
-        val jvmMain by getting
-
         val nonAndroid by creating {
             dependsOn(commonMain)
             iosMain.dependsOn(this)
-            jvmMain.dependsOn(this)
         }
     }
 }

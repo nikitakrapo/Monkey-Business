@@ -1,4 +1,5 @@
-import com.nikitakrapo.configuration.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
+import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -7,7 +8,7 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule()
+setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
 kotlin {
     sourceSets {
@@ -17,19 +18,6 @@ kotlin {
                 implementation(libs.kotlinx.coroutines)
                 api(projects.features.mvi.feature)
             }
-        }
-        val jvmMain by getting
-        val androidMain by getting {
-            dependsOn(jvmMain)
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
         }
     }
 }

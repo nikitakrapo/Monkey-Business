@@ -1,4 +1,5 @@
-import com.nikitakrapo.configuration.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
+import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -7,7 +8,7 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule()
+setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
 kotlin {
     sourceSets {

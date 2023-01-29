@@ -1,5 +1,5 @@
-import com.nikitakrapo.configuration.iosCompat
-import com.nikitakrapo.configuration.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
+import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -8,10 +8,7 @@ plugins {
     kotlin("native.cocoapods")
 }
 
-setupMultiplatformModule {
-    android()
-    iosCompat()
-}
+setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
 kotlin {
     cocoapods {

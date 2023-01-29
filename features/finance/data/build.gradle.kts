@@ -1,4 +1,5 @@
-import com.nikitakrapo.configuration.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
+import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -9,7 +10,7 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule()
+setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
 sqldelight {
     database("TransactionsDatabase") {
@@ -37,11 +38,6 @@ kotlin {
             dependencies {
                 implementation(libs.turbine)
                 implementation(libs.kotlinx.coroutines.test)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.sqldelight.jvm)
             }
         }
         val androidMain by getting {

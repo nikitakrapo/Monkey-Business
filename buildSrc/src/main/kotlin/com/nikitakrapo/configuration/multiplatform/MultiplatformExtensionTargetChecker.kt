@@ -1,4 +1,4 @@
-package com.nikitakrapo.configuration
+package com.nikitakrapo.configuration.multiplatform
 
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
