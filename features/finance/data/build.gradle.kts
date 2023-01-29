@@ -30,6 +30,7 @@ kotlin {
             dependencies {
                 api(projects.features.finance.models)
                 implementation(libs.sqldelight.runtime)
+                implementation(projects.features.network)
                 api(projects.features.kmmutils)
                 api(libs.kotlinx.coroutines)
             }

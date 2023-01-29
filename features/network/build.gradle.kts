@@ -15,6 +15,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.ktor.core)
+                api(libs.ktor.auth)
                 api(libs.ktor.logging)
             }
         }
