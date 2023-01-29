@@ -1,13 +1,21 @@
 package com.nikitakrapo.monkeybusiness.finance.db
 
+import com.nikitakrapo.monkeybusiness.db.DatabaseDriverFactory
+import com.nikitakrapo.monkeybusiness.db.asFlow
+import com.nikitakrapo.monkeybusiness.db.mapToList
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import finance.transactions.TransactionsDatabase
 import kotlinx.coroutines.flow.Flow
 
-class TransactionsDatabaseProvider(
+internal class TransactionsDatabaseProvider(
     databaseDriverFactory: DatabaseDriverFactory,
 ) {
-    private val transactionsDatabase = TransactionsDatabase(databaseDriverFactory.createDriver())
+    private val transactionsDatabase = TransactionsDatabase(
+        databaseDriverFactory.createDriver(
+            schema = TransactionsDatabase.Schema,
+            name = "transactions.db"
+        )
+    )
     private val queries = transactionsDatabase.transactionsDatabaseQueries
 
     fun addTransaction(transaction: Transaction) {

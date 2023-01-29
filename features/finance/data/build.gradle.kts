@@ -28,6 +28,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.features.database)
                 api(projects.features.finance.models)
                 implementation(libs.sqldelight.runtime)
                 implementation(projects.features.network)
@@ -52,18 +53,6 @@ kotlin {
                 implementation(libs.androidx.junit)
                 implementation(libs.androidx.junit.ktx)
                 implementation(libs.androidx.espresso)
-            }
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.sqldelight.ios)
             }
         }
     }

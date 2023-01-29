@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.finance.db
+package com.nikitakrapo.monkeybusiness.db
 
 import com.squareup.sqldelight.Query
 import kotlinx.coroutines.Dispatchers

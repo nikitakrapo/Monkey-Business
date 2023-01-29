@@ -2,6 +2,7 @@ package com.nikitakrapo.monkeybusiness.finance.db
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.nikitakrapo.monkeybusiness.db.DatabaseDriverFactory
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
