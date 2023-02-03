@@ -23,7 +23,7 @@ internal class TransactionsDatabaseProvider(
             id = transaction.id,
             amount = transaction.moneyAmount.amount,
             currency = transaction.moneyAmount.currency.code,
-            timestamp = transaction.timestamp.toEpochMilliseconds(),
+            timestampMs = transaction.timestampMs,
             name = transaction.name,
         )
     }

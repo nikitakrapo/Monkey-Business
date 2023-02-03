@@ -39,7 +39,7 @@ private val fakeTransactions = buildList {
             Transaction(
                 id = "$i",
                 moneyAmount = MoneyAmount(amount, Currency.RUB),
-                timestamp = Instant.fromEpochSeconds(0),
+                timestampMs = 0,
                 name = "some expenses",
             )
         )

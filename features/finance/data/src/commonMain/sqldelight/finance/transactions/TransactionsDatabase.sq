@@ -2,12 +2,12 @@ CREATE TABLE TransactionItem ( -- Transaction is reserved in SQLite
     id TEXT NOT NULL,
     amount INTEGER NOT NULL,
     currency TEXT NOT NULL,
-    timestamp INTEGER NOT NULL,
+    timestampMs INTEGER NOT NULL,
     name TEXT NOT NULL
 );
 
 insertTransaction:
-INSERT INTO TransactionItem(id, amount, currency, timestamp, name)
+INSERT INTO TransactionItem(id, amount, currency, timestampMs, name)
 VALUES (?, ?, ?, ?, ?);
 
 removeTransaction:

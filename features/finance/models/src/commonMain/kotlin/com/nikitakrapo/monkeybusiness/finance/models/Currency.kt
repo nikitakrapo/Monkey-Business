@@ -1,8 +1,11 @@
 package com.nikitakrapo.monkeybusiness.finance.models
 
+import kotlinx.serialization.Serializable
+
 /**
  * @property code Currency code in ISO 4217
  */
+@Serializable
 enum class Currency(
     val code: String,
     val symbol: String,
@@ -22,3 +25,4 @@ enum class Currency(
         }
     }
 }
+

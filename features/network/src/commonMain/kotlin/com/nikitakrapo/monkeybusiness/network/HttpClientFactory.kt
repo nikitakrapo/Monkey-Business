@@ -6,6 +6,7 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.bearer
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -14,6 +15,7 @@ import kotlin.time.Duration.Companion.seconds
 
 object HttpClientFactory {
     fun createHttpClient(
+        baseUrl: String,
         clientAuth: ClientAuth,
     ) = httpClient {
         install(HttpTimeout) {
@@ -26,6 +28,10 @@ object HttpClientFactory {
         }
 
         installAuth(clientAuth)
+
+        defaultRequest {
+            url(baseUrl)
+        }
     }
 
     private fun HttpClientConfig<*>.installAuth(

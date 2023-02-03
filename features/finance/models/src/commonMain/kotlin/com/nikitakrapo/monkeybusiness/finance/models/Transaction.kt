@@ -1,10 +1,17 @@
 package com.nikitakrapo.monkeybusiness.finance.models
 
-import kotlinx.datetime.Instant
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+//TODO: move to shared BE & Mobile module
+@Serializable
 data class Transaction(
+    @SerialName("id")
     val id: String,
+    @SerialName("name")
+    val name: String,
+    @SerialName("moneyAmount")
     val moneyAmount: MoneyAmount,
-    val timestamp: Instant,
-    val name: String
+    @SerialName("timestampMs")
+    val timestampMs: Long
 )

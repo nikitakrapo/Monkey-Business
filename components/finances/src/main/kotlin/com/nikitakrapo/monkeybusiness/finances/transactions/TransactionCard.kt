@@ -96,7 +96,7 @@ fun TransactionCard_Preview() {
                 transaction = Transaction(
                     id = "1",
                     moneyAmount = MoneyAmount(1001, Currency.RUB),
-                    timestamp = Instant.fromEpochSeconds(0),
+                    timestampMs = 0,
                     name = "taxi expenses",
                 ),
                 onClick = {}

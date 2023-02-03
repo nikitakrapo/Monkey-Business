@@ -28,12 +28,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.features.database)
                 api(projects.features.finance.models)
-                implementation(libs.sqldelight.runtime)
-                implementation(projects.features.network)
                 api(projects.features.kmmutils)
                 api(libs.kotlinx.coroutines)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(projects.features.database)
+                implementation(projects.features.network)
+                implementation(libs.sqldelight.runtime)
             }
         }
         val commonTest by getting {

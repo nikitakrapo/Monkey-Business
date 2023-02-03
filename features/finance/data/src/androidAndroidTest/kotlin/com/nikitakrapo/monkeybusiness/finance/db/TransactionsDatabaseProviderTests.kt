@@ -77,7 +77,7 @@ class TransactionsDatabaseProviderTests {
     ) = Transaction(
         id = id,
         moneyAmount = MoneyAmount(amount = 1000, currency = Currency.HUF),
-        timestamp = Instant.fromEpochSeconds(1674415617),
+        timestampMs = 1674415617000,
         name = "sample desc",
     )
 }

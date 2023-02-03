@@ -30,6 +30,7 @@ kotlin {
             dependencies {
                 api(projects.features.analytics)
                 implementation(libs.kotlinx.coroutines)
+                implementation(projects.features.network)
                 implementation(libs.essenty.parcelable)
             }
         }

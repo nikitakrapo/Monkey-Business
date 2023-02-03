@@ -60,7 +60,7 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
                     Transaction(
                         id = "30fb18274",
                         moneyAmount = MoneyAmount(1000, Currency.RUB),
-                        timestamp = Instant.fromEpochSeconds(0),
+                        timestampMs = 0,
                         name = "taxi expenses",
                     )
                 )
