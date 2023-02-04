@@ -10,7 +10,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 
-class TransactionsApi(
+internal class TransactionsApi(
     bearerTokensProvider: BearerTokensProvider,
 ) {
     private val client = createHttpClient(

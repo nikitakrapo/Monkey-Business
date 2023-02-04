@@ -17,6 +17,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(projects.features.finance.data)
                 api(projects.features.finance.models)
                 api(projects.features.navigation.core)
                 implementation(projects.features.mvi.feature)

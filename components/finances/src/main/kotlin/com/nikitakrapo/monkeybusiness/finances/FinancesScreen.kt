@@ -63,7 +63,8 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
                         timestampMs = 0,
                         name = "taxi expenses",
                     )
-                )
+                ),
+                transactionsLoading = false
             )
         )
 

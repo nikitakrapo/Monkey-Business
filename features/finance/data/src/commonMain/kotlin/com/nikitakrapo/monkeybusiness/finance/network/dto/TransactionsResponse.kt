@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class TransactionsResponse(
+internal class TransactionsResponse(
     @SerialName("transactionList")
     val transactionList: List<Transaction>,
 )

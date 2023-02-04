@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class TransactionRequest(
+internal class TransactionRequest(
     @SerialName("transaction")
     val transaction: Transaction,
 )
