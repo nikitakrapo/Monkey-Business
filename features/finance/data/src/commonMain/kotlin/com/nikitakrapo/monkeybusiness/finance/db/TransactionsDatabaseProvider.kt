@@ -28,6 +28,13 @@ internal class TransactionsDatabaseProvider(
         )
     }
 
+    fun updateTransactions(transactions: List<Transaction>) {
+        queries.transaction {
+            removeAllTransactions()
+            transactions.forEach(::addTransaction)
+        }
+    }
+
     fun getTransactionById(id: String): Transaction? {
         return queries.selectTransactionById(id).executeAsOneOrNull()?.mapToDomainModel()
     }

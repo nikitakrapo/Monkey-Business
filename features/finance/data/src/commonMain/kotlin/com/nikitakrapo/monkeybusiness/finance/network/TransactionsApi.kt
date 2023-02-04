@@ -11,11 +11,11 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 
 class TransactionsApi(
-    firebaseTokensProvider: BearerTokensProvider,
+    bearerTokensProvider: BearerTokensProvider,
 ) {
     private val client = createHttpClient(
         baseUrl = TRANSACTIONS_HOST,
-        clientAuth = ClientAuth.Bearer(bearerTokensProvider = firebaseTokensProvider)
+        clientAuth = ClientAuth.Bearer(bearerTokensProvider = bearerTokensProvider)
     )
 
     suspend fun postTransaction(request: TransactionRequest) {

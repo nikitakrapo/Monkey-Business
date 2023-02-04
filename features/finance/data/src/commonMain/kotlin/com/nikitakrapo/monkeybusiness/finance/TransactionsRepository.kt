@@ -4,6 +4,6 @@ import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionsRepository {
-    fun addTransaction(transaction: Transaction)
-    fun getAllTransactions(): Flow<List<Transaction>>
+    suspend fun addTransaction(transaction: Transaction)
+    suspend fun getAllTransactions(): Flow<List<Transaction>>
 }
