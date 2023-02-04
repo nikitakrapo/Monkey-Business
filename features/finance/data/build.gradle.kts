@@ -31,9 +31,9 @@ kotlin {
                 api(projects.features.finance.models)
                 api(projects.features.kmmutils)
                 api(libs.kotlinx.coroutines)
+                api(projects.features.network)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(projects.features.database)
-                implementation(projects.features.network)
                 implementation(libs.sqldelight.runtime)
             }
         }

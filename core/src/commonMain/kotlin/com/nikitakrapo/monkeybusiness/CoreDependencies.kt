@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness
 
 import com.nikitakrapo.account.AccountManager
+import com.nikitakrapo.account.BearerTokensProviderImpl
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.finances.TransactionAddRouter
@@ -17,12 +18,17 @@ class CoreDependencies(
     fun homeDependencies(
         transactionAddRouter: TransactionAddRouter,
         profileEditRouter: ProfileEditRouter
-    ) = HomeDependencies(
-        analyticsManager = analyticsManager,
-        accountManager = accountManager,
-        transactionAddRouter = transactionAddRouter,
-        profileEditRouter = profileEditRouter,
-    )
+    ): HomeDependencies {
+        val bearerTokensProvider = BearerTokensProviderImpl(accountManager)
+        return HomeDependencies(
+            analyticsManager = analyticsManager,
+            accountManager = accountManager,
+            bearerTokensProvider = bearerTokensProvider,
+            transactionAddRouter = transactionAddRouter,
+            profileEditRouter = profileEditRouter,
+            platformContext = platformContext,
+        )
+    }
 
     fun authDependencies() = AuthDependencies(
         accountManager = accountManager,
