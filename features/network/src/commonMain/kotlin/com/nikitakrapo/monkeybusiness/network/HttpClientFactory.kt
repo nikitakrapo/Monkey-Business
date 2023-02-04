@@ -6,11 +6,13 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.bearer
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.serialization.kotlinx.json.json
 import kotlin.time.Duration.Companion.seconds
 
 object HttpClientFactory {
@@ -25,6 +27,10 @@ object HttpClientFactory {
         install(Logging) {
             level = LogLevel.ALL
             logger = Logger.DEFAULT
+        }
+
+        install(ContentNegotiation) {
+            json()
         }
 
         installAuth(clientAuth)

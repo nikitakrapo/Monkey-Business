@@ -39,10 +39,12 @@ fun FinancesScreen(
                     onAddTransactionClicked = component::onAddTransactionClicked,
                 )
             }
-            TransactionsList(
-                transactions = state.transactionsList,
-                onTransactionClick = {},
-            )
+            state.transactionsList?.let {
+                TransactionsList(
+                    transactions = it,
+                    onTransactionClick = {},
+                )
+            }
         }
     }
 }

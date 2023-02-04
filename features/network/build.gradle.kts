@@ -17,6 +17,8 @@ kotlin {
                 api(libs.ktor.core)
                 api(libs.ktor.auth)
                 api(libs.ktor.logging)
+                implementation(libs.ktor.contentnegotiation)
+                implementation(libs.ktor.json)
             }
         }
         val androidMain by getting {

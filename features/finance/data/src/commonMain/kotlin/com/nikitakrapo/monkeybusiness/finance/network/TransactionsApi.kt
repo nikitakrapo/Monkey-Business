@@ -25,7 +25,8 @@ internal class TransactionsApi(
     }
 
     suspend fun getAllTransactions(): TransactionsResponse {
-        return client.get("transactions").body()
+        val response = client.get("transactions")
+        return response.body()
     }
 
     companion object {
