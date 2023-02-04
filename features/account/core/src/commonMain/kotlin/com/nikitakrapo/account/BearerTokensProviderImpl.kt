@@ -11,7 +11,8 @@ class BearerTokensProviderImpl(
         return BearerTokens(accessToken = token, refreshToken = "")
     }
 
+    // TODO: figure out if it's okay
     override suspend fun refreshToken(previousTokens: BearerTokens?): BearerTokens? {
-
+        return null
     }
 }
