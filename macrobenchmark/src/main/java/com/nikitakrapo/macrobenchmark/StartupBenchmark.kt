@@ -33,7 +33,7 @@ class StartupBenchmark {
         startupMode = StartupMode.COLD,
         setupBlock = {
             pressHome()
-        }
+        },
     ) {
         // Waits for the first rendered frame, which represents time to initial display.
         startActivityAndWait()

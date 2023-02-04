@@ -42,7 +42,7 @@ class AuthComponentImpl(
 
     private fun child(
         screen: AuthScreen,
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
     ): AuthComponent.Child =
         when (screen) {
             AuthScreen.Login -> {
@@ -56,7 +56,7 @@ class AuthComponentImpl(
             AuthScreen.Registration -> {
                 val component = RegistrationComponentImpl(
                     componentContext = componentContext,
-                    accountManager = dependencies.accountManager
+                    accountManager = dependencies.accountManager,
                 )
                 AuthComponent.Child.Registration(component)
             }

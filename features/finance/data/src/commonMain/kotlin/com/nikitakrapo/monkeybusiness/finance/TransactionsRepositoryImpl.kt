@@ -9,9 +9,6 @@ import com.nikitakrapo.monkeybusiness.finance.network.dto.TransactionRequest
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokensProvider
 import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.startWith
 
 class TransactionsRepositoryImpl(
     platformContext: PlatformContext,
@@ -19,11 +16,11 @@ class TransactionsRepositoryImpl(
 ) : TransactionsRepository {
 
     private val db: TransactionsDatabaseProvider = TransactionsDatabaseProvider(
-        databaseDriverFactory = DatabaseDriverFactory(platformContext = platformContext)
+        databaseDriverFactory = DatabaseDriverFactory(platformContext = platformContext),
     )
 
     private val api = TransactionsApi(
-        bearerTokensProvider = bearerTokensProvider
+        bearerTokensProvider = bearerTokensProvider,
     )
 
     override suspend fun addTransaction(transaction: Transaction) {

@@ -4,13 +4,13 @@ import com.nikitakrapo.application.PlatformContext
 import com.squareup.sqldelight.db.SqlDriver
 
 expect class DatabaseDriverFactory constructor(
-    platformContext: PlatformContext
+    platformContext: PlatformContext,
 ) {
     /**
      * @param name Name for database file
      */
     fun createDriver(
         schema: SqlDriver.Schema,
-        name: String
+        name: String,
     ): SqlDriver
 }

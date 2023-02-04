@@ -22,7 +22,7 @@ inline fun <reified C : Parcelable, T : Any> ComponentContext.childFlow(
         initialConfiguration = initialConfiguration,
         key = key,
         handleBackButton = handleBackButton,
-        childFactory = childFactory
+        childFactory = childFactory,
     )
     val mutableStackFlow = MutableStateFlow(stackValue.value.active.instance)
     stackValue
@@ -43,7 +43,7 @@ inline fun <reified C : Parcelable, T : Any> ComponentContext.childStackFlow(
         initialConfiguration = initialConfiguration,
         key = key,
         handleBackButton = handleBackButton,
-        childFactory = childFactory
+        childFactory = childFactory,
     )
     val mutableStackFlow = MutableStateFlow(stackValue.value)
     stackValue.subscribe { mutableStackFlow.value = it }

@@ -36,7 +36,7 @@ class RegistrationComponentImpl(
                         accountManager.createAccount(
                             email = state.email,
                             password = state.password,
-                            username = state.username
+                            username = state.username,
                         )
                             .fold(
                                 onSuccess = {
@@ -44,7 +44,7 @@ class RegistrationComponentImpl(
                                 },
                                 onFailure = {
                                     emit(Effect.FinishLoading(Result.failure(it)))
-                                }
+                                },
                             )
                     }
                 }
@@ -53,28 +53,27 @@ class RegistrationComponentImpl(
                 when (it) {
                     is Effect.UsernameChanged -> copy(
                         username = it.text,
-                        error = null
+                        error = null,
                     )
                     is Effect.EmailChanged -> copy(
                         email = it.text,
-                        error = null
+                        error = null,
                     )
                     is Effect.PasswordChanged -> copy(
                         password = it.text,
-                        error = null
+                        error = null,
                     )
                     is Effect.FinishLoading -> copy(
                         error = it.result.exceptionOrNull()?.message,
-                        isLoading = false
+                        isLoading = false,
                     )
                     Effect.StartLoading -> copy(
                         isLoading = true,
-                        error = null
+                        error = null,
                     )
                 }
-            }
+            },
         )
-
     }
 
     override val state: StateFlow<RegistrationComponent.State> get() = feature.state

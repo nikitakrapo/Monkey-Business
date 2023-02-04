@@ -53,13 +53,13 @@ fun PasswordOutlinedTextField(
                     R.string.cd_show_password
                 } else {
                     R.string.cd_hide_password
-                }
+                },
             )
 
             IconButton(
                 onClick = {
                     passwordVisible = !passwordVisible
-                }
+                },
             ) {
                 Icon(imageVector = image, description)
             }

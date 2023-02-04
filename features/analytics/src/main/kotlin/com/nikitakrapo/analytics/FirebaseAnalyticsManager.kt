@@ -5,7 +5,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.nikitakrapo.analytics.firebase.checkEventName
 
 class FirebaseAnalyticsManager(
-    private val firebaseAnalytics: FirebaseAnalytics
+    private val firebaseAnalytics: FirebaseAnalytics,
 ) : AnalyticsManager {
 
     override fun reportEvent(event: String) {

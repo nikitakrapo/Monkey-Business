@@ -13,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
 
 fun LoggingFeatureFactory(
     delegate: FeatureFactory,
-    logger: Logger
+    logger: Logger,
 ): FeatureFactory = object : FeatureFactory {
 
     override fun <Intent : Any, Action : Any, Effect : Any, State : Any, Event : Any> create(
@@ -25,7 +25,7 @@ fun LoggingFeatureFactory(
         bootstrapper: Bootstrapper<Action>?,
         eventsPublisher: EventsPublisher<Action, Effect, State, Event>?,
         coroutineContext: CoroutineContext,
-        threadVerifier: ThreadVerifier
+        threadVerifier: ThreadVerifier,
     ): Feature<Intent, State, Event> {
         if (name == null) {
             return delegate.create(
@@ -37,7 +37,7 @@ fun LoggingFeatureFactory(
                 bootstrapper = bootstrapper,
                 eventsPublisher = eventsPublisher,
                 coroutineContext = coroutineContext,
-                threadVerifier = threadVerifier
+                threadVerifier = threadVerifier,
             )
         }
 
@@ -78,7 +78,7 @@ fun LoggingFeatureFactory(
                 }
             },
             coroutineContext = coroutineContext,
-            threadVerifier = threadVerifier
+            threadVerifier = threadVerifier,
         )
 
         return object : Feature<Intent, State, Event> by origin {

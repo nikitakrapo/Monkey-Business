@@ -17,7 +17,7 @@ class CoreDependencies(
 ) {
     fun homeDependencies(
         transactionAddRouter: TransactionAddRouter,
-        profileEditRouter: ProfileEditRouter
+        profileEditRouter: ProfileEditRouter,
     ): HomeDependencies {
         val bearerTokensProvider = BearerTokensProviderImpl(accountManager)
         return HomeDependencies(

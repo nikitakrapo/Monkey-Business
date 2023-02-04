@@ -29,7 +29,6 @@ import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import com.nikitakrapo.monkeybusiness.finances.MoneyAmountTextProvider.createText
-import kotlinx.datetime.Instant
 
 @Composable
 fun TransactionCard(
@@ -53,19 +52,18 @@ fun TransactionCard(
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primaryContainer),
         ) {
-
         }
         Column {
             Text(
                 text = transaction.name,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = transaction.id,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -79,7 +77,7 @@ fun TransactionCard(
             Text(
                 text = moneyText,
                 style = MaterialTheme.typography.titleMedium,
-                color = color ?: MaterialTheme.colorScheme.onSurface
+                color = color ?: MaterialTheme.colorScheme.onSurface,
             )
         }
     }
@@ -99,7 +97,7 @@ fun TransactionCard_Preview() {
                     timestampMs = 0,
                     name = "taxi expenses",
                 ),
-                onClick = {}
+                onClick = {},
             )
         }
     }

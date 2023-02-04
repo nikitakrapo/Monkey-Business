@@ -15,7 +15,7 @@ internal class TransactionsApi(
 ) {
     private val client = createHttpClient(
         baseUrl = TRANSACTIONS_HOST,
-        clientAuth = ClientAuth.Bearer(bearerTokensProvider = bearerTokensProvider)
+        clientAuth = ClientAuth.Bearer(bearerTokensProvider = bearerTokensProvider),
     )
 
     suspend fun postTransaction(request: TransactionRequest) {

@@ -28,13 +28,13 @@ internal actual object FirebaseAuthProvider : AuthProvider {
     }
 
     override suspend fun getIdToken(
-        forceRefresh: Boolean
+        forceRefresh: Boolean,
     ): String? = suspendCoroutine { continuation ->
         firebaseAuth.currentUser?.getIDTokenResultForcingRefresh(
             forceRefresh = forceRefresh,
             completion = continuation.completionHandler { result ->
                 result?.token
-            }
+            },
         )
     }
 
@@ -47,7 +47,7 @@ internal actual object FirebaseAuthProvider : AuthProvider {
             password = password,
             completion = continuation.completionHandler { result ->
                 result?.user?.toDomainModel()
-            }
+            },
         )
     }
 
@@ -60,7 +60,7 @@ internal actual object FirebaseAuthProvider : AuthProvider {
             password = password,
             completion = continuation.completionHandler { result ->
                 result?.user?.toDomainModel()
-            }
+            },
         )
     }
 
@@ -75,7 +75,7 @@ internal actual object FirebaseAuthProvider : AuthProvider {
                 request.username?.let { displayName = it }
             }
             firebaseRequest.commitChangesWithCompletion(
-                completion = continuation.noArgCompletionHandler()
+                completion = continuation.noArgCompletionHandler(),
             )
         }
 

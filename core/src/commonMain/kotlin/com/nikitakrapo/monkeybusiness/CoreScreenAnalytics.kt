@@ -3,7 +3,7 @@ package com.nikitakrapo.monkeybusiness
 import com.nikitakrapo.analytics.AnalyticsManager
 
 class CoreScreenAnalytics(
-    private val analytics: AnalyticsManager
+    private val analytics: AnalyticsManager,
 ) {
 
     fun onHomeShown() {

@@ -44,7 +44,7 @@ class MainActivity : FragmentActivity() {
                 analyticsManager = mainActivityComponent.analyticsManager,
                 accountManager = mainActivityComponent.accountManager,
                 platformContext = PlatformContext(context = applicationContext),
-            )
+            ),
         )
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -56,7 +56,7 @@ class MainActivity : FragmentActivity() {
                 systemUiController.setSystemBarsColor(
                     color = Color.Transparent,
                     darkIcons = useDarkIcons,
-                    isNavigationBarContrastEnforced = false
+                    isNavigationBarContrastEnforced = false,
                 )
             }
 
@@ -64,7 +64,7 @@ class MainActivity : FragmentActivity() {
                 Surface {
                     ConstraintLayout(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxSize(),
                     ) {
                         val (coreScreen, debugButton) = createRefs()
 
@@ -74,7 +74,7 @@ class MainActivity : FragmentActivity() {
                                 .constrainAs(coreScreen) {
                                     centerTo(parent)
                                 },
-                            component = coreComponent
+                            component = coreComponent,
                         )
 
                         // TODO: make testing abstraction
@@ -91,7 +91,7 @@ class MainActivity : FragmentActivity() {
                                             .getOrNull()
                                         this@MainActivity.copyToClipboard("UUID", token.toString())
                                     }
-                                }
+                                },
                             )
                         }
                     }

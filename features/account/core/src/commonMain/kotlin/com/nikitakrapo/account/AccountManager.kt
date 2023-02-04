@@ -13,17 +13,17 @@ interface AccountManager {
     suspend fun createAccount(
         email: String,
         password: String,
-        username: String
+        username: String,
     ): Result<Account>
 
     suspend fun login(
         email: String,
-        password: String
+        password: String,
     ): Result<Account>
 
     fun logout(): Result<Boolean>
 
     suspend fun updateAccount(
-        configure: AccountUpdateRequest.() -> Unit
+        configure: AccountUpdateRequest.() -> Unit,
     ): Result<Unit>
 }

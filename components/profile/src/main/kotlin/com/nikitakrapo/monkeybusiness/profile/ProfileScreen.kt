@@ -13,7 +13,6 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,14 +39,14 @@ fun ProfileScreen(
                 .fillMaxWidth(),
             displayName = state.displayName,
             profileImageUrl = state.profileImageUrl,
-            onEditClick = component::onEditClicked
+            onEditClick = component::onEditClicked,
         )
         Spacer(modifier = Modifier.height(12.dp))
         FilledTonalButton(onClick = component::onLogoutClicked) {
             Icon(
                 modifier = Modifier.size(ButtonDefaults.IconSize),
                 imageVector = Icons.Default.ExitToApp,
-                contentDescription = null
+                contentDescription = null,
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             Text("Logout")
@@ -57,7 +56,7 @@ fun ProfileScreen(
 
 @Preview(
     widthDp = 360,
-    heightDp = 720
+    heightDp = 720,
 )
 @Composable
 fun ProfileDetailsScreen_Preview_Username() {
@@ -65,8 +64,8 @@ fun ProfileDetailsScreen_Preview_Username() {
         Surface {
             ProfileScreen(
                 component = PreviewProfileComponent(
-                    displayName = "nikitakrapo"
-                )
+                    displayName = "nikitakrapo",
+                ),
             )
         }
     }
@@ -79,8 +78,8 @@ fun PreviewProfileComponent(
         get() = MutableStateFlow(
             ProfileComponent.State(
                 displayName = displayName,
-                null
-            )
+                null,
+            ),
         )
 
     override fun onEditClicked() {}

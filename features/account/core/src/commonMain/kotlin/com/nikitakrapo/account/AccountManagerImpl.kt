@@ -6,7 +6,7 @@ import com.nikitakrapo.account.models.AccountUpdateRequest
 import com.nikitakrapo.analytics.AnalyticsManager
 import kotlinx.coroutines.flow.StateFlow
 
-//TODO: handle exceptions properly
+// TODO: handle exceptions properly
 class AccountManagerImpl(
     analyticsManager: AnalyticsManager,
 ) : AccountManager {
@@ -31,7 +31,7 @@ class AccountManagerImpl(
             analytics.onLoginStarted(email)
             val account = authProvider.signInWithEmailAndPassword(
                 email = email,
-                password = password
+                password = password,
             ) ?: throw IllegalStateException()
             analytics.onLoginSucceeded()
             Result.success(account)
@@ -44,13 +44,13 @@ class AccountManagerImpl(
     override suspend fun createAccount(
         email: String,
         password: String,
-        username: String
+        username: String,
     ): Result<Account> {
         return try {
             analytics.onCreateAccountStarted(email)
             val account = authProvider.createUserWithEmailAndPassword(
                 email = email,
-                password = password
+                password = password,
             ) ?: throw IllegalStateException()
             analytics.onCreateAccountStarted(email)
             Result.success(account)
@@ -73,7 +73,7 @@ class AccountManagerImpl(
     }
 
     override suspend fun updateAccount(
-        configure: AccountUpdateRequest.() -> Unit
+        configure: AccountUpdateRequest.() -> Unit,
     ): Result<Unit> {
         val request = AccountUpdateRequest().apply(configure)
         return Result.runCatching {

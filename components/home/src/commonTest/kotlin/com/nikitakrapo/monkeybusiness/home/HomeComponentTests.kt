@@ -18,7 +18,7 @@ class HomeComponentTests {
     private fun component(): HomeComponent {
         return HomeComponentImpl(
             navigateToProfile = {},
-            navigateToSearch = {}
+            navigateToSearch = {},
         )
     }
 }

@@ -1,10 +1,10 @@
 package com.nikitakrapo.account.firebase
 
-import com.nikitakrapo.account.models.AccountUpdateRequest
 import com.nikitakrapo.account.models.Account
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import kotlinx.coroutines.flow.StateFlow
 
-//TODO: map exceptions to [AuthException]
+// TODO: map exceptions to [AuthException]
 interface AuthProvider {
 
     val account: StateFlow<Account?>

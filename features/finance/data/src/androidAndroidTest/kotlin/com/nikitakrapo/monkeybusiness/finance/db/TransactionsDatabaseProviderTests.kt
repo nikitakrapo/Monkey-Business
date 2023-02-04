@@ -6,7 +6,6 @@ import com.nikitakrapo.monkeybusiness.db.DatabaseDriverFactory
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
-import kotlinx.datetime.Instant
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

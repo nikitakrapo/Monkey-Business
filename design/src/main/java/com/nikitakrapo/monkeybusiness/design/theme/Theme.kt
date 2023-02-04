@@ -35,7 +35,7 @@ private val LightColors = lightColorScheme(
     inverseSurface = md_theme_light_inverseSurface,
     inversePrimary = md_theme_light_inversePrimary,
     surfaceTint = md_theme_light_surfaceTint,
-    scrim = Color.Black.copy(alpha = 0.2f)
+    scrim = Color.Black.copy(alpha = 0.2f),
 )
 
 private val DarkColors = darkColorScheme(
@@ -66,13 +66,13 @@ private val DarkColors = darkColorScheme(
     inverseSurface = md_theme_dark_inverseSurface,
     inversePrimary = md_theme_dark_inversePrimary,
     surfaceTint = md_theme_dark_surfaceTint,
-    scrim = Color.Black.copy(alpha = 0.2f)
+    scrim = Color.Black.copy(alpha = 0.2f),
 )
 
 @Composable
 fun MonkeyTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colors = if (!useDarkTheme) {
         LightColors
@@ -83,6 +83,6 @@ fun MonkeyTheme(
     MaterialTheme(
         colorScheme = colors,
         typography = AppTypography,
-        content = content
+        content = content,
     )
 }

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
@@ -56,26 +55,26 @@ fun DebugButton(
             }
             .clip(MaterialTheme.shapes.medium)
             .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
-            .animateContentSize()
+            .animateContentSize(),
     ) {
         Row(
             modifier = Modifier
-                .defaultMinSize(minWidth = if (debugViewExpanded) 200.dp else 0.dp)
+                .defaultMinSize(minWidth = if (debugViewExpanded) 200.dp else 0.dp),
         ) {
             IconButton(
                 modifier = Modifier.clip(CircleShape),
-                onClick = { debugViewExpanded = !debugViewExpanded }
+                onClick = { debugViewExpanded = !debugViewExpanded },
             ) {
                 Crossfade(targetState = debugViewExpanded) { isExpanded ->
                     if (isExpanded) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     } else {
                         Icon(
                             imageVector = Icons.Default.Settings,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 }
@@ -85,7 +84,7 @@ fun DebugButton(
                 Text(
                     modifier = Modifier.align(Alignment.CenterVertically),
                     text = "Debug panel",
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
         }
@@ -93,18 +92,18 @@ fun DebugButton(
         if (debugViewExpanded) {
             Column(
                 modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
             ) {
                 DebugItem(
                     titleText = "UUID",
                     subtitleText = "Copy UUID",
-                    onClick = onUuidClick
+                    onClick = onUuidClick,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 DebugItem(
                     titleText = "Crash app",
                     subtitleText = "Check crashlytics",
-                    onClick = { throw Exception("Crash from debug panel") }
+                    onClick = { throw Exception("Crash from debug panel") },
                 )
             }
         }
@@ -116,23 +115,23 @@ fun DebugItem(
     modifier: Modifier = Modifier,
     titleText: String,
     subtitleText: String?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.7f))
             .clickable(onClick = onClick)
-            .padding(6.dp)
+            .padding(6.dp),
     ) {
         Text(
             text = titleText,
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
         )
         subtitleText?.let {
             Text(
                 text = it,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
             )
         }
     }

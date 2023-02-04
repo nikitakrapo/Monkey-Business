@@ -6,8 +6,6 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
-import com.nikitakrapo.account.currentAccount
-import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.monkeybusiness.finances.FinancesComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
 import com.nikitakrapo.navigation.stack.childStackFlow
@@ -15,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class HomeComponentImpl(
     componentContext: ComponentContext,
-    private val dependencies: HomeDependencies
+    private val dependencies: HomeDependencies,
 ) : HomeComponent, ComponentContext by componentContext {
 
     private val analytics = HomeScreenAnalytics(dependencies.analyticsManager)
@@ -55,13 +53,13 @@ class HomeComponentImpl(
             FinancesComponentImpl(
                 componentContext = componentContext,
                 dependencies = dependencies.financesDependencies(),
-            )
+            ),
         )
         is HomeScreen.Profile -> HomeComponent.Child.Profile(
             ProfileComponentImpl(
                 componentContext = componentContext,
                 dependencies = dependencies.profileDependencies(),
-            )
+            ),
         )
     }
 }

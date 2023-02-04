@@ -7,7 +7,7 @@ import com.arkivanov.essenty.statekeeper.StateKeeperDispatcher
 import kotlin.reflect.KClass
 
 class TestStateKeeperDispatcher(
-    initialSavedState: ParcelableContainer? = null
+    initialSavedState: ParcelableContainer? = null,
 ) : StateKeeperDispatcher {
 
     private val savedState: MutableMap<String, ParcelableContainer>? = initialSavedState?.consume<SavedState>()?.map
@@ -17,7 +17,7 @@ class TestStateKeeperDispatcher(
 
     override fun save(): ParcelableContainer {
         val state = TestParcelableContainer(
-            SavedState(suppliers.mapValuesTo(HashMap()) { TestParcelableContainer(it.value()) })
+            SavedState(suppliers.mapValuesTo(HashMap()) { TestParcelableContainer(it.value()) }),
         )
         lastSavedState = state
 
@@ -42,6 +42,6 @@ class TestStateKeeperDispatcher(
     override fun isRegistered(key: String): Boolean = key in suppliers
 
     private class SavedState(
-        val map: MutableMap<String, ParcelableContainer>
+        val map: MutableMap<String, ParcelableContainer>,
     ) : Parcelable by ParcelableStub()
 }

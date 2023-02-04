@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.ExperimentalMaterialApi
@@ -76,7 +75,7 @@ fun BottomSheet(
                 state = swipeableState,
                 anchors = anchorsPx,
                 thresholds = { _, _ -> FractionalThreshold(DEFAULT_ANCHOR_THRESHOLD) },
-                orientation = Orientation.Vertical
+                orientation = Orientation.Vertical,
             )
             .imePadding(),
     ) {
@@ -113,7 +112,7 @@ fun BottomSheetContainer(
     modifier: Modifier = Modifier,
     yOffset: Dp,
     height: Dp,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Surface(
@@ -125,14 +124,14 @@ fun BottomSheetContainer(
         color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.extraLarge.copy(
             bottomEnd = ZeroCornerSize,
-            bottomStart = ZeroCornerSize
-        )
+            bottomStart = ZeroCornerSize,
+        ),
     ) {
         Box(
             modifier = modifier
                 .clickable(
                     interactionSource = interactionSource,
-                    indication = null
+                    indication = null,
                 ) {}
                 .navigationBarsPadding(),
         ) {
@@ -140,7 +139,7 @@ fun BottomSheetContainer(
             DragHandle(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 12.dp)
+                    .padding(top = 12.dp),
             )
         }
     }
@@ -162,7 +161,7 @@ fun DragHandle(
                 .clip(CircleShape)
                 .background(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
-                        .copy(alpha = 0.4f)
+                        .copy(alpha = 0.4f),
                 ),
         )
     }

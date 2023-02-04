@@ -5,9 +5,7 @@ import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditComponent.State
 import com.nikitakrapo.mvi.feature.FeatureFactory
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -71,8 +69,10 @@ class ProfileEditComponentImpl(
         eventsPublisher = { action, effect, state ->
             if (effect is Effect.SavingFinished && effect.result.isSuccess) {
                 Event.SavingFinishedSuccessfully
-            } else null
-        }
+            } else {
+                null
+            }
+        },
     )
 
     override fun onUsernameTextChanged(text: String) {

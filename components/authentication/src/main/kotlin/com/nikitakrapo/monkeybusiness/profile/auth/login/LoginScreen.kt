@@ -1,7 +1,6 @@
 package com.nikitakrapo.monkeybusiness.profile.auth.login
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -43,9 +42,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.constraintlayout.compose.ChainStyle
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import com.nikitakrapo.monkeybusiness.authentication.R
 import com.nikitakrapo.monkeybusiness.design.components.PasswordOutlinedTextField
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
@@ -73,14 +69,14 @@ fun LoginScreen(
                 onClick = {
                     focusManager.clearFocus()
                 },
-                indication = null
-            )
+                indication = null,
+            ),
     ) {
         AnimatedVisibility(
             modifier = Modifier.align(Alignment.Center),
             enter = fadeIn(),
             exit = fadeOut(),
-            visible = state.isLoading
+            visible = state.isLoading,
         ) {
             Box(
                 modifier = Modifier
@@ -103,7 +99,7 @@ fun LoginScreen(
                     onClick = {
                         focusManager.clearFocus()
                     },
-                    indication = null
+                    indication = null,
                 ),
         ) {
             OutlinedTextField(
@@ -112,7 +108,7 @@ fun LoginScreen(
                     .focusRequester(focusRequester),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
+                    imeAction = ImeAction.Next,
                 ),
                 enabled = !state.isLoading,
                 value = state.emailText,
@@ -134,15 +130,15 @@ fun LoginScreen(
                     onDone = {
                         focusManager.clearFocus()
                         component.onLoginClicked()
-                    }
+                    },
                 ),
-                label = { Text(stringResource(R.string.password_hint)) }
+                label = { Text(stringResource(R.string.password_hint)) },
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             AnimatedVisibility(
-                visible = state.error?.isNotEmpty() == true
+                visible = state.error?.isNotEmpty() == true,
             ) {
                 Row {
                     Text(
@@ -156,14 +152,14 @@ fun LoginScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 TextButton(
                     enabled = !state.isLoading,
                     onClick = {
                         focusManager.clearFocus()
                         component.onRegistrationClicked()
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.create_account))
                 }
@@ -173,7 +169,7 @@ fun LoginScreen(
                     onClick = {
                         focusManager.clearFocus()
                         component.onLoginClicked()
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.login_common))
                 }
@@ -191,7 +187,7 @@ fun LoginScreen_Preview() {
     MonkeyTheme {
         Surface {
             LoginScreen(
-                component = PreviewLoginComponent()
+                component = PreviewLoginComponent(),
             )
         }
     }
@@ -208,7 +204,7 @@ fun LoginScreen_Preview_Loading() {
             LoginScreen(
                 component = PreviewLoginComponent(
                     isLoading = true,
-                )
+                ),
             )
         }
     }
@@ -224,8 +220,8 @@ fun LoginScreen_Preview_Error() {
         Surface {
             LoginScreen(
                 component = PreviewLoginComponent(
-                    error = "Your email is badly formatted"
-                )
+                    error = "Your email is badly formatted",
+                ),
             )
         }
     }
@@ -241,8 +237,8 @@ fun PreviewLoginComponent(
                 emailText = "",
                 passwordText = "",
                 isLoading = isLoading,
-                error = error
-            )
+                error = error,
+            ),
         )
 
     override fun onEmailTextChanged(text: String) {}

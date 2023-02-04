@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun CoreScreen(
     modifier: Modifier = Modifier,
-    component: CoreComponent
+    component: CoreComponent,
 ) {
     val childStack by component.childStack.collectAsState()
     val modalChildStack by component.modalChildStack.collectAsState()
@@ -44,7 +44,7 @@ fun CoreScreen(
             stack = childStack,
             modifier = Modifier
                 .fillMaxSize(),
-            animation = stackAnimation(fade())
+            animation = stackAnimation(fade()),
         ) { createdChild ->
             when (val child = createdChild.instance) {
                 is CoreComponent.Child.Home -> HomeScreen(component = child.component)
@@ -61,7 +61,7 @@ fun CoreScreen(
             params = BottomSheetParams(
                 type = BottomSheetType.Modal,
                 offsetAnchors = mapOf(0.dp to 0, 360.dp to 1),
-                initialState = if (hasModal) 0 else 1
+                initialState = if (hasModal) 0 else 1,
             ),
             enabled = hasModal,
             onDismiss = component::dismissModal,
@@ -79,7 +79,7 @@ fun CoreScreen(
 
 @Preview(
     widthDp = 360,
-    heightDp = 720
+    heightDp = 720,
 )
 @Composable
 fun CoreScreen_Preview_Home() {
@@ -87,7 +87,7 @@ fun CoreScreen_Preview_Home() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Home)
+                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Home),
             )
         }
     }
@@ -95,7 +95,7 @@ fun CoreScreen_Preview_Home() {
 
 @Preview(
     widthDp = 360,
-    heightDp = 720
+    heightDp = 720,
 )
 @Composable
 fun CoreScreen_Preview_Authentication() {
@@ -103,14 +103,14 @@ fun CoreScreen_Preview_Authentication() {
         Surface {
             CoreScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Authentication)
+                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.Authentication),
             )
         }
     }
 }
 
 internal fun PreviewCoreComponent(
-    child: CoreComponentImpl.CoreScreen
+    child: CoreComponentImpl.CoreScreen,
 ) = object : CoreComponent {
     override val childStack: StateFlow<ChildStack<CoreComponentImpl.CoreScreen, CoreComponent.Child>>
         get() = MutableStateFlow(
@@ -118,20 +118,20 @@ internal fun PreviewCoreComponent(
                 configuration = child,
                 instance = when (child) {
                     CoreComponentImpl.CoreScreen.Home -> CoreComponent.Child.Home(
-                        PreviewHomeComponent()
+                        PreviewHomeComponent(),
                     )
                     CoreComponentImpl.CoreScreen.Authentication -> CoreComponent.Child.Authentication(
-                        PreviewAuthComponent()
+                        PreviewAuthComponent(),
                     )
-                }
-            )
+                },
+            ),
         )
     override val modalChildStack: StateFlow<ChildStack<*, CoreComponent.ModalChild>>
         get() = MutableStateFlow(
             ChildStack(
                 configuration = CoreComponentImpl.CoreModalScreen.None,
-                instance = CoreComponent.ModalChild.None
-            )
+                instance = CoreComponent.ModalChild.None,
+            ),
         )
 
     override fun dismissModal() {}

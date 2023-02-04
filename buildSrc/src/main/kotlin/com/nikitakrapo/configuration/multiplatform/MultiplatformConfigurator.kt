@@ -1,7 +1,6 @@
 package com.nikitakrapo.configuration.multiplatform
 
 import com.nikitakrapo.configuration.android.setupAndroidLibrary
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
 import com.nikitakrapo.sourcesets.DefaultMultiplatformSourceSets
 import com.nikitakrapo.sourcesets.MultiplatformSourceSets
 import org.gradle.api.Project

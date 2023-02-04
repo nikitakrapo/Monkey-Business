@@ -16,4 +16,3 @@ actual class ParcelableStub actual constructor() : Parcelable {
         override fun newArray(size: Int): Array<ParcelableStub?> = arrayOfNulls(size)
     }
 }
-

@@ -27,14 +27,14 @@ import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 @Composable
 fun SearchBarButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = modifier
             .clip(CircleShape)
             .border(1.dp, colorScheme.outline, shape = CircleShape)
             .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.width(10.dp))
         Icon(imageVector = Icons.Default.Search, contentDescription = null, tint = colorScheme.onSurfaceVariant)
@@ -42,7 +42,7 @@ fun SearchBarButton(
         Text(
             text = stringResource(R.string.search),
             style = typography.bodyLarge,
-            color = colorScheme.onSurfaceVariant
+            color = colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -55,9 +55,9 @@ fun SearchBar_Preview() {
             SearchBarButton(
                 modifier = Modifier.size(
                     width = 300.dp,
-                    height = 48.dp
+                    height = 48.dp,
                 ),
-                onClick = {}
+                onClick = {},
             )
         }
     }

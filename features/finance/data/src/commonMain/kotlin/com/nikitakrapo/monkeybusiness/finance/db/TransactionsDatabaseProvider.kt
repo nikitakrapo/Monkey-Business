@@ -13,8 +13,8 @@ internal class TransactionsDatabaseProvider(
     private val transactionsDatabase = TransactionsDatabase(
         databaseDriverFactory.createDriver(
             schema = TransactionsDatabase.Schema,
-            name = "transactions.db"
-        )
+            name = "transactions.db",
+        ),
     )
     private val queries = transactionsDatabase.transactionsDatabaseQueries
 

@@ -10,7 +10,7 @@ plugins {
 
 setupMultiplatformModule(
     withUtils = true,
-    targets = ::multiplatformMobileTargets
+    targets = ::multiplatformMobileTargets,
 )
 
 kotlin {

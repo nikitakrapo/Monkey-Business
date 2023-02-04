@@ -24,9 +24,9 @@ fun TopNavigationBar(
             IconButton(onClick = navigationAction) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = stringResource(R.string.cd_navigate_back)
+                    contentDescription = stringResource(R.string.cd_navigate_back),
                 )
             }
-        }
+        },
     )
 }

@@ -32,7 +32,7 @@ fun <T : Any> Query<T>.asFlow(): Flow<Query<T>> = flow {
 }
 
 fun <T : Any> Flow<Query<T>>.mapToOne(
-    context: CoroutineContext = Dispatchers.Default
+    context: CoroutineContext = Dispatchers.Default,
 ): Flow<T> = map {
     withContext(context) {
         it.executeAsOne()
@@ -41,7 +41,7 @@ fun <T : Any> Flow<Query<T>>.mapToOne(
 
 fun <T : Any> Flow<Query<T>>.mapToOneOrDefault(
     defaultValue: T,
-    context: CoroutineContext = Dispatchers.Default
+    context: CoroutineContext = Dispatchers.Default,
 ): Flow<T> = map {
     withContext(context) {
         it.executeAsOneOrNull() ?: defaultValue
@@ -49,7 +49,7 @@ fun <T : Any> Flow<Query<T>>.mapToOneOrDefault(
 }
 
 fun <T : Any> Flow<Query<T>>.mapToOneOrNull(
-    context: CoroutineContext = Dispatchers.Default
+    context: CoroutineContext = Dispatchers.Default,
 ): Flow<T?> = map {
     withContext(context) {
         it.executeAsOneOrNull()
@@ -57,7 +57,7 @@ fun <T : Any> Flow<Query<T>>.mapToOneOrNull(
 }
 
 fun <T : Any> Flow<Query<T>>.mapToOneNotNull(
-    context: CoroutineContext = Dispatchers.Default
+    context: CoroutineContext = Dispatchers.Default,
 ): Flow<T> = mapNotNull {
     withContext(context) {
         it.executeAsOneOrNull()
@@ -65,7 +65,7 @@ fun <T : Any> Flow<Query<T>>.mapToOneNotNull(
 }
 
 fun <T : Any> Flow<Query<T>>.mapToList(
-    context: CoroutineContext = Dispatchers.Default
+    context: CoroutineContext = Dispatchers.Default,
 ): Flow<List<T>> = map {
     withContext(context) {
         it.executeAsList()

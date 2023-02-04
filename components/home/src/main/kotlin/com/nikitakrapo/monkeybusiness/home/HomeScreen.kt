@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -21,7 +20,6 @@ import androidx.constraintlayout.compose.Dimension
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
-import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.monkeybusiness.design.components.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.components.NavigationBarItemModel
 import com.nikitakrapo.monkeybusiness.design.icons.Wallet
@@ -37,7 +35,7 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    component: HomeComponent
+    component: HomeComponent,
 ) {
     val childStack by component.childStack.collectAsState()
 
@@ -57,16 +55,16 @@ fun HomeScreen(
                     height = Dimension.fillToConstraints
                 },
             stack = childStack,
-            animation = homeTabAnimation()
+            animation = homeTabAnimation(),
         ) { createdChild ->
             when (val child = createdChild.instance) {
                 is HomeComponent.Child.Finances -> FinancesScreen(
                     modifier = Modifier.fillMaxWidth(),
-                    component = child.component
+                    component = child.component,
                 )
                 is HomeComponent.Child.Profile -> ProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
-                    component = child.component
+                    component = child.component,
                 )
             }
         }
@@ -81,16 +79,16 @@ fun HomeScreen(
                     selected = childStack.active.instance is HomeComponent.Child.Finances,
                     onClick = component::onFinancesClicked,
                     icon = Icons.Default.Wallet,
-                    iconContentDescription = stringResource(R.string.cd_finances)
+                    iconContentDescription = stringResource(R.string.cd_finances),
                 ),
                 NavigationBarItemModel(
                     selected = childStack.active.instance is HomeComponent.Child.Profile,
                     onClick = component::onProfileClicked,
                     icon = Icons.Default.Person,
-                    iconContentDescription = stringResource(R.string.cd_profile)
-                )
+                    iconContentDescription = stringResource(R.string.cd_profile),
+                ),
             ),
-            windowInsets = WindowInsets.navigationBars
+            windowInsets = WindowInsets.navigationBars,
         )
     }
 }
@@ -105,7 +103,7 @@ fun HomeScreen_Preview_Finances() {
         Surface {
             HomeScreen(
                 modifier = Modifier.fillMaxSize(),
-                component = PreviewHomeComponent(HomeComponentImpl.HomeScreen.Finances)
+                component = PreviewHomeComponent(HomeComponentImpl.HomeScreen.Finances),
             )
         }
     }
@@ -122,8 +120,8 @@ fun HomeScreen_Preview_Profile() {
             HomeScreen(
                 modifier = Modifier.fillMaxSize(),
                 component = PreviewHomeComponent(
-                    HomeComponentImpl.HomeScreen.Profile
-                )
+                    HomeComponentImpl.HomeScreen.Profile,
+                ),
             )
         }
     }
@@ -139,13 +137,13 @@ fun PreviewHomeComponent(
                 configuration = screen,
                 instance = when (screen) {
                     HomeComponentImpl.HomeScreen.Finances -> HomeComponent.Child.Finances(
-                        PreviewFinancesComponent()
+                        PreviewFinancesComponent(),
                     )
                     is HomeComponentImpl.HomeScreen.Profile -> HomeComponent.Child.Profile(
-                        PreviewProfileComponent()
+                        PreviewProfileComponent(),
                     )
-                }
-            )
+                },
+            ),
         )
 
     override fun onFinancesClicked() {}

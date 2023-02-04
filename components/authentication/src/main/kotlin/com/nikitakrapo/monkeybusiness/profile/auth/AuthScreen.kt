@@ -1,6 +1,5 @@
 package com.nikitakrapo.monkeybusiness.profile.auth
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,14 +26,14 @@ fun AuthScreen(
     Children(
         stack = childStack,
         modifier = modifier,
-        animation = stackAnimation(slide())
+        animation = stackAnimation(slide()),
     ) { createdChild ->
         when (val child = createdChild.instance) {
             is AuthComponent.Child.Login -> LoginScreen(
-                component = child.component
+                component = child.component,
             )
             is AuthComponent.Child.Registration -> RegistrationScreen(
-                component = child.component
+                component = child.component,
             )
         }
     }
@@ -45,8 +44,8 @@ fun PreviewAuthComponent() = object : AuthComponent {
         get() = MutableStateFlow(
             ChildStack(
                 configuration = AuthComponentImpl.AuthScreen.Login,
-                instance = AuthComponent.Child.Login(PreviewLoginComponent())
-            )
+                instance = AuthComponent.Child.Login(PreviewLoginComponent()),
+            ),
         )
 
     override fun openLogin() {}

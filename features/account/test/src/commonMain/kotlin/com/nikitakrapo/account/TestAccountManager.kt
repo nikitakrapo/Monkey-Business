@@ -20,7 +20,7 @@ fun testAccountManager(
     override suspend fun createAccount(
         email: String,
         password: String,
-        username: String
+        username: String,
     ): Result<Account> {
         val newAccount = Account(
             uid = "uid",
@@ -34,7 +34,7 @@ fun testAccountManager(
 
     override suspend fun login(
         email: String,
-        password: String
+        password: String,
     ): Result<Account> {
         val newAccount = Account(
             uid = "uid",
@@ -52,7 +52,7 @@ fun testAccountManager(
     }
 
     override suspend fun updateAccount(
-        configure: AccountUpdateRequest.() -> Unit
+        configure: AccountUpdateRequest.() -> Unit,
     ): Result<Unit> {
         val request = AccountUpdateRequest().apply(configure)
         accountFlow.value = accountFlow.value?.copy(username = request.username)

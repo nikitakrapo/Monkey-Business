@@ -23,7 +23,7 @@ class LoginComponentImpl(
                 emailText = "",
                 passwordText = "",
                 isLoading = false,
-                error = null
+                error = null,
             ),
             intentToAction = { it },
             actor = { action, state ->
@@ -39,7 +39,7 @@ class LoginComponentImpl(
                                 },
                                 onFailure = {
                                     emit(Effect.FinishLoading(Result.failure(it)))
-                                }
+                                },
                             )
                     }
                 }
@@ -48,22 +48,22 @@ class LoginComponentImpl(
                 when (it) {
                     is Effect.EmailChanged -> copy(
                         emailText = it.text,
-                        error = null
+                        error = null,
                     )
                     is Effect.PasswordChanged -> copy(
                         passwordText = it.text,
-                        error = null
+                        error = null,
                     )
                     is Effect.FinishLoading -> copy(
                         error = it.result.exceptionOrNull()?.message,
-                        isLoading = false
+                        isLoading = false,
                     )
                     Effect.StartLoading -> copy(
                         isLoading = true,
-                        error = null
+                        error = null,
                     )
                 }
-            }
+            },
         )
     }
 

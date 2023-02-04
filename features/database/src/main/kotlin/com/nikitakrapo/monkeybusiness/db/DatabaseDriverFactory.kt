@@ -9,7 +9,7 @@ actual class DatabaseDriverFactory actual constructor(
 ) {
     actual fun createDriver(
         schema: SqlDriver.Schema,
-        name: String
+        name: String,
     ): SqlDriver {
         return AndroidSqliteDriver(schema, platformContext.context, name)
     }

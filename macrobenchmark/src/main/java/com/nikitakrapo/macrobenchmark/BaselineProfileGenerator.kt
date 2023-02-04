@@ -15,6 +15,6 @@ class BaselineProfileGenerator {
         packageName = "com.nikitakrapo.monkeybusiness",
         profileBlock = {
             startActivityAndWait()
-        }
+        },
     )
 }

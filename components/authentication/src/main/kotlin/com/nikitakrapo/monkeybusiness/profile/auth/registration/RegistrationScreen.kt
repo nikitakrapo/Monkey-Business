@@ -68,14 +68,14 @@ fun RegistrationScreen(
                 onClick = {
                     focusManager.clearFocus()
                 },
-                indication = null
-            )
+                indication = null,
+            ),
     ) {
         AnimatedVisibility(
             modifier = Modifier.align(Alignment.Center),
             enter = fadeIn(),
             exit = fadeOut(),
-            visible = state.isLoading
+            visible = state.isLoading,
         ) {
             Box(
                 modifier = Modifier
@@ -108,7 +108,7 @@ fun RegistrationScreen(
                     value = state.username,
                     onValueChange = component::onUsernameTextChanged,
                     keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
+                        imeAction = ImeAction.Next,
                     ),
                     label = { Text(stringResource(R.string.username_hint)) },
                     singleLine = true,
@@ -125,7 +125,7 @@ fun RegistrationScreen(
                     onValueChange = component::onEmailTextChanged,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next
+                        imeAction = ImeAction.Next,
                     ),
                     label = { Text(stringResource(R.string.email_hint)) },
                     singleLine = true,
@@ -144,15 +144,15 @@ fun RegistrationScreen(
                         onDone = {
                             focusManager.clearFocus()
                             component.onRegisterClicked()
-                        }
+                        },
                     ),
-                    label = { Text(stringResource(R.string.password_hint)) }
+                    label = { Text(stringResource(R.string.password_hint)) },
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 AnimatedVisibility(
-                    visible = state.error?.isNotEmpty() == true
+                    visible = state.error?.isNotEmpty() == true,
                 ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
@@ -168,7 +168,7 @@ fun RegistrationScreen(
                     onClick = {
                         focusManager.clearFocus()
                         component.onRegisterClicked()
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.register_common))
                 }
@@ -194,8 +194,8 @@ fun RegistrationScreen_Preview_Loading() {
         Surface {
             RegistrationScreen(
                 component = PreviewRegistrationComponent(
-                    isLoading = true
-                )
+                    isLoading = true,
+                ),
             )
         }
     }
@@ -208,8 +208,8 @@ fun RegistrationScreen_Preview_Error() {
         Surface {
             RegistrationScreen(
                 component = PreviewRegistrationComponent(
-                    error = "This email is already in use"
-                )
+                    error = "This email is already in use",
+                ),
             )
         }
     }
@@ -226,8 +226,8 @@ fun PreviewRegistrationComponent(
                 email = "email@email.com",
                 password = "samplepass",
                 isLoading = isLoading,
-                error = error
-            )
+                error = error,
+            ),
         )
 
     override fun onUsernameTextChanged(text: String) {}

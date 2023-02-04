@@ -10,7 +10,7 @@ actual class DatabaseDriverFactory actual constructor(
 ) {
     actual fun createDriver(
         schema: SqlDriver.Schema,
-        name: String
+        name: String,
     ): SqlDriver {
         return NativeSqliteDriver(schema, name)
     }

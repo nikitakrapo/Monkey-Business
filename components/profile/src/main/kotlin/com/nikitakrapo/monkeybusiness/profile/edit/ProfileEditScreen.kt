@@ -10,11 +10,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,7 +37,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.monkeybusiness.design.components.UserAvatar
 import com.nikitakrapo.monkeybusiness.profile.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,7 +64,7 @@ fun ProfileEditScreen(
                     onClick = {
                         focusManager.clearFocus()
                     },
-                    indication = null
+                    indication = null,
                 )
                 .padding(horizontal = 12.dp)
                 .padding(top = 12.dp),
@@ -79,21 +75,21 @@ fun ProfileEditScreen(
             ) {
                 IconButton(
                     enabled = !state.isLoading,
-                    onClick = component::onNavigateBackClicked
+                    onClick = component::onNavigateBackClicked,
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(R.string.cd_navigate_back)
+                        contentDescription = stringResource(R.string.cd_navigate_back),
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(
                     enabled = !state.isLoading,
-                    onClick = component::onSaveChangesClicked
+                    onClick = component::onSaveChangesClicked,
                 ) {
                     Icon(
                         imageVector = Icons.Default.Check,
-                        contentDescription = stringResource(R.string.cd_save_changes)
+                        contentDescription = stringResource(R.string.cd_save_changes),
                     )
                 }
             }
@@ -105,13 +101,13 @@ fun ProfileEditScreen(
                 value = state.username,
                 onValueChange = component::onUsernameTextChanged,
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
+                    imeAction = ImeAction.Next,
                 ),
                 label = { Text(stringResource(R.string.username_hint)) },
                 singleLine = true,
             )
             AnimatedVisibility(
-                visible = state.error?.isNotEmpty() == true
+                visible = state.error?.isNotEmpty() == true,
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),

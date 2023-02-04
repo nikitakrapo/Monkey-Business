@@ -3,7 +3,7 @@ package com.nikitakrapo.monkeybusiness.finance.models
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-//TODO: move to shared BE & Mobile module
+// TODO: move to shared BE & Mobile module
 @Serializable
 data class Transaction(
     @SerialName("id")
@@ -13,5 +13,5 @@ data class Transaction(
     @SerialName("moneyAmount")
     val moneyAmount: MoneyAmount,
     @SerialName("timestampMs")
-    val timestampMs: Long
+    val timestampMs: Long,
 )

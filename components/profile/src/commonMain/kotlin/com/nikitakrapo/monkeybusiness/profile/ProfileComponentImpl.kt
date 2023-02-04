@@ -23,7 +23,7 @@ class ProfileComponentImpl(
         ProfileComponent.State(
             displayName = account?.getDisplayName() ?: "ERROR",
             profileImageUrl = account?.photoUrl,
-        )
+        ),
     )
     override val state: StateFlow<ProfileComponent.State>
         get() = stateFlow.asStateFlow()

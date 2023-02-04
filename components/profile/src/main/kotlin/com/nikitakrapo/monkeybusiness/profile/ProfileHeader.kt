@@ -35,7 +35,7 @@ fun ProfileHeader(
             modifier = Modifier
                 .size(52.dp),
             imageUrl = profileImageUrl,
-            onClick = {}
+            onClick = {},
         )
 
         Spacer(modifier = Modifier.width(12.dp))
@@ -52,7 +52,7 @@ fun ProfileHeader(
         IconButton(onClick = onEditClick) {
             Icon(
                 imageVector = Icons.Default.Edit,
-                contentDescription = stringResource(R.string.cd_edit_account)
+                contentDescription = stringResource(R.string.cd_edit_account),
             )
         }
     }
@@ -70,7 +70,7 @@ fun ProfileHeader_Preview() {
                 modifier = Modifier.padding(12.dp),
                 displayName = "nikitakrapo",
                 profileImageUrl = null,
-                onEditClick = {}
+                onEditClick = {},
             )
         }
     }
@@ -88,7 +88,7 @@ fun ProfileHeader_Preview_LongUsername() {
                 modifier = Modifier.padding(12.dp),
                 displayName = "longusername16lt",
                 profileImageUrl = null,
-                onEditClick = {}
+                onEditClick = {},
             )
         }
     }

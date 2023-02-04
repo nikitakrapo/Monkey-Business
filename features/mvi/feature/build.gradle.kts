@@ -1,4 +1,4 @@
-import com.nikitakrapo.configuration.multiplatform.iosCompat
+
 import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
 import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
 

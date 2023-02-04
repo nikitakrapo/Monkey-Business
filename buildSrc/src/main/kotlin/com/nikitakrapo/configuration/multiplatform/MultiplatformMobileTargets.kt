@@ -1,6 +1,5 @@
 package com.nikitakrapo.configuration.multiplatform
 
-import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 fun multiplatformMobileTargets(extension: KotlinMultiplatformExtension) = with(extension) {

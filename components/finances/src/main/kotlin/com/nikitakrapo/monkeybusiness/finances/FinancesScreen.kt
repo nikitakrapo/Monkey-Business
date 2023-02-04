@@ -17,7 +17,6 @@ import com.nikitakrapo.monkeybusiness.finances.balance.BalanceCard
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionsList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.datetime.Instant
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -37,12 +36,12 @@ fun FinancesScreen(
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp),
                     balance = state.moneyAmount,
-                    onAddTransactionClicked = component::onAddTransactionClicked
+                    onAddTransactionClicked = component::onAddTransactionClicked,
                 )
             }
             TransactionsList(
                 transactions = state.transactionsList,
-                onTransactionClick = {}
+                onTransactionClick = {},
             )
         }
     }
@@ -54,7 +53,7 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
             FinancesComponent.State(
                 moneyAmount = MoneyAmount(
                     amount = 123456,
-                    currency = Currency.GBP
+                    currency = Currency.GBP,
                 ),
                 transactionsList = listOf(
                     Transaction(
@@ -62,10 +61,10 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
                         moneyAmount = MoneyAmount(1000, Currency.RUB),
                         timestampMs = 0,
                         name = "taxi expenses",
-                    )
+                    ),
                 ),
-                transactionsLoading = false
-            )
+                transactionsLoading = false,
+            ),
         )
 
     override fun onAddTransactionClicked() {}

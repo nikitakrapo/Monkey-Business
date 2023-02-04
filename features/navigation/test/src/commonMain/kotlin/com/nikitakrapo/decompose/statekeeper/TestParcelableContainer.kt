@@ -5,7 +5,7 @@ import com.arkivanov.essenty.parcelable.ParcelableContainer
 import kotlin.reflect.KClass
 
 class TestParcelableContainer(
-    var value: Parcelable? = null
+    var value: Parcelable? = null,
 ) : ParcelableContainer, Parcelable by ParcelableStub() {
 
     @Suppress("UNCHECKED_CAST")

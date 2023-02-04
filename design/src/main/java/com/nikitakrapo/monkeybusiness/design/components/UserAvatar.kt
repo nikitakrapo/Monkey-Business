@@ -34,10 +34,10 @@ fun UserAvatar(
             .clip(CircleShape)
             .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
-            containerColor = colorScheme.background
+            containerColor = colorScheme.background,
         ),
         shape = CircleShape,
-        border = BorderStroke(1.dp, colorScheme.onSurface)
+        border = BorderStroke(1.dp, colorScheme.onSurface),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Icon(
@@ -45,7 +45,7 @@ fun UserAvatar(
                     .align(Alignment.Center),
                 imageVector = Icons.Default.Person,
                 tint = colorScheme.onSurface,
-                contentDescription = null
+                contentDescription = null,
             )
         }
     }
@@ -59,7 +59,7 @@ fun UserAvatar_Preview() {
             UserAvatar(
                 modifier = Modifier.size(92.dp),
                 imageUrl = null,
-                onClick = {}
+                onClick = {},
             )
         }
     }

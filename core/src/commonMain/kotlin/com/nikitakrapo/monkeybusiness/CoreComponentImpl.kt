@@ -6,7 +6,6 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.replaceAll
-import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.currentAccount
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class CoreComponentImpl(
     componentContext: ComponentContext,
-    private val dependencies: CoreDependencies
+    private val dependencies: CoreDependencies,
 ) : CoreComponent, ComponentContext by componentContext {
 
     private val scope = coroutineScope(Dispatchers.Main)
@@ -44,7 +43,7 @@ class CoreComponentImpl(
             source = navigation,
             key = "CoreChildStack",
             initialConfiguration = getScreenForAuthState(
-                dependencies.accountManager.currentAccount
+                dependencies.accountManager.currentAccount,
             ),
             handleBackButton = true,
             childFactory = ::createChild,
@@ -64,7 +63,7 @@ class CoreComponentImpl(
             key = "CoreModalChildStack",
             initialConfiguration = CoreModalScreen.None,
             handleBackButton = true,
-            childFactory = ::createModalChild
+            childFactory = ::createModalChild,
         )
 
     @Parcelize
@@ -80,7 +79,7 @@ class CoreComponentImpl(
 
     private fun createChild(
         screen: CoreScreen,
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
     ): CoreComponent.Child = when (screen) {
         CoreScreen.Home -> {
             analytics.onHomeShown()
@@ -93,9 +92,9 @@ class CoreComponentImpl(
                         },
                         profileEditRouter = {
                             modalNavigation.bringToFront(CoreModalScreen.ProfileEdit)
-                        }
-                    )
-                )
+                        },
+                    ),
+                ),
             )
         }
         CoreScreen.Authentication -> {
@@ -104,7 +103,7 @@ class CoreComponentImpl(
                 AuthComponentImpl(
                     componentContext = componentContext,
                     dependencies = dependencies.authDependencies(),
-                )
+                ),
             )
         }
     }
@@ -123,7 +122,7 @@ class CoreComponentImpl(
 
     private fun createModalChild(
         screen: CoreModalScreen,
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
     ): CoreComponent.ModalChild = when (screen) {
         CoreModalScreen.None -> CoreComponent.ModalChild.None
         CoreModalScreen.TransactionAdd -> CoreComponent.ModalChild.TransactionAdd()
@@ -136,10 +135,10 @@ class CoreComponentImpl(
                         transformer = { stack ->
                             stack.filterNot { it is CoreModalScreen.ProfileEdit }
                         },
-                        onComplete = { _, _ -> }
+                        onComplete = { _, _ -> },
                     )
-                }
-            )
+                },
+            ),
         )
     }
 }

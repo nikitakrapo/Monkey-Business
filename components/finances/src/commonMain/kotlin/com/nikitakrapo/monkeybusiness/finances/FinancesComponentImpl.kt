@@ -27,10 +27,10 @@ class FinancesComponentImpl(
         initialState = State(
             moneyAmount = MoneyAmount(
                 amount = 123456,
-                currency = Currency.GBP
+                currency = Currency.GBP,
             ),
             transactionsList = null,
-            transactionsLoading = true
+            transactionsLoading = true,
         ),
         intentToAction = { it },
         reducer = { effect ->
@@ -52,7 +52,7 @@ class FinancesComponentImpl(
         },
         bootstrapper = {
             flowOf(Intent.ObserveTransactions)
-        }
+        },
     )
 
     override fun onAddTransactionClicked() {

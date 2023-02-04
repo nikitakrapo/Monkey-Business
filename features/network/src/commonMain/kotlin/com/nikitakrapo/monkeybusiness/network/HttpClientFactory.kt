@@ -35,18 +35,18 @@ object HttpClientFactory {
     }
 
     private fun HttpClientConfig<*>.installAuth(
-        clientAuth: ClientAuth
+        clientAuth: ClientAuth,
     ) = install(Auth) {
         when (clientAuth) {
             is ClientAuth.Bearer -> installBearerAuth(
-                bearerTokensProvider = clientAuth.bearerTokensProvider
+                bearerTokensProvider = clientAuth.bearerTokensProvider,
             )
             ClientAuth.None -> {}
         }
     }
 
     private fun Auth.installBearerAuth(
-        bearerTokensProvider: BearerTokensProvider
+        bearerTokensProvider: BearerTokensProvider,
     ) = bearer {
         loadTokens(bearerTokensProvider::getTokens)
         refreshTokens { bearerTokensProvider.refreshToken(oldTokens) }

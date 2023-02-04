@@ -1,7 +1,6 @@
 package com.nikitakrapo.monkeybusiness.home
 
 import com.nikitakrapo.account.AccountManager
-import com.nikitakrapo.account.BearerTokensProviderImpl
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.finance.TransactionsRepositoryImpl
@@ -22,7 +21,7 @@ class HomeDependencies(
     fun financesDependencies(): FinancesDependencies {
         val transactionsRepository = TransactionsRepositoryImpl(
             platformContext = platformContext,
-            bearerTokensProvider = bearerTokensProvider
+            bearerTokensProvider = bearerTokensProvider,
         )
         return FinancesDependencies(
             transactionsRepository = transactionsRepository,

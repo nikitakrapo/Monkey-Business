@@ -10,7 +10,7 @@ import org.gradle.kotlin.dsl.withGroovyBuilder
 internal fun defaultAndroidConfig() = AndroidConfig(
     minSdk = 24,
     targetSdk = 31,
-    compileSdk = 33
+    compileSdk = 33,
 )
 
 fun Project.setupAndroidLibrary() {
@@ -37,7 +37,7 @@ fun Project.setupAndroidApp(
 }
 
 internal fun Project.setupAndroidCommon(
-    config: AndroidConfig = defaultAndroidConfig()
+    config: AndroidConfig = defaultAndroidConfig(),
 ) {
     extensions.configure<BaseExtension> {
         compileSdkVersion(config.compileSdk)

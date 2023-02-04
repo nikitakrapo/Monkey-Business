@@ -4,15 +4,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
-import com.nikitakrapo.account.models.AccountUpdateRequest
 import com.nikitakrapo.account.models.Account
+import com.nikitakrapo.account.models.AccountUpdateRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.tasks.await
 
 @Suppress("FunctionName")
-internal actual object FirebaseAuthProvider: AuthProvider {
+internal actual object FirebaseAuthProvider : AuthProvider {
 
     private val firebaseAuth = Firebase.auth
 

@@ -7,11 +7,11 @@ import kotlin.reflect.KProperty
 
 inline operator fun <Intent : Any, State : Any, Event : Any> FeatureInstance<Intent, State, Event>.getValue(
     thisObj: Any?,
-    property: KProperty<*>
+    property: KProperty<*>,
 ) = feature
 
 fun <Intent : Any, State : Any, Event : Any> ComponentContext.createFeature(
-    factory: () -> Feature<Intent, State, Event>
+    factory: () -> Feature<Intent, State, Event>,
 ): FeatureInstance<Intent, State, Event> {
     return instanceKeeper.getOrCreate {
         object : FeatureInstance<Intent, State, Event> {

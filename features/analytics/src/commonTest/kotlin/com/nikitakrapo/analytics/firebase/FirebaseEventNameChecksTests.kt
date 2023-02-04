@@ -2,9 +2,6 @@ package com.nikitakrapo.analytics.firebase
 
 import kotlin.test.Test
 import kotlin.test.assertFails
-import kotlin.test.assertFailsWith
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 class FirebaseEventNameChecksTests {
 
