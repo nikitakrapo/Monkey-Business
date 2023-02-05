@@ -2,12 +2,14 @@ package com.nikitakrapo.monkeybusiness.design.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
@@ -22,11 +24,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.monkeybusiness.design.BorderSegment
-import com.nikitakrapo.monkeybusiness.design.segmentedBorder
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 
 private val minItemHeight = 40.dp
@@ -39,12 +39,19 @@ fun SegmentedSwitch(
     require(items.size >= 2) { "There should be >= 2 items in switch" }
 
     val itemWeight = remember(items) { 1f / items.size }
+    val itemsPadding = remember { 2.dp }
 
     Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Center,
+        modifier = modifier
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.outline)
+            .padding(itemsPadding),
+        horizontalArrangement = Arrangement.Center
     ) {
         items.forEachIndexed { index, segmentedSwitchItem ->
+            if (index != 0) {
+                Spacer(modifier = Modifier.width(itemsPadding))
+            }
             val alpha by animateFloatAsState(
                 targetValue = if (segmentedSwitchItem.isSelected) 0.4f else 0f
             )
@@ -59,8 +66,9 @@ fun SegmentedSwitch(
                     .background(
                         color = if (segmentedSwitchItem.isSelected) {
                             MaterialTheme.colorScheme.secondaryContainer.copy(alpha = alpha)
+                                .compositeOver(MaterialTheme.colorScheme.surface)
                         } else {
-                            Color.Transparent
+                            MaterialTheme.colorScheme.surface
                         }
                     )
                     .clickable { segmentedSwitchItem.onSelect() },
@@ -75,8 +83,6 @@ fun SegmentedSwitch(
 
 @Composable
 internal fun Modifier.segmentItem(
-    strokeWidth: Dp = 2.dp,
-    strokeColor: Color = MaterialTheme.colorScheme.outline,
     itemIndex: Int,
     lastIndex: Int
 ): Modifier {
@@ -86,20 +92,16 @@ internal fun Modifier.segmentItem(
                 topEnd = CornerSize(0),
                 bottomEnd = CornerSize(0)
             )
-            clip(shape).border(width = strokeWidth, color = strokeColor, shape = shape)
+            clip(shape)
         }
         lastIndex -> {
             val shape = CircleShape.copy(
                 topStart = CornerSize(0),
                 bottomStart = CornerSize(0)
             )
-            clip(shape).border(width = strokeWidth, color = strokeColor, shape = shape)
+            clip(shape)
         }
-        else -> segmentedBorder(
-            strokeWidth = strokeWidth,
-            color = strokeColor,
-            segments = setOf(BorderSegment.Top, BorderSegment.Bottom),
-        )
+        else -> this
     }
 }
 
