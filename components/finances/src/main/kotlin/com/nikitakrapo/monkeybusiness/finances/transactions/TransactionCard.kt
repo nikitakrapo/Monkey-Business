@@ -53,19 +53,11 @@ fun TransactionCard(
                 .background(MaterialTheme.colorScheme.primaryContainer),
         ) {
         }
-        Column {
-            Text(
-                text = transaction.name,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = transaction.id,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        Text(
+            text = transaction.name,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
         Spacer(modifier = Modifier.weight(1f))
         Column {
             val color = remember(transaction.moneyAmount.amount) {
