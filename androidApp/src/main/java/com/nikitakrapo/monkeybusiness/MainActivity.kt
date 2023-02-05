@@ -11,21 +11,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import com.arkivanov.decompose.defaultComponentContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.nikitakrapo.account.AccountManagerImpl
 import com.nikitakrapo.analytics.FirebaseAnalyticsManager
 import com.nikitakrapo.application.PlatformContext
-import com.nikitakrapo.monkeybusiness.ClipboardCopyManager.copyToClipboard
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
-import kotlinx.coroutines.launch
 
 class MainActivity : FragmentActivity() {
 
     private lateinit var mainActivityComponent: MainActivityComponent
     private lateinit var coreComponent: CoreComponent
+
+    private val accountManager get() = mainActivityComponent.accountManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,7 @@ class MainActivity : FragmentActivity() {
             componentContext = componentContext,
             dependencies = CoreDependencies(
                 analyticsManager = mainActivityComponent.analyticsManager,
-                accountManager = mainActivityComponent.accountManager,
+                accountManager = accountManager,
                 platformContext = PlatformContext(context = applicationContext),
             ),
         )
@@ -80,18 +79,11 @@ class MainActivity : FragmentActivity() {
                         // TODO: make testing abstraction
                         if (BuildConfig.DEBUG) {
                             DebugButton(
-                                modifier = Modifier
-                                    .constrainAs(debugButton) {
-                                        centerVerticallyTo(parent)
-                                        end.linkTo(parent.end)
-                                    },
-                                onUuidClick = {
-                                    lifecycleScope.launch {
-                                        val token = mainActivityComponent.accountManager.getToken()
-                                            .getOrNull()
-                                        this@MainActivity.copyToClipboard("UUID", token.toString())
-                                    }
+                                modifier = Modifier.constrainAs(debugButton) {
+                                    centerVerticallyTo(parent)
+                                    end.linkTo(parent.end)
                                 },
+                                accountManager = accountManager
                             )
                         }
                     }

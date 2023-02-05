@@ -24,20 +24,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.nikitakrapo.account.AccountManager
+import com.nikitakrapo.account.currentAccount
+import com.nikitakrapo.monkeybusiness.ClipboardCopyManager.copyToClipboard
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
 fun DebugButton(
     modifier: Modifier = Modifier,
-    onUuidClick: () -> Unit,
+    accountManager: AccountManager,
 ) {
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
 
@@ -95,15 +104,30 @@ fun DebugButton(
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
             ) {
                 DebugItem(
-                    titleText = "UUID",
-                    subtitleText = "Copy UUID",
-                    onClick = onUuidClick,
+                    titleText = "UID",
+                    subtitleText = "Copy user id",
+                    onClick = {
+                        val token = accountManager.currentAccount?.uid
+                        context.copyToClipboard("UUID", token.toString())
+                    },
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                DebugItem(
+                    titleText = "Bearer",
+                    subtitleText = "Copy token",
+                    onClick = {
+                        scope.launch {
+                            val token = accountManager.getToken()
+                                .getOrNull()
+                            context.copyToClipboard("token", token.toString())
+                        }
+                    },
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 DebugItem(
                     titleText = "Crash app",
                     subtitleText = "Check crashlytics",
-                    onClick = { throw Exception("Crash from debug panel") },
+                    onClick = { throw IllegalStateException("Crash from debug panel") },
                 )
             }
         }
