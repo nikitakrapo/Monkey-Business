@@ -12,6 +12,7 @@ import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.currentAccount
 import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.decompose.coroutines.coroutineScope
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponentImpl
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditComponentImpl
@@ -153,7 +154,16 @@ class CoreComponentImpl(
     ): CoreComponent.ModalChild = when (screen) {
         CoreModalScreen.None -> CoreComponent.ModalChild.None
         CoreModalScreen.TransactionAdd -> CoreComponent.ModalChild.TransactionAdd(
-
+            component = TransactionAddComponentImpl(
+                closeTransactionAdd = {
+                    modalNavigation.navigate(
+                        transformer = { stack ->
+                            stack.filterNot { it is CoreModalScreen.TransactionAdd }
+                        },
+                        onComplete = { _, _ -> },
+                    )
+                }
+            )
         )
         CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
             component = ProfileEditComponentImpl(

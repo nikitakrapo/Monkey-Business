@@ -31,10 +31,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,12 +51,18 @@ import com.nikitakrapo.monkeybusiness.design.components.SegmentedSwitchItem
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finances.R
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.TransactionType
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransactionAddScreen(
     modifier: Modifier = Modifier,
+    component: TransactionAddComponent,
 ) {
+    val state by component.state.collectAsState()
+
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -78,7 +83,7 @@ fun TransactionAddScreen(
                 )
             },
             navigationIcon = {
-                IconButton(onClick = { }) {
+                IconButton(onClick = component::onBackClicked) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = stringResource(R.string.cd_navigate_back),
@@ -86,9 +91,6 @@ fun TransactionAddScreen(
                 }
             },
         )
-        var text by remember {
-            mutableStateOf("")
-        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -107,8 +109,8 @@ fun TransactionAddScreen(
                 modifier = Modifier
                     .weight(1f)
                     .focusRequester(focusRequester),
-                value = text,
-                onValueChange = { text = it },
+                value = state.nameText,
+                onValueChange = component::onNameTextChanged,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                 ),
@@ -118,45 +120,32 @@ fun TransactionAddScreen(
             )
         }
         Spacer(modifier = Modifier.height(24.dp))
-        var selected by remember {
-            mutableStateOf(0)
-        }
         SegmentedSwitch(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
-            items = listOf(
+            items = TransactionType.values().map { transactionType ->
+                val text = when (transactionType) {
+                    TransactionType.Debit -> stringResource(R.string.switch_item_debit)
+                    TransactionType.Credit -> stringResource(R.string.switch_item_credit)
+                }
+                val isSelected = state.selectedTransactionType == transactionType
                 SegmentedSwitchItem(
                     label = {
                         Text(
-                            text = stringResource(R.string.switch_item_credit),
+                            text = text,
                             style = MaterialTheme.typography.labelLarge,
-                            color = if (selected == 0) {
+                            color = if (isSelected) {
                                 MaterialTheme.colorScheme.onSecondaryContainer
                             } else {
                                 MaterialTheme.colorScheme.onSurface
                             }
                         )
                     },
-                    isSelected = selected == 0,
-                    onSelect = { selected = 0 },
-                ),
-                SegmentedSwitchItem(
-                    label = {
-                        Text(
-                            text = stringResource(R.string.switch_item_debit),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = if (selected == 1) {
-                                MaterialTheme.colorScheme.onSecondaryContainer
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            }
-                        )
-                    },
-                    isSelected = selected == 1,
-                    onSelect = { selected = 1 },
+                    isSelected = isSelected,
+                    onSelect = { component.onTransactionTypeSelected(transactionType) },
                 )
-            )
+            }
         )
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -164,22 +153,20 @@ fun TransactionAddScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
         ) {
-            var currency by remember { mutableStateOf(Currency.RUB) }
-            var amountText by remember { mutableStateOf("") }
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 ),
-                value = amountText,
-                onValueChange = { amountText = it },
+                value = state.moneyAmountText,
+                onValueChange = component::onMoneyAmountTextChanged,
                 shape = MaterialTheme.shapes.medium.copy(
                     bottomEnd = ZeroCornerSize,
                     topEnd = ZeroCornerSize
                 ),
                 trailingIcon = {
                     Text(
-                        text = currency.symbol,
+                        text = state.selectedCurrency.symbol,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
@@ -188,8 +175,8 @@ fun TransactionAddScreen(
             )
             CurrencyPicker(
                 currenciesList = Currency.values().toList(),
-                selectedCurrency = currency,
-                onCurrencySelected = { currency = it },
+                selectedCurrency = state.selectedCurrency,
+                onCurrencySelected = component::onCurrencySelected,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -197,7 +184,7 @@ fun TransactionAddScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            onClick = { /*TODO*/ }
+            onClick = component::onAddClicked
         ) {
             Icon(imageVector = Icons.Default.Done, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
@@ -214,7 +201,30 @@ fun TransactionAddScreen(
 fun TransactionAddScreen_Preview() {
     MonkeyTheme {
         Surface {
-            TransactionAddScreen()
+            TransactionAddScreen(
+                component = PreviewTransactionAddComponent()
+            )
         }
     }
+}
+
+fun PreviewTransactionAddComponent() = object : TransactionAddComponent {
+    override val state: StateFlow<TransactionAddComponent.State>
+        get() = MutableStateFlow(
+            TransactionAddComponent.State(
+                nameText = "nameText",
+                selectedTransactionType = TransactionType.Default,
+                moneyAmountText = "moneyAmountText",
+                selectedCurrency = Currency.Default,
+                isLoading = false,
+                error = null,
+            )
+        )
+
+    override fun onNameTextChanged(text: String) {}
+    override fun onTransactionTypeSelected(type: TransactionType) {}
+    override fun onMoneyAmountTextChanged(text: String) {}
+    override fun onCurrencySelected(currency: Currency) {}
+    override fun onBackClicked() {}
+    override fun onAddClicked() {}
 }

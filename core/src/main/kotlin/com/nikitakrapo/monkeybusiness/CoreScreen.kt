@@ -79,7 +79,8 @@ fun CoreScreen(
         ) {
             when (val child = modalChildStack.active.instance) {
                 is CoreComponent.ModalChild.TransactionAdd -> TransactionAddScreen(
-                    modifier = Modifier.dragHandlePadding()
+                    modifier = Modifier.dragHandlePadding(),
+                    component = child.component,
                 )
                 is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
                     component = child.component,
