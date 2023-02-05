@@ -38,6 +38,9 @@ import kotlinx.coroutines.launch
 
 private const val DEFAULT_ANCHOR_THRESHOLD = 0.3f
 
+/**
+ * @param enabled used to have opportunity to always draw BottomSheet (
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheet(
@@ -45,6 +48,7 @@ fun BottomSheet(
     params: BottomSheetParams,
     onDismiss: () -> Unit,
     enabled: Boolean,
+    isDismissing: Boolean,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current
@@ -66,6 +70,10 @@ fun BottomSheet(
     }
     LaunchedEffect(isClosed) {
         if (isClosed) onDismiss()
+    }
+
+    LaunchedEffect(isDismissing) {
+        swipeableState.animateTo(anchorModalClosedValue)
     }
 
     if (isClosed && !enabled) return

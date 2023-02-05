@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.replaceAll
+import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.currentAccount
@@ -16,7 +17,9 @@ import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditComponentImpl
 import com.nikitakrapo.navigation.stack.childStackFlow
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CoreComponentImpl(
@@ -35,6 +38,13 @@ class CoreComponentImpl(
     }
 
     private val analytics = CoreScreenAnalytics(dependencies.analyticsManager)
+
+    private val stateFlow = MutableStateFlow(
+        CoreComponent.State(
+            isModalDismissing = false
+        )
+    )
+    override val state: StateFlow<CoreComponent.State> get() = stateFlow.asStateFlow()
 
     private val navigation = StackNavigation<CoreScreen>()
 
@@ -66,6 +76,22 @@ class CoreComponentImpl(
             childFactory = ::createModalChild,
         )
 
+    private val modalCloseBackCallback = BackCallback(
+        isEnabled = modalChildStack.value.backStack.isNotEmpty(),
+        onBack = {
+            stateFlow.value = stateFlow.value.copy(isModalDismissing = true)
+        }
+    )
+
+    init {
+        scope.launch {
+            modalChildStack.collect { modalStack ->
+                modalCloseBackCallback.isEnabled = modalStack.backStack.isNotEmpty()
+            }
+        }
+        backHandler.register(modalCloseBackCallback)
+    }
+
     @Parcelize
     sealed class CoreModalScreen : Parcelable {
         object None : CoreModalScreen()
@@ -74,6 +100,7 @@ class CoreComponentImpl(
     }
 
     override fun dismissModal() {
+        stateFlow.value = stateFlow.value.copy(isModalDismissing = false)
         modalNavigation.pop()
     }
 

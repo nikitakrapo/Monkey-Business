@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface CoreComponent {
 
+    val state: StateFlow<State>
+
     val childStack: StateFlow<ChildStack<*, Child>>
     val modalChildStack: StateFlow<ChildStack<*, ModalChild>>
 
@@ -23,4 +25,8 @@ interface CoreComponent {
         class TransactionAdd : ModalChild()
         class ProfileEdit(val component: ProfileEditComponent) : ModalChild()
     }
+
+    data class State(
+        val isModalDismissing: Boolean,
+    )
 }

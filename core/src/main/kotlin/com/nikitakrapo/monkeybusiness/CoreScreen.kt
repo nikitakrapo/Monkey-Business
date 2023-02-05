@@ -36,6 +36,7 @@ fun CoreScreen(
     modifier: Modifier = Modifier,
     component: CoreComponent,
 ) {
+    val state by component.state.collectAsState()
     val childStack by component.childStack.collectAsState()
     val modalChildStack by component.modalChildStack.collectAsState()
 
@@ -73,6 +74,7 @@ fun CoreScreen(
                 initialState = if (hasModal) 0 else 1,
             ),
             enabled = hasModal,
+            isDismissing = state.isModalDismissing,
             onDismiss = component::dismissModal,
         ) {
             when (val child = modalChildStack.active.instance) {
@@ -125,6 +127,9 @@ fun CoreScreen_Preview_Authentication() {
 internal fun PreviewCoreComponent(
     child: CoreComponentImpl.CoreScreen,
 ) = object : CoreComponent {
+    override val state: StateFlow<CoreComponent.State>
+        get() = MutableStateFlow(CoreComponent.State(isModalDismissing = false))
+
     override val childStack: StateFlow<ChildStack<CoreComponentImpl.CoreScreen, CoreComponent.Child>>
         get() = MutableStateFlow(
             ChildStack(
