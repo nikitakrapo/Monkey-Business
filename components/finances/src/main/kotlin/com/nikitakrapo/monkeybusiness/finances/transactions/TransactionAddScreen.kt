@@ -1,26 +1,44 @@
 package com.nikitakrapo.monkeybusiness.finances.transactions
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -41,38 +59,81 @@ fun TransactionAddScreen(
 
     Column(
         modifier = modifier
+            .fillMaxSize()
             .clickable(
                 interactionSource = MutableInteractionSource(),
                 onClick = focusManager::clearFocus,
                 indication = null
             )
-            .padding(horizontal = 12.dp)
     ) {
-        OutlinedTextField(
+        CenterAlignedTopAppBar(
+            title = {
+                Text(
+                    text = stringResource(R.string.transaction_adding),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = stringResource(R.string.cd_navigate_back),
+                    )
+                }
+            },
+            actions = {
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Default.Done,
+                        contentDescription = stringResource(R.string.add_transaction_done),
+                    )
+                }
+            }
+        )
+        var text by remember {
+            mutableStateOf("")
+        }
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRequester(focusRequester),
-            //enabled = !state.isLoading,
-            value = "",
-            onValueChange = { },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-            ),
-            label = { Text(stringResource(R.string.transaction_name_label)) },
-            singleLine = true,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
+                .padding(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(TextFieldDefaults.MinHeight)
+                    .clip(CircleShape)
+                    .background(Color.Gray)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            OutlinedTextField(
+                modifier = Modifier
+                    .weight(1f)
+                    .focusRequester(focusRequester),
+                value = text,
+                onValueChange = { text = it },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                ),
+                label = { Text(stringResource(R.string.transaction_name_label)) },
+                singleLine = true,
+                shape = CircleShape
+            )
+        }
+        Spacer(modifier = Modifier.height(12.dp))
         var selected by remember {
             mutableStateOf(0)
         }
         SegmentedSwitch(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp),
             items = listOf(
                 SegmentedSwitchItem(
                     label = {
                         Text(
-                            text = stringResource(R.string.switch_item_expense),
+                            text = stringResource(R.string.switch_item_credit),
                             style = MaterialTheme.typography.labelLarge,
                             color = if (selected == 0) {
                                 MaterialTheme.colorScheme.onSecondaryContainer
@@ -87,7 +148,7 @@ fun TransactionAddScreen(
                 SegmentedSwitchItem(
                     label = {
                         Text(
-                            text = stringResource(R.string.switch_item_income),
+                            text = stringResource(R.string.switch_item_debit),
                             style = MaterialTheme.typography.labelLarge,
                             color = if (selected == 1) {
                                 MaterialTheme.colorScheme.onSecondaryContainer

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_transaction">Add transaction</string>
-    <string name="switch_item_expense">Expense</string>
-    <string name="switch_item_income">Income</string>
+    <string name="add_transaction_done">Add transaction</string>
+    <string name="cd_navigate_back">Navigate back</string>
+    <string name="switch_item_credit">Credit</string>
+    <string name="switch_item_debit">Debit</string>
+    <string name="transaction_adding">Add transaction</string>
     <string name="transaction_name_label">Name</string>
 </resources>

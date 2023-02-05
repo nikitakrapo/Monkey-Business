@@ -62,7 +62,7 @@ fun CoreScreen(
             when (modalChildStack.active.instance) {
                 CoreComponent.ModalChild.None -> mapOf(0.dp to 0, Int.MAX_VALUE.dp to 1)
                 is CoreComponent.ModalChild.ProfileEdit -> mapOf(0.dp to 0, 360.dp to 1)
-                is CoreComponent.ModalChild.TransactionAdd -> mapOf(0.dp to 0, 1000.dp to 1)
+                is CoreComponent.ModalChild.TransactionAdd -> mapOf(0.dp to 0, 640.dp to 1)
             }
         }
         BottomSheet(
