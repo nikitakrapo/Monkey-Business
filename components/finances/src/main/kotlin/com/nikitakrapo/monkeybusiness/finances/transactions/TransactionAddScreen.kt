@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -84,14 +85,6 @@ fun TransactionAddScreen(
                     )
                 }
             },
-            actions = {
-                IconButton(onClick = { }) {
-                    Icon(
-                        imageVector = Icons.Default.Done,
-                        contentDescription = stringResource(R.string.add_transaction_done),
-                    )
-                }
-            }
         )
         var text by remember {
             mutableStateOf("")
@@ -124,7 +117,7 @@ fun TransactionAddScreen(
                 shape = CircleShape
             )
         }
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         var selected by remember {
             mutableStateOf(0)
         }
@@ -165,7 +158,7 @@ fun TransactionAddScreen(
                 )
             )
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -190,14 +183,25 @@ fun TransactionAddScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
+                singleLine = true,
                 label = { Text(stringResource(R.string.amount_label)) }
             )
-            Spacer(modifier = Modifier.width(0.dp))
             CurrencyPicker(
                 currenciesList = Currency.values().toList(),
                 selectedCurrency = currency,
                 onCurrencySelected = { currency = it },
             )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        FilledTonalButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            onClick = { /*TODO*/ }
+        ) {
+            Icon(imageVector = Icons.Default.Done, contentDescription = null)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = stringResource(id = R.string.add_transaction_done))
         }
     }
 }
