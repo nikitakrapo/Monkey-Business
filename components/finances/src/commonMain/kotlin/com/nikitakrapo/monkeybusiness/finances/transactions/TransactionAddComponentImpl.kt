@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness.finances.transactions
 
 import com.arkivanov.decompose.ComponentContext
+import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
@@ -10,9 +11,10 @@ import com.nikitakrapo.mvi.feature.FeatureFactory
 import com.nikitakrapo.randomUuid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 
 class TransactionAddComponentImpl(
@@ -22,9 +24,11 @@ class TransactionAddComponentImpl(
     featureFactory: FeatureFactory = FeatureFactory(),
 ) : TransactionAddComponent, ComponentContext by componentContext {
 
+    private val scope = coroutineScope(Dispatchers.Main)
+
     private val transactionsRepository get() = dependencies.transactionsRepository
 
-    private val feature = featureFactory.create<Intent, Intent, Effect, State, Nothing>(
+    private val feature = featureFactory.create<Intent, Intent, Effect, State, Event>(
         name = "TransactionAddFeature",
         initialState = State(
             nameText = "",
@@ -73,8 +77,11 @@ class TransactionAddComponentImpl(
                     emit(Effect.AddingStarted)
                     // FIXME: validate input
                     val result = runCatching {
+                        val isCredit = state.selectedTransactionType == TransactionType.Credit
+                        var amount = state.moneyAmountText.toLong()
+                        if (isCredit) amount *= -1
                         val moneyAmount = MoneyAmount(
-                            amount = state.moneyAmountText.toLong(),
+                            amount = amount,
                             currency = state.selectedCurrency
                         )
                         val transaction = Transaction(
@@ -88,8 +95,25 @@ class TransactionAddComponentImpl(
                     emit(Effect.AddingFinished(result))
                 }
             }
+        },
+        eventsPublisher = { action, effect, state ->
+            if (effect is Effect.AddingFinished && effect.result.isSuccess) {
+                Event.AddingFinishedSuccessfully
+            } else {
+                null
+            }
         }
     )
+
+    init {
+        scope.launch {
+            feature.events.collect {
+                when (it) {
+                    Event.AddingFinishedSuccessfully -> closeTransactionAdd()
+                }
+            }
+        }
+    }
 
     override val state: StateFlow<State> get() = feature.state
 
@@ -132,5 +156,9 @@ class TransactionAddComponentImpl(
         class CurrencySelected(val currency: Currency) : Effect()
         object AddingStarted : Effect()
         class AddingFinished(val result: Result<Unit>) : Effect()
+    }
+
+    private sealed class Event {
+        object AddingFinishedSuccessfully : Event()
     }
 }
