@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -23,24 +24,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.BorderSegment
 import com.nikitakrapo.monkeybusiness.design.segmentedBorder
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 
-private val defaultItemSize = DpSize(
-    width = 92.dp,
-    height = 46.dp
-)
+private val minItemHeight = 40.dp
 
 @Composable
 fun SegmentedSwitch(
     modifier: Modifier = Modifier,
     items: List<SegmentedSwitchItem>,
-    itemSize: DpSize = defaultItemSize,
 ) {
     require(items.size >= 2) { "There should be >= 2 items in switch" }
+
+    val itemWeight = remember(items) { 1f / items.size }
 
     Row(
         modifier = modifier,
@@ -52,7 +50,8 @@ fun SegmentedSwitch(
             )
             Row(
                 modifier = Modifier
-                    .size(itemSize)
+                    .weight(itemWeight)
+                    .heightIn(min = minItemHeight)
                     .segmentItem(
                         itemIndex = index,
                         lastIndex = items.lastIndex
@@ -110,24 +109,82 @@ data class SegmentedSwitchItem(
     val onSelect: () -> Unit,
 )
 
-@Preview
+@Preview(name = "Big items")
 @Composable
-fun SegmentedSwitch_Preview() {
+fun SegmentedSwitch_Preview_BigItems() {
     var selectedItem by remember { mutableStateOf(0) }
     MonkeyTheme {
         Surface {
             SegmentedSwitch(
                 items = listOf(
                     SegmentedSwitchItem(
-                        label = { Text("this1") },
+                        label = {
+                            Text(
+                                modifier = Modifier
+                                    .size(64.dp)
+                                    .background(Color.Cyan),
+                                text = "item1"
+                            )
+                        },
                         isSelected = selectedItem == 0,
                     ) { selectedItem = 0 },
                     SegmentedSwitchItem(
-                        label = { Text("this2") },
+                        label = {
+                            Text(
+                                modifier = Modifier
+                                    .size(64.dp)
+                                    .background(Color.Cyan),
+                                text = "item2"
+                            )
+                        },
+                        isSelected = selectedItem == 1,
+                    ) { selectedItem = 1 }
+                )
+            )
+        }
+    }
+}
+
+@Preview(name = "2 Items")
+@Composable
+fun SegmentedSwitch_Preview2() {
+    var selectedItem by remember { mutableStateOf(0) }
+    MonkeyTheme {
+        Surface {
+            SegmentedSwitch(
+                items = listOf(
+                    SegmentedSwitchItem(
+                        label = { Text("item1") },
+                        isSelected = selectedItem == 0,
+                    ) { selectedItem = 0 },
+                    SegmentedSwitchItem(
+                        label = { Text("item2") },
+                        isSelected = selectedItem == 1,
+                    ) { selectedItem = 1 }
+                )
+            )
+        }
+    }
+}
+
+@Preview(name = "3 Items")
+@Composable
+fun SegmentedSwitch_Preview3() {
+    var selectedItem by remember { mutableStateOf(0) }
+    MonkeyTheme {
+        Surface {
+            SegmentedSwitch(
+                items = listOf(
+                    SegmentedSwitchItem(
+                        label = { Text("item1") },
+                        isSelected = selectedItem == 0,
+                    ) { selectedItem = 0 },
+                    SegmentedSwitchItem(
+                        label = { Text("item2") },
                         isSelected = selectedItem == 1,
                     ) { selectedItem = 1 },
                     SegmentedSwitchItem(
-                        label = { Text("this3") },
+                        label = { Text("item3") },
                         isSelected = selectedItem == 2,
                     ) { selectedItem = 2 },
                 )
@@ -135,3 +192,4 @@ fun SegmentedSwitch_Preview() {
         }
     }
 }
+
