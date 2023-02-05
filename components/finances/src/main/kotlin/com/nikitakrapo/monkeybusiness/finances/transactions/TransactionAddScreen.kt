@@ -15,8 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -42,11 +43,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.components.SegmentedSwitch
 import com.nikitakrapo.monkeybusiness.design.components.SegmentedSwitchItem
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finances.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -162,6 +165,40 @@ fun TransactionAddScreen(
                 )
             )
         )
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp),
+        ) {
+            var currency by remember { mutableStateOf(Currency.RUB) }
+            var amountText by remember { mutableStateOf("") }
+            OutlinedTextField(
+                modifier = Modifier.weight(1f),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                ),
+                value = amountText,
+                onValueChange = { amountText = it },
+                shape = MaterialTheme.shapes.medium.copy(
+                    bottomEnd = ZeroCornerSize,
+                    topEnd = ZeroCornerSize
+                ),
+                trailingIcon = {
+                    Text(
+                        text = currency.symbol,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
+                label = { Text(stringResource(R.string.amount_label)) }
+            )
+            Spacer(modifier = Modifier.width(0.dp))
+            CurrencyPicker(
+                currenciesList = Currency.values().toList(),
+                selectedCurrency = currency,
+                onCurrencySelected = { currency = it },
+            )
+        }
     }
 }
 
