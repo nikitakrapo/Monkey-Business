@@ -155,6 +155,8 @@ class CoreComponentImpl(
         CoreModalScreen.None -> CoreComponent.ModalChild.None
         CoreModalScreen.TransactionAdd -> CoreComponent.ModalChild.TransactionAdd(
             component = TransactionAddComponentImpl(
+                componentContext = componentContext,
+                dependencies = dependencies.transactionAddDependencies(),
                 closeTransactionAdd = {
                     modalNavigation.navigate(
                         transformer = { stack ->

@@ -1,5 +1,8 @@
 package com.nikitakrapo.monkeybusiness.finances.transactions
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -14,9 +17,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
@@ -109,6 +114,7 @@ fun TransactionAddScreen(
                 modifier = Modifier
                     .weight(1f)
                     .focusRequester(focusRequester),
+                enabled = !state.isLoading,
                 value = state.nameText,
                 onValueChange = component::onNameTextChanged,
                 keyboardOptions = KeyboardOptions(
@@ -124,6 +130,7 @@ fun TransactionAddScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
+            enabled = !state.isLoading,
             items = TransactionType.values().map { transactionType ->
                 val text = when (transactionType) {
                     TransactionType.Debit -> stringResource(R.string.switch_item_debit)
@@ -155,6 +162,7 @@ fun TransactionAddScreen(
         ) {
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
+                enabled = !state.isLoading,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 ),
@@ -180,10 +188,26 @@ fun TransactionAddScreen(
             )
         }
         Spacer(modifier = Modifier.weight(1f))
+        AnimatedVisibility(
+            visible = state.error != null,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            val scrollState = rememberScrollState()
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .verticalScroll(scrollState),
+                text = state.error.orEmpty(),
+                color = MaterialTheme.colorScheme.error
+            )
+        }
         FilledTonalButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
+            enabled = !state.isLoading,
             onClick = component::onAddClicked
         ) {
             Icon(imageVector = Icons.Default.Done, contentDescription = null)

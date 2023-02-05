@@ -1,16 +1,28 @@
 package com.nikitakrapo.monkeybusiness.finances.transactions
 
+import com.arkivanov.decompose.ComponentContext
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
+import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
+import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.State
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.TransactionType
 import com.nikitakrapo.mvi.feature.FeatureFactory
+import com.nikitakrapo.randomUuid
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 
 class TransactionAddComponentImpl(
+    componentContext: ComponentContext,
+    private val dependencies: TransactionAddDependencies,
     private val closeTransactionAdd: () -> Unit,
     featureFactory: FeatureFactory = FeatureFactory(),
-) : TransactionAddComponent {
+) : TransactionAddComponent, ComponentContext by componentContext {
+
+    private val transactionsRepository get() = dependencies.transactionsRepository
 
     private val feature = featureFactory.create<Intent, Intent, Effect, State, Nothing>(
         name = "TransactionAddFeature",
@@ -41,6 +53,14 @@ class TransactionAddComponentImpl(
                     selectedTransactionType = effect.type,
                     error = null
                 )
+                is Effect.AddingStarted -> copy(
+                    isLoading = true,
+                    error = null
+                )
+                is Effect.AddingFinished -> copy(
+                    isLoading = false,
+                    error = effect.result.exceptionOrNull()?.message
+                )
             }
         },
         actor = { action, state ->
@@ -49,7 +69,24 @@ class TransactionAddComponentImpl(
                 is Intent.ChangeNameText -> flowOf(Effect.NameTextChanged(action.text))
                 is Intent.SelectCurrency -> flowOf(Effect.CurrencySelected(action.currency))
                 is Intent.SelectTransactionType -> flowOf(Effect.TransactionTypeSelected(action.type))
-                Intent.AddTransaction -> TODO()
+                Intent.AddTransaction -> flow {
+                    emit(Effect.AddingStarted)
+                    // FIXME: validate input
+                    val result = runCatching {
+                        val moneyAmount = MoneyAmount(
+                            amount = state.moneyAmountText.toLong(),
+                            currency = state.selectedCurrency
+                        )
+                        val transaction = Transaction(
+                            id = randomUuid(),
+                            name = state.nameText,
+                            moneyAmount = moneyAmount,
+                            timestampMs = Clock.System.now().toEpochMilliseconds()
+                        )
+                        transactionsRepository.addTransaction(transaction)
+                    }
+                    emit(Effect.AddingFinished(result))
+                }
             }
         }
     )
@@ -93,5 +130,7 @@ class TransactionAddComponentImpl(
         class TransactionTypeSelected(val type: TransactionType) : Effect()
         class MoneyAmountTextChanged(val text: String) : Effect()
         class CurrencySelected(val currency: Currency) : Effect()
+        object AddingStarted : Effect()
+        class AddingFinished(val result: Result<Unit>) : Effect()
     }
 }

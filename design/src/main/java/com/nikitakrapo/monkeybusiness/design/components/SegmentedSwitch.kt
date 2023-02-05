@@ -35,6 +35,7 @@ private val minItemHeight = 40.dp
 fun SegmentedSwitch(
     modifier: Modifier = Modifier,
     items: List<SegmentedSwitchItem>,
+    enabled: Boolean = true,
 ) {
     require(items.size >= 2) { "There should be >= 2 items in switch" }
 
@@ -71,7 +72,7 @@ fun SegmentedSwitch(
                             MaterialTheme.colorScheme.surface
                         }
                     )
-                    .clickable { segmentedSwitchItem.onSelect() },
+                    .clickable(enabled = enabled) { segmentedSwitchItem.onSelect() },
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {

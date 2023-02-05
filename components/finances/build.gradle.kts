@@ -21,6 +21,7 @@ kotlin {
                 api(projects.features.finance.models)
                 api(projects.features.navigation.core)
                 implementation(projects.features.mvi.feature)
+                implementation(libs.kotlinx.datetime)
             }
         }
         val commonTest by getting {
