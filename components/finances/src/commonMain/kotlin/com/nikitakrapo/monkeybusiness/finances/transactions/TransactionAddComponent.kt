@@ -26,11 +26,11 @@ interface TransactionAddComponent {
     )
 
     enum class TransactionType {
-        Debit,
-        Credit;
+        Credit,
+        Debit;
 
         companion object {
-            val Default get() = Debit
+            val Default get() = Credit
         }
     }
 }
