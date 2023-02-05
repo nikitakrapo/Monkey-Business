@@ -18,7 +18,6 @@ fun Modifier.segmentedBorder(
 
         val strokeWidthPx = density.run { strokeWidth.toPx() }
 
-        //FIXME: bug
         Modifier.drawWithCache {
             onDrawWithContent {
                 val width = size.width
