@@ -125,7 +125,9 @@ class CoreComponentImpl(
         componentContext: ComponentContext,
     ): CoreComponent.ModalChild = when (screen) {
         CoreModalScreen.None -> CoreComponent.ModalChild.None
-        CoreModalScreen.TransactionAdd -> CoreComponent.ModalChild.TransactionAdd()
+        CoreModalScreen.TransactionAdd -> CoreComponent.ModalChild.TransactionAdd(
+
+        )
         CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
             component = ProfileEditComponentImpl(
                 componentContext = componentContext,

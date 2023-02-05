@@ -2,6 +2,7 @@ package com.nikitakrapo.monkeybusiness
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +21,7 @@ import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetParams
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetType
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddScreen
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
@@ -55,19 +57,28 @@ fun CoreScreen(
         val hasModal = remember(modalChildStack.active.instance) {
             modalChildStack.active.instance !is CoreComponent.ModalChild.None
         }
+        val offsetAnchors = remember(modalChildStack.active.configuration) {
+            when (modalChildStack.active.instance) {
+                CoreComponent.ModalChild.None -> mapOf(0.dp to 0, Int.MAX_VALUE.dp to 1)
+                is CoreComponent.ModalChild.ProfileEdit -> mapOf(0.dp to 0, 360.dp to 1)
+                is CoreComponent.ModalChild.TransactionAdd -> mapOf(0.dp to 0, 1000.dp to 1)
+            }
+        }
         BottomSheet(
             modifier = Modifier
                 .fillMaxSize(),
             params = BottomSheetParams(
                 type = BottomSheetType.Modal,
-                offsetAnchors = mapOf(0.dp to 0, 360.dp to 1),
+                offsetAnchors = offsetAnchors,
                 initialState = if (hasModal) 0 else 1,
             ),
             enabled = hasModal,
             onDismiss = component::dismissModal,
         ) {
             when (val child = modalChildStack.active.instance) {
-                is CoreComponent.ModalChild.TransactionAdd -> {}
+                is CoreComponent.ModalChild.TransactionAdd -> TransactionAddScreen(
+                    modifier = Modifier.dragHandlePadding()
+                )
                 is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
                     component = child.component,
                 )
@@ -76,6 +87,8 @@ fun CoreScreen(
         }
     }
 }
+
+private fun Modifier.dragHandlePadding() = padding(top = 16.dp)
 
 @Preview(
     widthDp = 360,
