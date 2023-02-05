@@ -73,7 +73,12 @@ fun TransactionAddScreen(
                     label = {
                         Text(
                             text = stringResource(R.string.switch_item_expense),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (selected == 0) {
+                                MaterialTheme.colorScheme.onSecondaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            }
                         )
                     },
                     isSelected = selected == 0,
@@ -81,7 +86,15 @@ fun TransactionAddScreen(
                 ),
                 SegmentedSwitchItem(
                     label = {
-                        Text(text = stringResource(R.string.switch_item_income))
+                        Text(
+                            text = stringResource(R.string.switch_item_income),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (selected == 1) {
+                                MaterialTheme.colorScheme.onSecondaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            }
+                        )
                     },
                     isSelected = selected == 1,
                     onSelect = { selected = 1 },
