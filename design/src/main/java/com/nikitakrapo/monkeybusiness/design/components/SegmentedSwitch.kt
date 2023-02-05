@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,10 +44,21 @@ fun SegmentedSwitch(
     val itemWeight = remember(items) { 1f / items.size }
     val itemsPadding = remember { 2.dp }
 
+    val containerColor = if (enabled) {
+        MaterialTheme.colorScheme.secondaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+    }
+    val outlineColor = if (enabled) {
+        MaterialTheme.colorScheme.outline
+    } else {
+        MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
+    }
+
     Row(
         modifier = modifier
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.outline)
+            .background(outlineColor)
             .padding(itemsPadding),
         horizontalArrangement = Arrangement.Center
     ) {
@@ -66,7 +79,8 @@ fun SegmentedSwitch(
                     )
                     .background(
                         color = if (segmentedSwitchItem.isSelected) {
-                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = alpha)
+                            containerColor
+                                .copy(alpha = alpha)
                                 .compositeOver(MaterialTheme.colorScheme.surface)
                         } else {
                             MaterialTheme.colorScheme.surface
@@ -76,7 +90,14 @@ fun SegmentedSwitch(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                segmentedSwitchItem.label()
+                val contentColor = if (enabled) {
+                    MaterialTheme.colorScheme.onSecondaryContainer
+                } else {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                }
+                CompositionLocalProvider(LocalContentColor provides contentColor) {
+                    segmentedSwitchItem.label()
+                }
             }
         }
     }

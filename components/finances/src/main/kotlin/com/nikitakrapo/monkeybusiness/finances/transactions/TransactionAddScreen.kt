@@ -25,7 +25,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.ButtonDefaults.IconSize
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -142,11 +144,6 @@ fun TransactionAddScreen(
                         Text(
                             text = text,
                             style = MaterialTheme.typography.labelLarge,
-                            color = if (isSelected) {
-                                MaterialTheme.colorScheme.onSecondaryContainer
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            }
                         )
                     },
                     isSelected = isSelected,
@@ -176,6 +173,7 @@ fun TransactionAddScreen(
                     Text(
                         text = state.selectedCurrency.symbol,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
+                            .copy(alpha = if (state.isLoading) 0.4f else 1f)
                     )
                 },
                 singleLine = true,
@@ -185,6 +183,7 @@ fun TransactionAddScreen(
                 currenciesList = Currency.values().toList(),
                 selectedCurrency = state.selectedCurrency,
                 onCurrencySelected = component::onCurrencySelected,
+                enabled = !state.isLoading,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -210,9 +209,16 @@ fun TransactionAddScreen(
             enabled = !state.isLoading,
             onClick = component::onAddClicked
         ) {
-            Icon(imageVector = Icons.Default.Done, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = stringResource(id = R.string.add_transaction_done))
+            if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(IconSize),
+                    strokeWidth = 2.dp,
+                )
+            } else {
+                Icon(imageVector = Icons.Default.Done, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(id = R.string.add_transaction_done))
+            }
         }
     }
 }

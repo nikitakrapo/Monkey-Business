@@ -32,19 +32,23 @@ fun CurrencyPicker(
     currenciesList: List<Currency>,
     selectedCurrency: Currency,
     onCurrencySelected: (Currency) -> Unit,
+    enabled: Boolean = true,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var expandedState by remember { mutableStateOf(false) }
+    val expanded = expandedState && enabled
+
     val rotation by animateFloatAsState(targetValue = if (expanded) 180f else 0f)
     ExposedDropdownMenuBox(
         modifier = modifier,
         expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
+        onExpandedChange = { expandedState = !expanded }
     ) {
         OutlinedTextField(
             modifier = Modifier
                 .menuAnchor()
                 .width(100.dp),
             readOnly = true,
+            enabled = enabled,
             value = selectedCurrency.code,
             onValueChange = { },
             label = { Text(stringResource(R.string.currency_label)) },
@@ -64,7 +68,7 @@ fun CurrencyPicker(
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = {
-                expanded = false
+                expandedState = false
             }
         ) {
             currenciesList.forEach { currency ->
@@ -72,7 +76,7 @@ fun CurrencyPicker(
                     text = { Text(currency.code) },
                     onClick = {
                         onCurrencySelected(currency)
-                        expanded = false
+                        expandedState = false
                     }
                 )
             }
