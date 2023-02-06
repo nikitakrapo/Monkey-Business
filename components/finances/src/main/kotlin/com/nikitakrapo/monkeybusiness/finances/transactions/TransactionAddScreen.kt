@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -46,18 +45,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.monkeybusiness.design.components.SegmentedSwitch
-import com.nikitakrapo.monkeybusiness.design.components.SegmentedSwitchItem
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finances.R
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.AmountError
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.NameError
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.TransactionType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -126,7 +123,12 @@ fun TransactionAddScreen(
                 label = { Text(stringResource(R.string.transaction_name_label)) },
                 isError = state.nameError != null,
                 supportingText = state.nameError?.let {
-                    { Text(it) }
+                    {
+                        val errorText = when (it) {
+                            NameError.Empty -> stringResource(R.string.empty_name_error)
+                        }
+                        Text(text = errorText)
+                    }
                 },
                 singleLine = true,
                 shape = CircleShape
@@ -229,10 +231,10 @@ fun PreviewTransactionAddComponent(
         get() = MutableStateFlow(
             TransactionAddComponent.State(
                 nameText = "nameText",
-                nameError = if (hasErrors) "Sample nameError" else null,
+                nameError = if (hasErrors) NameError.Empty else null,
                 selectedTransactionType = TransactionType.Default,
                 amountText = "moneyAmountText",
-                amountError = if (hasErrors) "Sample amountError" else null,
+                amountError = if (hasErrors) AmountError.Empty else null,
                 selectedCurrency = Currency.Default,
                 isLoading = false,
                 error = if (hasErrors) "Sample error" else null,

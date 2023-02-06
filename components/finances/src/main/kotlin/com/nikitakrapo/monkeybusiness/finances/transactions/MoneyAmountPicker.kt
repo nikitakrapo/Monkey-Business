@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finances.R
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.AmountError
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +24,7 @@ fun MoneyAmountPicker(
     selectedCurrency: Currency,
     onCurrencySelected: (Currency) -> Unit,
     enabled: Boolean,
-    error: String?,
+    error: AmountError?,
 ) {
     Row(
         modifier = modifier,
@@ -51,7 +52,13 @@ fun MoneyAmountPicker(
             label = { Text(stringResource(R.string.amount_label)) },
             isError = error != null,
             supportingText = error?.let {
-                { Text(it) }
+                {
+                    val errorText = when (it) {
+                        AmountError.Empty -> stringResource(R.string.empty_amount_error)
+                        AmountError.Incorrect -> stringResource(R.string.incorrect_amount_error)
+                    }
+                    Text(text = errorText)
+                }
             },
         )
         CurrencyPicker(

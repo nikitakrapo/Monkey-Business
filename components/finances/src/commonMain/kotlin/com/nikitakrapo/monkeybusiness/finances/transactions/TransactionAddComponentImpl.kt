@@ -5,6 +5,8 @@ import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.AmountError
+import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.NameError
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.State
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent.TransactionType
 import com.nikitakrapo.mvi.feature.FeatureFactory
@@ -48,10 +50,12 @@ class TransactionAddComponentImpl(
                 )
                 is Effect.MoneyAmountTextChanged -> copy(
                     amountText = effect.text,
+                    amountError = null,
                     error = null
                 )
                 is Effect.NameTextChanged -> copy(
                     nameText = effect.text,
+                    nameError = null,
                     error = null
                 )
                 is Effect.TransactionTypeSelected -> copy(
@@ -66,6 +70,10 @@ class TransactionAddComponentImpl(
                     isLoading = false,
                     error = effect.result.exceptionOrNull()?.message
                 )
+                is Effect.ReceivedInputError -> copy(
+                    nameError = effect.nameError,
+                    amountError = effect.amountError,
+                )
             }
         },
         actor = { action, state ->
@@ -75,8 +83,11 @@ class TransactionAddComponentImpl(
                 is Intent.SelectCurrency -> flowOf(Effect.CurrencySelected(action.currency))
                 is Intent.SelectTransactionType -> flowOf(Effect.TransactionTypeSelected(action.type))
                 Intent.AddTransaction -> flow {
+                    checkForInputErrors(state)?.let { inputErrors ->
+                        emit(inputErrors)
+                        return@flow
+                    }
                     emit(Effect.AddingStarted)
-                    // FIXME: validate input
                     val result = runCatching {
                         val isCredit = state.selectedTransactionType == TransactionType.Credit
                         var amount = state.amountText.toDouble()
@@ -87,7 +98,7 @@ class TransactionAddComponentImpl(
                         )
                         val transaction = Transaction(
                             id = randomUuid(),
-                            name = state.nameText,
+                            name = state.nameText.trim(),
                             moneyAmount = moneyAmount,
                             timestampMs = Clock.System.now().toEpochMilliseconds()
                         )
@@ -155,6 +166,11 @@ class TransactionAddComponentImpl(
         class TransactionTypeSelected(val type: TransactionType) : Effect()
         class MoneyAmountTextChanged(val text: String) : Effect()
         class CurrencySelected(val currency: Currency) : Effect()
+        class ReceivedInputError(
+            val nameError: NameError?,
+            val amountError: AmountError?,
+        ) : Effect()
+
         object AddingStarted : Effect()
         class AddingFinished(val result: Result<Unit>) : Effect()
     }
@@ -163,6 +179,23 @@ class TransactionAddComponentImpl(
         object AddingFinishedSuccessfully : Event()
     }
 
-    private fun isCorrectDouble(text: String) =
-        Regex("^(-?)(0|([1-9]\\d*))(\\.\\d+)?$").matches(text)
+    private fun checkForInputErrors(state: State): Effect.ReceivedInputError? {
+        val nameError = when {
+            state.nameText.trim().isEmpty() -> NameError.Empty
+            else -> null
+        }
+        val amountError = when {
+            state.amountText.trim().isEmpty() -> AmountError.Empty
+            !state.amountText.isDouble -> AmountError.Incorrect
+            else -> null
+        }
+        if (nameError == null && amountError == null) return null
+        return Effect.ReceivedInputError(
+            nameError = nameError,
+            amountError = amountError,
+        )
+    }
+
+    private val String.isDouble get() =
+        Regex("^(-?)(0|([1-9]\\d*))(\\.\\d+)?$").matches(this)
 }

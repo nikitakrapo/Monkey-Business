@@ -18,14 +18,23 @@ interface TransactionAddComponent {
 
     data class State(
         val nameText: String,
-        val nameError: String?,
+        val nameError: NameError?,
         val selectedTransactionType: TransactionType,
         val amountText: String,
-        val amountError: String?,
+        val amountError: AmountError?,
         val selectedCurrency: Currency,
         val isLoading: Boolean,
         val error: String?,
     )
+
+    enum class NameError {
+        Empty;
+    }
+
+    enum class AmountError {
+        Empty,
+        Incorrect;
+    }
 
     enum class TransactionType {
         Credit,
