@@ -27,12 +27,8 @@ class TransactionsRepositoryImpl(
 
     override suspend fun addTransaction(transaction: Transaction) {
         val request = TransactionRequest(transaction = transaction)
-        try {
-            api.postTransaction(request)
-            db.addTransaction(transaction)
-        } catch (e: IOException) {
-            // FIXME: log exception
-        }
+        api.postTransaction(request)
+        db.addTransaction(transaction)
     }
 
     override suspend fun getAllTransactions(): Flow<List<Transaction>> = flow {
