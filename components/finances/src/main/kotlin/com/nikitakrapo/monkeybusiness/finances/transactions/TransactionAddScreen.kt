@@ -132,28 +132,13 @@ fun TransactionAddScreen(
             )
         }
         Spacer(modifier = Modifier.height(24.dp))
-        SegmentedSwitch(
+        CreditDebitSwitch(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
-            enabled = !state.isLoading,
-            items = TransactionType.values().map { transactionType ->
-                val text = when (transactionType) {
-                    TransactionType.Debit -> stringResource(R.string.switch_item_debit)
-                    TransactionType.Credit -> stringResource(R.string.switch_item_credit)
-                }
-                val isSelected = state.selectedTransactionType == transactionType
-                SegmentedSwitchItem(
-                    label = {
-                        Text(
-                            text = text,
-                            style = MaterialTheme.typography.labelLarge,
-                        )
-                    },
-                    isSelected = isSelected,
-                    onSelect = { component.onTransactionTypeSelected(transactionType) },
-                )
-            }
+            selectedTransactionType = state.selectedTransactionType,
+            onTransactionTypeSelected = component::onTransactionTypeSelected,
+            isEnabled = !state.isLoading,
         )
         Spacer(modifier = Modifier.height(8.dp))
         MoneyAmountPicker(
