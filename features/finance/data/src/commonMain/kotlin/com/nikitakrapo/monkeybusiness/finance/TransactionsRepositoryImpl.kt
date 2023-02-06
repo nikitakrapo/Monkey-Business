@@ -7,10 +7,9 @@ import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import com.nikitakrapo.monkeybusiness.finance.network.TransactionsApi
 import com.nikitakrapo.monkeybusiness.finance.network.dto.TransactionRequest
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokensProvider
-import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onStart
 
 class TransactionsRepositoryImpl(
     platformContext: PlatformContext,
@@ -31,11 +30,14 @@ class TransactionsRepositoryImpl(
         db.addTransaction(transaction)
     }
 
-    override suspend fun getAllTransactions(): Flow<List<Transaction>> = flow {
-        val remoteTransactions = api.getAllTransactions().transactionList
-        if (db.getAllTransactions() != remoteTransactions) {
-            db.updateTransactions(remoteTransactions)
-        }
-        emitAll(db.getAllTransactionsFlow())
-    }
+    override suspend fun getAllTransactions(): Flow<List<Transaction>> =
+        db.getAllTransactionsFlow()
+            .onStart {
+                val remoteTransactions = api.getAllTransactions().transactionList
+                if (db.getAllTransactions() != remoteTransactions) {
+                    db.updateTransactions(remoteTransactions)
+                }
+                emit(remoteTransactions)
+            }
+            .distinctUntilChanged()
 }
