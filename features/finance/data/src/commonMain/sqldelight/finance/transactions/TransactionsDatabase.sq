@@ -22,4 +22,5 @@ SELECT * FROM TransactionItem
 WHERE id = ?;
 
 selectAllTransactions:
-SELECT * FROM TransactionItem;
+SELECT * FROM TransactionItem
+ORDER BY timestampMs DESC;
