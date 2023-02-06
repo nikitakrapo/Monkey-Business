@@ -71,13 +71,13 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
         get() = MutableStateFlow(
             FinancesComponent.State(
                 moneyAmount = MoneyAmount(
-                    amount = 123456,
+                    amount = 123456.0,
                     currency = Currency.GBP,
                 ),
                 transactionsList = listOf(
                     Transaction(
                         id = "30fb18274",
-                        moneyAmount = MoneyAmount(1000, Currency.RUB),
+                        moneyAmount = MoneyAmount(1000.0, Currency.RUB),
                         timestampMs = 0,
                         name = "taxi expenses",
                     ),

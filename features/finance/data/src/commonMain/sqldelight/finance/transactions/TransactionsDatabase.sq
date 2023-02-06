@@ -1,6 +1,6 @@
 CREATE TABLE TransactionItem ( -- Transaction is reserved in SQLite
     id TEXT NOT NULL,
-    amount INTEGER NOT NULL,
+    amount REAL NOT NULL,
     currency TEXT NOT NULL,
     timestampMs INTEGER NOT NULL,
     name TEXT NOT NULL

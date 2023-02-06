@@ -85,7 +85,7 @@ fun TransactionCard_Preview() {
                 modifier = Modifier.width(360.dp),
                 transaction = Transaction(
                     id = "1",
-                    moneyAmount = MoneyAmount(1001, Currency.RUB),
+                    moneyAmount = MoneyAmount(1001.0, Currency.RUB),
                     timestampMs = 0,
                     name = "taxi expenses",
                 ),

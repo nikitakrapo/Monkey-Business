@@ -9,7 +9,7 @@ interface TransactionAddComponent {
 
     fun onNameTextChanged(text: String)
     fun onTransactionTypeSelected(type: TransactionType)
-    fun onMoneyAmountTextChanged(text: String)
+    fun onAmountTextChanged(text: String)
     fun onCurrencySelected(currency: Currency)
 
     fun onBackClicked()
@@ -18,8 +18,10 @@ interface TransactionAddComponent {
 
     data class State(
         val nameText: String,
+        val nameError: String?,
         val selectedTransactionType: TransactionType,
-        val moneyAmountText: String,
+        val amountText: String,
+        val amountError: String?,
         val selectedCurrency: Currency,
         val isLoading: Boolean,
         val error: String?,

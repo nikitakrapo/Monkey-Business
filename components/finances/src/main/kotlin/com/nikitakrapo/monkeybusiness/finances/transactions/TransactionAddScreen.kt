@@ -103,7 +103,7 @@ fun TransactionAddScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Bottom
+            verticalAlignment = Alignment.Top
         ) {
             Box(
                 modifier = Modifier
@@ -123,6 +123,10 @@ fun TransactionAddScreen(
                     imeAction = ImeAction.Next,
                 ),
                 label = { Text(stringResource(R.string.transaction_name_label)) },
+                isError = state.nameError != null,
+                supportingText = state.nameError?.let {
+                    { Text(it) }
+                },
                 singleLine = true,
                 shape = CircleShape
             )
@@ -152,40 +156,17 @@ fun TransactionAddScreen(
             }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
+        MoneyAmountPicker(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
-        ) {
-            OutlinedTextField(
-                modifier = Modifier.weight(1f),
-                enabled = !state.isLoading,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number
-                ),
-                value = state.moneyAmountText,
-                onValueChange = component::onMoneyAmountTextChanged,
-                shape = MaterialTheme.shapes.medium.copy(
-                    bottomEnd = ZeroCornerSize,
-                    topEnd = ZeroCornerSize
-                ),
-                trailingIcon = {
-                    Text(
-                        text = state.selectedCurrency.symbol,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                            .copy(alpha = if (state.isLoading) 0.4f else 1f)
-                    )
-                },
-                singleLine = true,
-                label = { Text(stringResource(R.string.amount_label)) }
-            )
-            CurrencyPicker(
-                currenciesList = Currency.values().toList(),
-                selectedCurrency = state.selectedCurrency,
-                onCurrencySelected = component::onCurrencySelected,
-                enabled = !state.isLoading,
-            )
-        }
+            amountText = state.amountText,
+            onAmountTextChanged = component::onAmountTextChanged,
+            selectedCurrency = state.selectedCurrency,
+            onCurrencySelected = component::onCurrencySelected,
+            enabled = !state.isLoading,
+            error = state.amountError,
+        )
         Spacer(modifier = Modifier.weight(1f))
         AnimatedVisibility(
             visible = state.error != null,
@@ -225,7 +206,7 @@ fun TransactionAddScreen(
 
 @Preview(
     widthDp = 360,
-    heightDp = 360
+    heightDp = 500
 )
 @Composable
 fun TransactionAddScreen_Preview() {
@@ -238,22 +219,43 @@ fun TransactionAddScreen_Preview() {
     }
 }
 
-fun PreviewTransactionAddComponent() = object : TransactionAddComponent {
+@Preview(
+    widthDp = 360,
+    heightDp = 500
+)
+@Composable
+fun TransactionAddScreen_Preview_Errors() {
+    MonkeyTheme {
+        Surface {
+            TransactionAddScreen(
+                component = PreviewTransactionAddComponent(
+                    hasErrors = true
+                )
+            )
+        }
+    }
+}
+
+fun PreviewTransactionAddComponent(
+    hasErrors: Boolean = false,
+) = object : TransactionAddComponent {
     override val state: StateFlow<TransactionAddComponent.State>
         get() = MutableStateFlow(
             TransactionAddComponent.State(
                 nameText = "nameText",
+                nameError = if (hasErrors) "Sample nameError" else null,
                 selectedTransactionType = TransactionType.Default,
-                moneyAmountText = "moneyAmountText",
+                amountText = "moneyAmountText",
+                amountError = if (hasErrors) "Sample amountError" else null,
                 selectedCurrency = Currency.Default,
                 isLoading = false,
-                error = null,
+                error = if (hasErrors) "Sample error" else null,
             )
         )
 
     override fun onNameTextChanged(text: String) {}
     override fun onTransactionTypeSelected(type: TransactionType) {}
-    override fun onMoneyAmountTextChanged(text: String) {}
+    override fun onAmountTextChanged(text: String) {}
     override fun onCurrencySelected(currency: Currency) {}
     override fun onBackClicked() {}
     override fun onAddClicked() {}

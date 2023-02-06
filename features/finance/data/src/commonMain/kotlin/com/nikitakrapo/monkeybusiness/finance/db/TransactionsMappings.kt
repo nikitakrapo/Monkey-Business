@@ -15,7 +15,7 @@ internal fun TransactionModel.mapToDomainModel() = mapToTransaction(
 
 internal fun mapToTransaction(
     id: String,
-    amount: Long,
+    amount: Double,
     currency: String,
     timestamp: Long,
     name: String,

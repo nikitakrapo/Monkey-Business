@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MoneyAmount(
     @SerialName("amount")
-    val amount: Long,
+    val amount: Double,
     @SerialName("currency")
     val currency: Currency,
 )

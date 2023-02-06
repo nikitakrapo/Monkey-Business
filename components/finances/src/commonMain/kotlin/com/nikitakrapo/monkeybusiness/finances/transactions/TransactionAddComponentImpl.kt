@@ -11,7 +11,6 @@ import com.nikitakrapo.mvi.feature.FeatureFactory
 import com.nikitakrapo.randomUuid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -32,8 +31,10 @@ class TransactionAddComponentImpl(
         name = "TransactionAddFeature",
         initialState = State(
             nameText = "",
+            nameError = null,
             selectedTransactionType = TransactionType.Default,
-            moneyAmountText = "",
+            amountText = "",
+            amountError = null,
             selectedCurrency = Currency.Default,
             isLoading = false,
             error = null,
@@ -46,7 +47,7 @@ class TransactionAddComponentImpl(
                     error = null
                 )
                 is Effect.MoneyAmountTextChanged -> copy(
-                    moneyAmountText = effect.text,
+                    amountText = effect.text,
                     error = null
                 )
                 is Effect.NameTextChanged -> copy(
@@ -78,7 +79,7 @@ class TransactionAddComponentImpl(
                     // FIXME: validate input
                     val result = runCatching {
                         val isCredit = state.selectedTransactionType == TransactionType.Credit
-                        var amount = state.moneyAmountText.toLong()
+                        var amount = state.amountText.toDouble()
                         if (isCredit) amount *= -1
                         val moneyAmount = MoneyAmount(
                             amount = amount,
@@ -125,7 +126,7 @@ class TransactionAddComponentImpl(
         feature.accept(Intent.SelectTransactionType(type))
     }
 
-    override fun onMoneyAmountTextChanged(text: String) {
+    override fun onAmountTextChanged(text: String) {
         feature.accept(Intent.ChangeMoneyAmountText(text))
     }
 
@@ -161,4 +162,7 @@ class TransactionAddComponentImpl(
     private sealed class Event {
         object AddingFinishedSuccessfully : Event()
     }
+
+    private fun isCorrectDouble(text: String) =
+        Regex("^(-?)(0|([1-9]\\d*))(\\.\\d+)?$").matches(text)
 }

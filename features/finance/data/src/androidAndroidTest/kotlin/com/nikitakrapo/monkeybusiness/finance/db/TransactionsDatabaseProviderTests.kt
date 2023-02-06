@@ -75,7 +75,7 @@ class TransactionsDatabaseProviderTests {
         id: String = "uuid",
     ) = Transaction(
         id = id,
-        moneyAmount = MoneyAmount(amount = 1000, currency = Currency.HUF),
+        moneyAmount = MoneyAmount(amount = 1000.0, currency = Currency.HUF),
         timestampMs = 1674415617000,
         name = "sample desc",
     )

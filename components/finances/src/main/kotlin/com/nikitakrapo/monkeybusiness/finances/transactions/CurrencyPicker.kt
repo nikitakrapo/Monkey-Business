@@ -33,6 +33,7 @@ fun CurrencyPicker(
     selectedCurrency: Currency,
     onCurrencySelected: (Currency) -> Unit,
     enabled: Boolean = true,
+    isError: Boolean,
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val expanded = expandedState && enabled
@@ -63,6 +64,8 @@ fun CurrencyPicker(
                 bottomStart = ZeroCornerSize,
                 topStart = ZeroCornerSize
             ),
+            isError = isError,
+            supportingText = if (isError) {{}} else null, // needed for MoneyAmountPicker height sync
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
         ExposedDropdownMenu(

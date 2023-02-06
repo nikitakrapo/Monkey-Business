@@ -27,7 +27,7 @@ class FinancesComponentImpl(
         name = "FinancesFeature",
         initialState = State(
             moneyAmount = MoneyAmount(
-                amount = 123456,
+                amount = 123456.0,
                 currency = Currency.GBP,
             ),
             transactionsList = null,
