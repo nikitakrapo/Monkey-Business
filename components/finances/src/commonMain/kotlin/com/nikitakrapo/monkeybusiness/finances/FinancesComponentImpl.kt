@@ -7,6 +7,7 @@ import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import com.nikitakrapo.monkeybusiness.finances.FinancesComponent.State
 import com.nikitakrapo.mvi.feature.FeatureFactory
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -31,20 +32,36 @@ class FinancesComponentImpl(
             ),
             transactionsList = null,
             transactionsLoading = true,
+            error = null,
         ),
         intentToAction = { it },
         reducer = { effect ->
             when (effect) {
-                is Effect.TransactionsLoaded -> copy(
-                    transactionsList = effect.transactionList,
-                    transactionsLoading = false,
-                )
+                is Effect.TransactionsLoaded -> {
+                    effect.result.fold(
+                        onSuccess = { transactionList ->
+                            copy(
+                                transactionsList = transactionList,
+                                transactionsLoading = false,
+                                error = null,
+                            )
+                        },
+                        onFailure = { error ->
+                            copy(
+                                transactionsLoading = false,
+                                error = error.message,
+                            )
+                        }
+                    )
+                }
             }
         },
         actor = { action, _ ->
             when (action) {
                 Intent.ObserveTransactions -> flow {
                     transactionsRepository.getAllTransactions()
+                        .map { Result.success(it) }
+                        .catch { emit(Result.failure(it)) }
                         .map(Effect::TransactionsLoaded)
                         .collect(::emit)
                 }
@@ -64,6 +81,6 @@ class FinancesComponentImpl(
     }
 
     private sealed class Effect {
-        class TransactionsLoaded(val transactionList: List<Transaction>) : Effect()
+        class TransactionsLoaded(val result: Result<List<Transaction>>) : Effect()
     }
 }

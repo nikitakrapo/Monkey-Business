@@ -2,13 +2,17 @@ package com.nikitakrapo.monkeybusiness.finances
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
@@ -39,6 +43,19 @@ fun FinancesScreen(
                     onAddTransactionClicked = component::onAddTransactionClicked,
                 )
             }
+            state.error?.let {
+                item {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp),
+                        text = it,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
             state.transactionsList?.let {
                 TransactionsList(
                     transactions = it,
@@ -66,6 +83,7 @@ fun PreviewFinancesComponent() = object : FinancesComponent {
                     ),
                 ),
                 transactionsLoading = false,
+                error = null,
             ),
         )
 

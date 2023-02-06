@@ -14,5 +14,6 @@ interface FinancesComponent {
         val moneyAmount: MoneyAmount,
         val transactionsList: List<Transaction>?,
         val transactionsLoading: Boolean,
+        val error: String?,
     )
 }

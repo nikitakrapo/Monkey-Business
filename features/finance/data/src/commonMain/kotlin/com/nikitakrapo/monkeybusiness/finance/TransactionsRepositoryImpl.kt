@@ -9,6 +9,8 @@ import com.nikitakrapo.monkeybusiness.finance.network.dto.TransactionRequest
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokensProvider
 import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 
 class TransactionsRepositoryImpl(
     platformContext: PlatformContext,
@@ -33,11 +35,11 @@ class TransactionsRepositoryImpl(
         }
     }
 
-    override suspend fun getAllTransactions(): Flow<List<Transaction>> {
+    override suspend fun getAllTransactions(): Flow<List<Transaction>> = flow {
         val remoteTransactions = api.getAllTransactions().transactionList
         if (db.getAllTransactions() != remoteTransactions) {
             db.updateTransactions(remoteTransactions)
         }
-        return db.getAllTransactionsFlow()
+        emitAll(db.getAllTransactionsFlow())
     }
 }
