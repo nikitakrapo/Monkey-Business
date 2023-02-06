@@ -107,9 +107,10 @@ fun TransactionAddScreen(
         ) {
             Box(
                 modifier = Modifier
+                    .padding(top = 8.dp) // see OutlinedTextFieldTopPadding
                     .size(TextFieldDefaults.MinHeight)
                     .clip(CircleShape)
-                    .background(Color.Gray)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
             )
             Spacer(modifier = Modifier.width(12.dp))
             OutlinedTextField(
