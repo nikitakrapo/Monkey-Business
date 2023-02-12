@@ -134,15 +134,6 @@ fun TransactionAddScreen(
                 shape = CircleShape
             )
         }
-        Spacer(modifier = Modifier.height(24.dp))
-        CreditDebitSwitch(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-            selectedTransactionType = state.selectedTransactionType,
-            onTransactionTypeSelected = component::onTransactionTypeSelected,
-            isEnabled = !state.isLoading,
-        )
         Spacer(modifier = Modifier.height(8.dp))
         MoneyAmountPicker(
             modifier = Modifier
@@ -155,6 +146,16 @@ fun TransactionAddScreen(
             enabled = !state.isLoading,
             error = state.amountError,
         )
+        Spacer(modifier = Modifier.height(8.dp))
+        CreditDebitSwitch(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp),
+            selectedTransactionType = state.selectedTransactionType,
+            onTransactionTypeSelected = component::onTransactionTypeSelected,
+            isEnabled = !state.isLoading,
+        )
+
         Spacer(modifier = Modifier.weight(1f))
         AnimatedVisibility(
             visible = state.error != null,
