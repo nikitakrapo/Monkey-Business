@@ -79,9 +79,7 @@ class CoreComponentImpl(
 
     private val modalCloseBackCallback = BackCallback(
         isEnabled = modalChildStack.value.backStack.isNotEmpty(),
-        onBack = {
-            stateFlow.value = stateFlow.value.copy(isModalDismissing = true)
-        }
+        onBack = ::dismissModalWithAnimation
     )
 
     init {
@@ -100,7 +98,11 @@ class CoreComponentImpl(
         object ProfileEdit : CoreModalScreen()
     }
 
-    override fun dismissModal() {
+    private fun dismissModalWithAnimation() {
+        stateFlow.value = stateFlow.value.copy(isModalDismissing = true)
+    }
+
+    override fun dismissModalInstantly() {
         stateFlow.value = stateFlow.value.copy(isModalDismissing = false)
         modalNavigation.pop()
     }
@@ -157,28 +159,14 @@ class CoreComponentImpl(
             component = TransactionAddComponentImpl(
                 componentContext = componentContext,
                 dependencies = dependencies.transactionAddDependencies(),
-                closeTransactionAdd = {
-                    modalNavigation.navigate(
-                        transformer = { stack ->
-                            stack.filterNot { it is CoreModalScreen.TransactionAdd }
-                        },
-                        onComplete = { _, _ -> },
-                    )
-                }
+                closeTransactionAdd = ::dismissModalWithAnimation
             )
         )
         CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
             component = ProfileEditComponentImpl(
                 componentContext = componentContext,
                 dependencies = dependencies.profileEditDependencies(),
-                navigateBack = {
-                    modalNavigation.navigate(
-                        transformer = { stack ->
-                            stack.filterNot { it is CoreModalScreen.ProfileEdit }
-                        },
-                        onComplete = { _, _ -> },
-                    )
-                },
+                closeProfileEdit = ::dismissModalWithAnimation,
             ),
         )
     }

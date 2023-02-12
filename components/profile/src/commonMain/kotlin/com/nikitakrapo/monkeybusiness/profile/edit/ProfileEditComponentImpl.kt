@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class ProfileEditComponentImpl(
     componentContext: ComponentContext,
     private val dependencies: ProfileEditDependencies,
-    private val navigateBack: () -> Unit,
+    private val closeProfileEdit: () -> Unit,
     featureFactory: FeatureFactory = FeatureFactory(),
 ) : ProfileEditComponent, ComponentContext by componentContext {
 
@@ -25,7 +25,7 @@ class ProfileEditComponentImpl(
         scope.launch {
             feature.events.collect { event ->
                 when (event) {
-                    Event.SavingFinishedSuccessfully -> navigateBack()
+                    Event.SavingFinishedSuccessfully -> closeProfileEdit()
                 }
             }
         }
@@ -80,7 +80,7 @@ class ProfileEditComponentImpl(
     }
 
     override fun onNavigateBackClicked() {
-        navigateBack()
+        closeProfileEdit()
     }
 
     override fun onSaveChangesClicked() {

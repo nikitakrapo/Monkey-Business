@@ -1,6 +1,6 @@
 package com.nikitakrapo.monkeybusiness
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
@@ -40,7 +39,7 @@ fun CoreScreen(
     val childStack by component.childStack.collectAsState()
     val modalChildStack by component.modalChildStack.collectAsState()
 
-    Box(
+    BoxWithConstraints(
         modifier = modifier,
     ) {
         Children(
@@ -62,7 +61,7 @@ fun CoreScreen(
             when (modalChildStack.active.instance) {
                 CoreComponent.ModalChild.None -> mapOf(0.dp to 0, Int.MAX_VALUE.dp to 1)
                 is CoreComponent.ModalChild.ProfileEdit -> mapOf(0.dp to 0, 360.dp to 1)
-                is CoreComponent.ModalChild.TransactionAdd -> mapOf(0.dp to 0, 540.dp to 1)
+                is CoreComponent.ModalChild.TransactionAdd -> mapOf(0.dp to 0, maxHeight - 16.dp to 1)
             }
         }
         BottomSheet(
@@ -75,7 +74,7 @@ fun CoreScreen(
             ),
             enabled = hasModal,
             isDismissing = state.isModalDismissing,
-            onDismiss = component::dismissModal,
+            onDismiss = component::dismissModalInstantly,
         ) {
             when (val child = modalChildStack.active.instance) {
                 is CoreComponent.ModalChild.TransactionAdd -> TransactionAddScreen(
@@ -153,5 +152,5 @@ internal fun PreviewCoreComponent(
             ),
         )
 
-    override fun dismissModal() {}
+    override fun dismissModalInstantly() {}
 }
