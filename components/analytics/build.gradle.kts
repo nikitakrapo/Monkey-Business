@@ -18,25 +18,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.components.finances)
-                api(projects.components.analytics)
-                api(projects.components.profile)
-                api(projects.features.finance.models)
-                api(projects.features.analytics)
+                api(projects.features.navigation.core)
                 implementation(projects.features.mvi.feature)
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(projects.features.mvi.featureLogging)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.turbine)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(projects.design)
-                implementation(libs.decompose.jetpack)
             }
         }
     }

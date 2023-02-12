@@ -1,13 +1,17 @@
-package com.nikitakrapo.monkeybusiness.design.icons
+package com.nikitakrapo.monkeybusiness.design.icons.filled
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 
-val Icons.Filled.Wallet: ImageVector
+
+public val Icons.Filled.Wallet: ImageVector
     get() {
-        return instance ?: materialIcon(name = "Filled.Wallet") {
+        if (_wallet != null) {
+            return _wallet!!
+        }
+        _wallet = materialIcon(name = "Filled.AccountBalanceWallet") {
             materialPath {
                 moveTo(21.0f, 18.0f)
                 verticalLineToRelative(1.0f)
@@ -38,9 +42,8 @@ val Icons.Filled.Wallet: ImageVector
                 reflectiveCurveToRelative(-0.67f, 1.5f, -1.5f, 1.5f)
                 close()
             }
-        }.also {
-            instance = it
         }
+        return _wallet!!
     }
 
-private var instance: ImageVector? = null
+private var _wallet: ImageVector? = null

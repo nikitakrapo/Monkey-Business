@@ -18,8 +18,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.nikitakrapo.monkeybusiness.design.R
-import com.nikitakrapo.monkeybusiness.design.icons.Visibility
-import com.nikitakrapo.monkeybusiness.design.icons.VisibilityOff
+import com.nikitakrapo.monkeybusiness.design.icons.filled.Visibility
+import com.nikitakrapo.monkeybusiness.design.icons.filled.VisibilityOff
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

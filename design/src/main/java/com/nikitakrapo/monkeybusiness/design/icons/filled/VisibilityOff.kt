@@ -1,13 +1,16 @@
-package com.nikitakrapo.monkeybusiness.design.icons
+package com.nikitakrapo.monkeybusiness.design.icons.filled
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 
-val Icons.Filled.VisibilityOff: ImageVector
+public val Icons.Filled.VisibilityOff: ImageVector
     get() {
-        return instance ?: materialIcon(name = "Filled.VisibilityOff") {
+        if (_visibilityOff != null) {
+            return _visibilityOff!!
+        }
+        _visibilityOff = materialIcon(name = "Filled.VisibilityOff") {
             materialPath {
                 moveTo(12.0f, 7.0f)
                 curveToRelative(2.76f, 0.0f, 5.0f, 2.24f, 5.0f, 5.0f)
@@ -48,9 +51,8 @@ val Icons.Filled.VisibilityOff: ImageVector
                 lineToRelative(-0.17f, 0.01f)
                 close()
             }
-        }.also {
-            instance = it
         }
+        return _visibilityOff!!
     }
 
-private var instance: ImageVector? = null
+private var _visibilityOff: ImageVector? = null

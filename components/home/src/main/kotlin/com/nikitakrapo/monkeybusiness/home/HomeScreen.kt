@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,9 +21,13 @@ import androidx.constraintlayout.compose.Dimension
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.monkeybusiness.analytics.PreviewAnalyticsComponent
 import com.nikitakrapo.monkeybusiness.design.components.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.components.NavigationBarItemModel
-import com.nikitakrapo.monkeybusiness.design.icons.Wallet
+import com.nikitakrapo.monkeybusiness.design.icons.filled.Analytics
+import com.nikitakrapo.monkeybusiness.design.icons.filled.Wallet
+import com.nikitakrapo.monkeybusiness.design.icons.outlined.Analytics
+import com.nikitakrapo.monkeybusiness.design.icons.outlined.Wallet
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finances.FinancesScreen
 import com.nikitakrapo.monkeybusiness.finances.PreviewFinancesComponent
@@ -62,6 +67,9 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     component = child.component,
                 )
+                is HomeComponent.Child.Analytics -> {
+                    /* TODO */
+                }
                 is HomeComponent.Child.Profile -> ProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     component = child.component,
@@ -75,18 +83,33 @@ fun HomeScreen(
                     bottom.linkTo(parent.bottom)
                 },
             items = listOf(
-                NavigationBarItemModel(
-                    selected = childStack.active.instance is HomeComponent.Child.Finances,
-                    onClick = component::onFinancesClicked,
-                    icon = Icons.Default.Wallet,
-                    iconContentDescription = stringResource(R.string.cd_finances),
-                ),
-                NavigationBarItemModel(
-                    selected = childStack.active.instance is HomeComponent.Child.Profile,
-                    onClick = component::onProfileClicked,
-                    icon = Icons.Default.Person,
-                    iconContentDescription = stringResource(R.string.cd_profile),
-                ),
+                run {
+                    val isSelected = childStack.active.instance is HomeComponent.Child.Finances
+                    NavigationBarItemModel(
+                        selected = isSelected,
+                        onClick = component::onFinancesClicked,
+                        icon = if (isSelected) Icons.Filled.Wallet else Icons.Outlined.Wallet,
+                        iconContentDescription = stringResource(R.string.cd_finances),
+                    )
+                },
+                run {
+                    val isSelected = childStack.active.instance is HomeComponent.Child.Analytics
+                    NavigationBarItemModel(
+                        selected = isSelected,
+                        onClick = component::onAnalyticsClicked,
+                        icon = if (isSelected) Icons.Filled.Analytics else Icons.Outlined.Analytics,
+                        iconContentDescription = stringResource(R.string.cd_analytics),
+                    )
+                },
+                run {
+                    val isSelected = childStack.active.instance is HomeComponent.Child.Profile
+                    NavigationBarItemModel(
+                        selected = isSelected,
+                        onClick = component::onProfileClicked,
+                        icon = if (isSelected) Icons.Filled.Person else Icons.Outlined.Person,
+                        iconContentDescription = stringResource(R.string.cd_profile),
+                    )
+                },
             ),
             windowInsets = WindowInsets.navigationBars,
         )
@@ -139,7 +162,10 @@ fun PreviewHomeComponent(
                     HomeComponentImpl.HomeScreen.Finances -> HomeComponent.Child.Finances(
                         PreviewFinancesComponent(),
                     )
-                    is HomeComponentImpl.HomeScreen.Profile -> HomeComponent.Child.Profile(
+                    HomeComponentImpl.HomeScreen.Analytics -> HomeComponent.Child.Analytics(
+                        PreviewAnalyticsComponent(),
+                    )
+                    HomeComponentImpl.HomeScreen.Profile -> HomeComponent.Child.Profile(
                         PreviewProfileComponent(),
                     )
                 },
@@ -147,5 +173,6 @@ fun PreviewHomeComponent(
         )
 
     override fun onFinancesClicked() {}
+    override fun onAnalyticsClicked() {}
     override fun onProfileClicked() {}
 }

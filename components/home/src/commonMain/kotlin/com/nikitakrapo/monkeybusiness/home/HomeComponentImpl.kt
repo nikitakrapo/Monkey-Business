@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
+import com.nikitakrapo.monkeybusiness.analytics.AnalyticsComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.FinancesComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.ProfileComponentImpl
 import com.nikitakrapo.navigation.stack.childStackFlow
@@ -33,6 +34,11 @@ class HomeComponentImpl(
         navigation.bringToFront(HomeScreen.Finances)
     }
 
+    override fun onAnalyticsClicked() {
+        analytics.onAnalyticsClicked()
+        navigation.bringToFront(HomeScreen.Analytics)
+    }
+
     override fun onProfileClicked() {
         analytics.onProfileClicked()
         navigation.bringToFront(HomeScreen.Profile)
@@ -41,6 +47,8 @@ class HomeComponentImpl(
     @Parcelize
     sealed class HomeScreen : Parcelable {
         object Finances : HomeScreen()
+
+        object Analytics : HomeScreen()
 
         object Profile : HomeScreen()
     }
@@ -55,7 +63,12 @@ class HomeComponentImpl(
                 dependencies = dependencies.financesDependencies(),
             ),
         )
-        is HomeScreen.Profile -> HomeComponent.Child.Profile(
+        HomeScreen.Analytics -> HomeComponent.Child.Analytics(
+            AnalyticsComponentImpl(
+                componentContext = componentContext,
+            ),
+        )
+        HomeScreen.Profile -> HomeComponent.Child.Profile(
             ProfileComponentImpl(
                 componentContext = componentContext,
                 dependencies = dependencies.profileDependencies(),

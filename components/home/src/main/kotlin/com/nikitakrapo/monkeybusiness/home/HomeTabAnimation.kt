@@ -23,7 +23,8 @@ private val HomeComponent.Child.index: Int
     get() =
         when (this) {
             is HomeComponent.Child.Finances -> 0
-            is HomeComponent.Child.Profile -> 1
+            is HomeComponent.Child.Analytics -> 1
+            is HomeComponent.Child.Profile -> 2
         }
 
 @OptIn(ExperimentalDecomposeApi::class)

@@ -23,6 +23,7 @@ include(":androidApp")
 include(":core")
 include(":design")
 
+include(":components:analytics")
 include(":components:authentication")
 include(":components:home")
 include(":components:finances")
