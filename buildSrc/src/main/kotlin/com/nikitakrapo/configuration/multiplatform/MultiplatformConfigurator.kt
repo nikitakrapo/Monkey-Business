@@ -1,6 +1,7 @@
 package com.nikitakrapo.configuration.multiplatform
 
 import com.nikitakrapo.configuration.android.setupAndroidLibrary
+import com.nikitakrapo.configuration.libs
 import com.nikitakrapo.sourcesets.DefaultMultiplatformSourceSets
 import com.nikitakrapo.sourcesets.MultiplatformSourceSets
 import org.gradle.api.Project
@@ -16,6 +17,7 @@ fun Project.setupMultiplatformModule(
         setupSourceSets {
             common.main.dependencies {
                 if (withUtils) { implementation(project(":features:kmmutils")) }
+                implementation(libs.napier)
                 implementation(kotlin("stdlib"))
             }
 

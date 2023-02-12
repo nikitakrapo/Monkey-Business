@@ -2,10 +2,13 @@ package com.nikitakrapo.configuration.android
 
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.nikitakrapo.configuration.libs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withGroovyBuilder
+import org.gradle.kotlin.dsl.*
 
 internal fun defaultAndroidConfig() = AndroidConfig(
     minSdk = 24,
@@ -39,6 +42,10 @@ fun Project.setupAndroidApp(
 internal fun Project.setupAndroidCommon(
     config: AndroidConfig = defaultAndroidConfig(),
 ) {
+    dependencies {
+        add("implementation", libs.napier)
+    }
+
     extensions.configure<BaseExtension> {
         compileSdkVersion(config.compileSdk)
 
