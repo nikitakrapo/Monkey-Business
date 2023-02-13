@@ -22,3 +22,9 @@ fun LazyListScope.TransactionsList(
         )
     }
 }
+
+fun LazyListScope.TransactionsListShimmer() {
+    items(8) {
+        TransactionCardShimmer()
+    }
+}

@@ -75,6 +75,50 @@ fun TransactionCard(
     }
 }
 
+@Composable
+fun TransactionCardShimmer(
+    modifier: Modifier = Modifier,
+) {
+    val shimmerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+    val shimmerContainerShape = MaterialTheme.shapes.extraSmall
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(72.dp)
+            .padding(vertical = 8.dp)
+            .padding(end = 24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(shimmerColor),
+        ) {
+        }
+        Box(
+            modifier = Modifier
+                .size(
+                    width = 100.dp,
+                    height = 22.dp
+                )
+                .clip(shimmerContainerShape)
+                .background(shimmerColor),
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Box(
+            modifier = Modifier
+                .size(
+                    width = 80.dp,
+                    height = 18.dp
+                )
+                .clip(shimmerContainerShape)
+                .background(shimmerColor),
+        )
+    }
+}
+
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
@@ -90,6 +134,19 @@ fun TransactionCard_Preview() {
                     name = "taxi expenses",
                 ),
                 onClick = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun TransactionCardShimmer_Preview() {
+    MonkeyTheme {
+        Surface {
+            TransactionCardShimmer(
+                modifier = Modifier.width(360.dp),
             )
         }
     }
