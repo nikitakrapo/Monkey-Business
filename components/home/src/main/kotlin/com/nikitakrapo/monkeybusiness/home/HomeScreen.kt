@@ -21,6 +21,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.monkeybusiness.analytics.AnalyticsScreen
 import com.nikitakrapo.monkeybusiness.analytics.PreviewAnalyticsComponent
 import com.nikitakrapo.monkeybusiness.design.components.BottomNavigationBar
 import com.nikitakrapo.monkeybusiness.design.components.NavigationBarItemModel
@@ -67,9 +68,10 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     component = child.component,
                 )
-                is HomeComponent.Child.Analytics -> {
-                    /* TODO */
-                }
+                is HomeComponent.Child.Analytics -> AnalyticsScreen(
+                    modifier = Modifier.fillMaxWidth(),
+                    component = child.component,
+                )
                 is HomeComponent.Child.Profile -> ProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     component = child.component,
