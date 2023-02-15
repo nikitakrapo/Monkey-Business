@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.monkeybusiness.analytics.chart.SpendingsChart
+import com.nikitakrapo.monkeybusiness.analytics.chart.CircularSpendingsChart
 import com.nikitakrapo.monkeybusiness.analytics.chart.SpendingsChartPart
 
 @Composable
@@ -14,7 +14,7 @@ fun AnalyticsScreen(
     component: AnalyticsComponent,
 ) {
     Column(modifier = modifier) {
-        SpendingsChart(
+        CircularSpendingsChart(
             modifier = Modifier
                 .size(128.dp),
             parts = listOf(
