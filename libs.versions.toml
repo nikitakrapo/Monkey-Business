@@ -30,7 +30,7 @@ profile-installer = "1.2.0" # https://mvnrepository.com/artifact/androidx.profil
 
 kotlinCompilerCompose = "1.3.2" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/compose
-accompanist = "0.25.1" # https://github.com/google/accompanist/releases
+accompanist = "0.28.0" # https://github.com/google/accompanist/releases
 material = "1.3.1" # https://developer.android.com/jetpack/androidx/releases/compose-material
 material3 = "1.0.1" # https://developer.android.com/jetpack/androidx/releases/compose-material3
 constraintlayout-compose = "1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
@@ -103,6 +103,7 @@ compose-uiTest-manifest = { module = "androidx.compose.ui:ui-test-manifest", ver
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
 
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 

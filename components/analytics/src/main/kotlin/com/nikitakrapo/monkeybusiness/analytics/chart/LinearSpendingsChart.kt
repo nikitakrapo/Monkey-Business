@@ -102,6 +102,6 @@ fun LinearSpendingsChart_Preview_Many() {
 
 private fun previewParts(number: Int) = buildList {
     for (i in 1..number) {
-        add(SpendingsChartPart(value = i))
+        add(SpendingsChartPart(value = i, name = ""))
     }
 }

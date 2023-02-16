@@ -73,9 +73,9 @@ fun CircularSpendingsChart_Preview() {
 }
 
 private val previewParts = listOf(
-    SpendingsChartPart(value = 1),
-    SpendingsChartPart(value = 2),
-    SpendingsChartPart(value = 3),
-    SpendingsChartPart(value = 4),
-    SpendingsChartPart(value = 5),
+    SpendingsChartPart(value = 1, name = "sample"),
+    SpendingsChartPart(value = 2, name = "sample 1"),
+    SpendingsChartPart(value = 3, name = "sample 222"),
+    SpendingsChartPart(value = 4, name = "sample 3333"),
+    SpendingsChartPart(value = 5, name = "sample 4444"),
 )
