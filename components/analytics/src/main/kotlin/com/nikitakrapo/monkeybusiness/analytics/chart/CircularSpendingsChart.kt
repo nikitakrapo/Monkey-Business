@@ -52,7 +52,7 @@ fun CircularSpendingsChart(
                 startAngle = currentAngle,
                 sweepAngle = angle,
                 useCenter = false,
-                style = Stroke(12.dp.toPx())
+                style = Stroke(22.dp.toPx())
             )
             currentAngle += angle
         }
