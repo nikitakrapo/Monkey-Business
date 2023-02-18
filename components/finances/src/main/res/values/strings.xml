@@ -6,6 +6,7 @@
     <string name="cd_navigate_back">Navigate back</string>
     <string name="currency_label">Currency</string>
     <string name="empty_amount_error">Empty amount</string>
+    <string name="empty_transactions">No transactions added yet</string>
     <string name="empty_name_error">Empty name</string>
     <string name="incorrect_amount_error">Incorrect amount</string>
     <string name="switch_item_credit">Credit</string>

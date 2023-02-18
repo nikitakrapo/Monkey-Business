@@ -15,6 +15,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,11 +65,23 @@ fun FinancesScreen(
                 }
             }
             if (!state.transactionsLoading) {
-                state.transactionsList?.let {
+                state.transactionsList?.takeIf(List<Transaction>::isNotEmpty)?.let {
                     TransactionsList(
                         transactions = it,
                         onTransactionClick = {},
                     )
+                } ?: run {
+                    item {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 32.dp),
+                            text = stringResource(R.string.empty_transactions),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             } else {
                 TransactionsListShimmer()
@@ -103,8 +116,24 @@ fun FinancesScreen_Preview_Loading() {
     }
 }
 
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun FinancesScreen_Preview_Empty() {
+    MonkeyTheme {
+        Surface {
+            FinancesScreen(
+                component = PreviewFinancesComponent(
+                    transactionsEmpty = true,
+                )
+            )
+        }
+    }
+}
+
 fun PreviewFinancesComponent(
     transactionsLoading: Boolean = false,
+    transactionsEmpty: Boolean = false,
 ) = object : FinancesComponent {
     override val state: StateFlow<FinancesComponent.State>
         get() = MutableStateFlow(
@@ -113,7 +142,7 @@ fun PreviewFinancesComponent(
                     amount = 123456.0,
                     currency = Currency.GBP,
                 ),
-                transactionsList = stubTransactions,
+                transactionsList = if (transactionsEmpty) emptyList() else stubTransactions,
                 transactionsLoading = transactionsLoading,
                 error = null,
             ),
