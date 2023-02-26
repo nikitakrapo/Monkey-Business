@@ -8,7 +8,7 @@ buildToolsVersion = "31.0.0"
 
 # Gradle
 
-agp-bundle = "7.4.0-beta02" # https://developer.android.com/studio/releases/gradle-plugin
+agp-bundle = "7.4.1" # https://developer.android.com/studio/releases/gradle-plugin
 
 # Kotlin
 
