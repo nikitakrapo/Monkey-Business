@@ -1,5 +1,6 @@
 package com.nikitakrapo.monkeybusiness.finance.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -7,7 +8,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class Currency(
+    @SerialName("code")
     val code: String,
+    @SerialName("symbol")
     val symbol: String,
 ) {
     USD("USD", "$"),
