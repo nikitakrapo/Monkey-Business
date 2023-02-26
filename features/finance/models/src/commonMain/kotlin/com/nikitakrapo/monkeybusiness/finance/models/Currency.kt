@@ -23,7 +23,5 @@ enum class Currency(
             } ?: throw IllegalArgumentException("No Currency with code $code")
             return currency
         }
-
-        val Default get() = USD
     }
 }

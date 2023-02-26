@@ -37,7 +37,7 @@ class TransactionAddComponentImpl(
             selectedTransactionType = TransactionType.Default,
             amountText = "",
             amountError = null,
-            selectedCurrency = Currency.Default,
+            selectedCurrency = Currency.USD,
             isLoading = false,
             error = null,
         ),

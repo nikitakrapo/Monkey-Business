@@ -236,7 +236,7 @@ fun PreviewTransactionAddComponent(
                 selectedTransactionType = TransactionType.Default,
                 amountText = "moneyAmountText",
                 amountError = if (hasErrors) AmountError.Empty else null,
-                selectedCurrency = Currency.Default,
+                selectedCurrency = Currency.USD,
                 isLoading = false,
                 error = if (hasErrors) "Sample error" else null,
             )
