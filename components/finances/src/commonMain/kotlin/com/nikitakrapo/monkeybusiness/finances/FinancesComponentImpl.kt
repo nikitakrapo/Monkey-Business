@@ -1,86 +1,24 @@
 package com.nikitakrapo.monkeybusiness.finances
 
 import com.arkivanov.decompose.ComponentContext
-import com.nikitakrapo.monkeybusiness.finance.models.Currency
-import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
-import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import com.nikitakrapo.monkeybusiness.finances.FinancesComponent.State
-import com.nikitakrapo.mvi.feature.FeatureFactory
+import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsComponent
+import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsComponentImpl
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.asStateFlow
 
 class FinancesComponentImpl(
     componentContext: ComponentContext,
     private val dependencies: FinancesDependencies,
-    featureFactory: FeatureFactory = FeatureFactory(),
 ) : FinancesComponent, ComponentContext by componentContext {
 
-    private val transactionAddRouter get() = dependencies.transactionAddRouter
-    private val transactionsRepository get() = dependencies.transactionsRepository
+    private val stateFlow = MutableStateFlow(State(isRefreshing = false))
+    override val state: StateFlow<State> get() = stateFlow.asStateFlow()
 
-    override val state: StateFlow<State> get() = feature.state
+    override val bankAccountsComponent: BankAccountsComponent = BankAccountsComponentImpl()
 
-    private val feature = featureFactory.create<Intent, Intent, Effect, State, Nothing>(
-        name = "FinancesFeature",
-        initialState = State(
-            moneyAmount = MoneyAmount(
-                amount = 123456.0,
-                currency = Currency.GBP,
-            ),
-            transactionsList = null,
-            transactionsLoading = true,
-            error = null,
-        ),
-        intentToAction = { it },
-        reducer = { effect ->
-            when (effect) {
-                is Effect.TransactionsLoaded -> {
-                    effect.result.fold(
-                        onSuccess = { transactionList ->
-                            copy(
-                                transactionsList = transactionList,
-                                transactionsLoading = false,
-                                error = null,
-                            )
-                        },
-                        onFailure = { error ->
-                            copy(
-                                transactionsLoading = false,
-                                error = error.message,
-                            )
-                        }
-                    )
-                }
-            }
-        },
-        actor = { action, _ ->
-            when (action) {
-                Intent.ObserveTransactions -> flow {
-                    transactionsRepository.getAllTransactions()
-                        .map { Result.success(it) }
-                        .catch { emit(Result.failure(it)) }
-                        .map(Effect::TransactionsLoaded)
-                        .collect(::emit)
-                }
-            }
-        },
-        bootstrapper = {
-            flowOf(Intent.ObserveTransactions)
-        },
-    )
-
-    override fun onAddTransactionClicked() {
-        transactionAddRouter.openTransactionAdd()
-    }
-
-    private sealed class Intent {
-        object ObserveTransactions : Intent()
-    }
-
-    private sealed class Effect {
-        class TransactionsLoaded(val result: Result<List<Transaction>>) : Effect()
+    override fun refresh() {
+        stateFlow.value = state.value.copy(isRefreshing = true)
     }
 }

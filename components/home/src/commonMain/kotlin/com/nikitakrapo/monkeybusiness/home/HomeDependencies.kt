@@ -16,10 +16,7 @@ class HomeDependencies(
     val profileEditRouter: ProfileEditRouter,
 ) {
     fun financesDependencies(): FinancesDependencies {
-        return FinancesDependencies(
-            transactionsRepository = transactionsRepository,
-            transactionAddRouter = transactionAddRouter,
-        )
+        return FinancesDependencies()
     }
 
     fun profileDependencies() = ProfileDependencies(

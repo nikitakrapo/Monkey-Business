@@ -1,19 +1,17 @@
 package com.nikitakrapo.monkeybusiness.finances
 
-import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
-import com.nikitakrapo.monkeybusiness.finance.models.Transaction
+import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsComponent
 import kotlinx.coroutines.flow.StateFlow
 
 interface FinancesComponent {
 
     val state: StateFlow<State>
 
-    fun onAddTransactionClicked()
+    val bankAccountsComponent: BankAccountsComponent
+
+    fun refresh()
 
     data class State(
-        val moneyAmount: MoneyAmount,
-        val transactionsList: List<Transaction>?,
-        val transactionsLoading: Boolean,
-        val error: String?,
+        val isRefreshing: Boolean,
     )
 }
