@@ -1,12 +1,13 @@
 package com.nikitakrapo.monkeybusiness.finances
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshDefaults
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -16,7 +17,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsComponent
 import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsScreen
@@ -37,6 +40,15 @@ fun FinancesScreen(
         onRefresh = component::refresh,
     )
 
+    val offsetDp = LocalDensity.current.run {
+        val offset = WindowInsets.statusBars.getTop(this)
+        offset.toDp()
+    }
+    // TODO: find another way to apply insets to indicator
+    val indicatorOffset = animateDpAsState(
+        targetValue = if (!state.isRefreshing) -offsetDp else 0.dp
+    )
+
     Box(modifier = modifier.pullRefresh(pullRefreshState)) {
         BankAccountsScreen(
             modifier = Modifier
@@ -47,7 +59,8 @@ fun FinancesScreen(
 
         PullRefreshIndicator(
             modifier = Modifier
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
+                .offset(y = indicatorOffset.value),
             refreshing = state.isRefreshing,
             state = pullRefreshState
         )
