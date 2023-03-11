@@ -1,9 +1,16 @@
 package com.nikitakrapo.monkeybusiness.finances.accounts
 
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class BankAccountsComponentImpl : BankAccountsComponent {
+class BankAccountsComponentImpl(
+    componentContext: ComponentContext,
+    dependencies: BankAccountsDependencies,
+) : BankAccountsComponent, ComponentContext by componentContext {
+
+    private val productOpeningLandingRouter = dependencies.productOpeningLandingRouter
+
     override val state: StateFlow<BankAccountsComponent.State> =
         MutableStateFlow(BankAccountsComponent.State(emptyList()))
 
@@ -11,5 +18,6 @@ class BankAccountsComponentImpl : BankAccountsComponent {
     }
 
     override fun onOpenProductClicked() {
+        productOpeningLandingRouter.openProductOpening()
     }
 }

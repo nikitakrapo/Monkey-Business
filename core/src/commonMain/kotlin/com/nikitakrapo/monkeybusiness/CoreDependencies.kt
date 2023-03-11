@@ -5,7 +5,9 @@ import com.nikitakrapo.account.BearerTokensProviderImpl
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.finance.TransactionsRepositoryImpl
-import com.nikitakrapo.monkeybusiness.finances.TransactionAddRouter
+import com.nikitakrapo.monkeybusiness.finances.accounts.ProductOpeningLandingRouter
+import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningDependencies
+import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddDependencies
 import com.nikitakrapo.monkeybusiness.home.HomeDependencies
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokensProvider
@@ -26,14 +28,13 @@ class CoreDependencies(
     )
 
     fun homeDependencies(
-        transactionAddRouter: TransactionAddRouter,
+        productOpeningLandingRouter: ProductOpeningLandingRouter,
         profileEditRouter: ProfileEditRouter,
     ) = HomeDependencies(
         analyticsManager = analyticsManager,
         accountManager = accountManager,
-        transactionsRepository = transactionsRepository,
-        transactionAddRouter = transactionAddRouter,
         profileEditRouter = profileEditRouter,
+        productOpeningLandingRouter = productOpeningLandingRouter,
     )
 
     fun authDependencies() = AuthDependencies(
@@ -46,5 +47,12 @@ class CoreDependencies(
 
     fun transactionAddDependencies() = TransactionAddDependencies(
         transactionsRepository = transactionsRepository,
+    )
+
+    fun productOpeningDependencies(
+        productOpeningRouter: ProductOpeningRouter,
+    ) = ProductOpeningDependencies(
+        analyticsManager = analyticsManager,
+        productOpeningRouter = productOpeningRouter,
     )
 }

@@ -10,13 +10,16 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class FinancesComponentImpl(
     componentContext: ComponentContext,
-    private val dependencies: FinancesDependencies,
+    dependencies: FinancesDependencies,
 ) : FinancesComponent, ComponentContext by componentContext {
 
     private val stateFlow = MutableStateFlow(State(isRefreshing = false))
     override val state: StateFlow<State> get() = stateFlow.asStateFlow()
 
-    override val bankAccountsComponent: BankAccountsComponent = BankAccountsComponentImpl()
+    override val bankAccountsComponent: BankAccountsComponent = BankAccountsComponentImpl(
+        componentContext = this,
+        dependencies = dependencies.bankAccountsDependencies()
+    )
 
     override fun refresh() {
         stateFlow.value = state.value.copy(isRefreshing = true)

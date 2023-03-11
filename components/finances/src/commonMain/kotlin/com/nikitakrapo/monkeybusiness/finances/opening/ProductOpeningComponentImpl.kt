@@ -5,19 +5,18 @@ import com.arkivanov.decompose.ComponentContext
 class ProductOpeningComponentImpl(
     componentContext: ComponentContext,
     dependencies: ProductOpeningDependencies,
-    private val openCardOpening: () -> Unit,
-    private val openAccountOpening: () -> Unit,
 ) : ProductOpeningComponent, ComponentContext by componentContext {
 
     private val analytics = ProductOpeningAnalytics(dependencies.analyticsManager)
+    private val router = dependencies.productOpeningRouter
 
     override fun onOpenCardSelected() {
         analytics.onOpenCardSelected()
-        openCardOpening()
+        router.openCardOpening()
     }
 
     override fun onOpenAccountSelected() {
         analytics.onOpenAccountSelected()
-        openAccountOpening()
+        router.openAccountOpening()
     }
 }

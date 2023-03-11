@@ -20,6 +20,7 @@ import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetParams
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetType
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningScreen
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddScreen
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
@@ -62,6 +63,7 @@ fun CoreScreen(
                 CoreComponent.ModalChild.None -> mapOf(0.dp to 0, Int.MAX_VALUE.dp to 1)
                 is CoreComponent.ModalChild.ProfileEdit -> mapOf(0.dp to 0, 360.dp to 1)
                 is CoreComponent.ModalChild.TransactionAdd -> mapOf(0.dp to 0, maxHeight - 16.dp to 1)
+                is CoreComponent.ModalChild.ProductOpening -> mapOf(0.dp to 0, 180.dp to 1)
             }
         }
         BottomSheet(
@@ -82,6 +84,9 @@ fun CoreScreen(
                     component = child.component,
                 )
                 is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
+                    component = child.component,
+                )
+                is CoreComponent.ModalChild.ProductOpening -> ProductOpeningScreen(
                     component = child.component,
                 )
                 CoreComponent.ModalChild.None -> {}

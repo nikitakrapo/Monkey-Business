@@ -12,6 +12,8 @@ import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.currentAccount
 import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.decompose.coroutines.coroutineScope
+import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningComponentImpl
+import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponentImpl
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
@@ -96,6 +98,7 @@ class CoreComponentImpl(
         object None : CoreModalScreen()
         object TransactionAdd : CoreModalScreen()
         object ProfileEdit : CoreModalScreen()
+        object ProductOpening : CoreModalScreen()
     }
 
     private fun dismissModalWithAnimation() {
@@ -117,8 +120,8 @@ class CoreComponentImpl(
                 HomeComponentImpl(
                     componentContext = componentContext,
                     dependencies = dependencies.homeDependencies(
-                        transactionAddRouter = {
-                            modalNavigation.bringToFront(CoreModalScreen.TransactionAdd)
+                        productOpeningLandingRouter = {
+                            modalNavigation.bringToFront(CoreModalScreen.ProductOpening)
                         },
                         profileEditRouter = {
                             modalNavigation.bringToFront(CoreModalScreen.ProfileEdit)
@@ -169,5 +172,23 @@ class CoreComponentImpl(
                 closeProfileEdit = ::dismissModalWithAnimation,
             ),
         )
+        CoreModalScreen.ProductOpening -> CoreComponent.ModalChild.ProductOpening(
+            component = ProductOpeningComponentImpl(
+                componentContext = componentContext,
+                dependencies = dependencies.productOpeningDependencies(
+                    productOpeningRouter = productOpeningRouter()
+                )
+            )
+        )
+    }
+
+    private fun productOpeningRouter() = object : ProductOpeningRouter {
+        override fun openCardOpening() {
+            TODO("Not yet implemented")
+        }
+
+        override fun openAccountOpening() {
+            TODO("Not yet implemented")
+        }
     }
 }
