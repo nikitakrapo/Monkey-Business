@@ -104,7 +104,7 @@ fun BottomSheet(
             }
         }
 
-        val yOffset = with(density) { swipeableState.offset.value.toDp().coerceAtLeast(0.dp) }
+        val yOffset = with(density) { swipeableState.offset.value.toDp() }
         BottomSheetContainer(
             modifier = Modifier
                 .align(Alignment.BottomCenter),
