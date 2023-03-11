@@ -20,7 +20,13 @@ class BankAccountsComponentImpl(
             moneyText = "872 102,00 $",
             currencyText = "$",
             bankCardList = fakeSmallBankCardViewState(),
-        )
+        ),
+        BankAccountViewState(
+            name = "Rubles",
+            moneyText = "0,00 ₽",
+            currencyText = "₽",
+            bankCardList = emptyList(),
+        ),
     )
 
     private fun fakeSmallBankCardViewState() = listOf(
