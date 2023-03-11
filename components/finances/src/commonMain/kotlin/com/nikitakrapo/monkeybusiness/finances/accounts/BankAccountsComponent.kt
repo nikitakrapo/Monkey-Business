@@ -7,7 +7,7 @@ interface BankAccountsComponent {
     val state: StateFlow<State>
 
     fun onAccountClicked(index: Int)
-    fun onOpenAccountOrCardClicked()
+    fun onOpenProductClicked()
 
     data class State(
         val accountList: List<BankAccountViewState>

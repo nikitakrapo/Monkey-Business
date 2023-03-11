@@ -10,6 +10,6 @@ class BankAccountsComponentImpl : BankAccountsComponent {
     override fun onAccountClicked(index: Int) {
     }
 
-    override fun onOpenAccountOrCardClicked() {
+    override fun onOpenProductClicked() {
     }
 }

@@ -48,11 +48,11 @@ fun BankAccountsScreen(
                 modifier = Modifier
                     .fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium,
-                onClick = component::onOpenAccountOrCardClicked,
+                onClick = component::onOpenProductClicked,
                 contentPadding = PaddingValues(vertical = 12.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.open_new_account_or_card),
+                    text = stringResource(R.string.open_new_card_or_product),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -95,5 +95,5 @@ fun PreviewBankAccountsComponent() = object : BankAccountsComponent {
         )
 
     override fun onAccountClicked(index: Int) {}
-    override fun onOpenAccountOrCardClicked() {}
+    override fun onOpenProductClicked() {}
 }
