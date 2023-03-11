@@ -20,6 +20,7 @@ kotlin {
                 api(projects.features.finance.data)
                 api(projects.features.finance.models)
                 api(projects.features.navigation.core)
+                api(projects.features.analytics)
                 implementation(projects.features.mvi.feature)
                 implementation(libs.kotlinx.datetime)
             }
