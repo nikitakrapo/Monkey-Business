@@ -40,6 +40,7 @@ class CoreComponentImpl(
         }
     }
 
+    private val accountManager = dependencies.accountManager
     private val analytics = CoreScreenAnalytics(dependencies.analyticsManager)
 
     private val stateFlow = MutableStateFlow(
@@ -55,12 +56,17 @@ class CoreComponentImpl(
         childStackFlow(
             source = navigation,
             key = "CoreChildStack",
-            initialConfiguration = getScreenForAuthState(
-                dependencies.accountManager.currentAccount,
-            ),
+            initialConfiguration = getInitialScreen(),
             handleBackButton = true,
             childFactory = ::createChild,
         )
+
+    private fun getInitialScreen() =
+        if (shouldNavigateToAuth(accountManager.currentAccount)) {
+            CoreScreen.Authentication
+        } else {
+            CoreScreen.Home
+        }
 
     @Parcelize
     sealed class CoreScreen : Parcelable {
@@ -130,6 +136,7 @@ class CoreComponentImpl(
                 ),
             )
         }
+
         CoreScreen.Authentication -> {
             analytics.onAuthenticationShown()
             CoreComponent.Child.Authentication(
@@ -143,14 +150,18 @@ class CoreComponentImpl(
 
     private fun navigateAuthIfNeeded(account: Account?) {
         val currentScreen = childStack.value.active.configuration
-        val expectedScreen = getScreenForAuthState(account)
-        if (currentScreen != expectedScreen) {
-            navigation.replaceAll(expectedScreen)
+        val shouldNavigateToAuth = shouldNavigateToAuth(account)
+        if (shouldNavigateToAuth && currentScreen != CoreScreen.Authentication) {
+            navigation.replaceAll(CoreScreen.Authentication)
+            modalNavigation.replaceAll(CoreModalScreen.None)
+        }
+        if (!shouldNavigateToAuth && currentScreen == CoreScreen.Authentication) {
+            navigation.replaceAll(CoreScreen.Home)
         }
     }
 
-    private fun getScreenForAuthState(account: Account?): CoreScreen {
-        return if (account == null) CoreScreen.Authentication else CoreScreen.Home
+    private fun shouldNavigateToAuth(account: Account?): Boolean {
+        return account == null
     }
 
     private fun createModalChild(
@@ -165,6 +176,7 @@ class CoreComponentImpl(
                 closeTransactionAdd = ::dismissModalWithAnimation
             )
         )
+
         CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
             component = ProfileEditComponentImpl(
                 componentContext = componentContext,
@@ -172,6 +184,7 @@ class CoreComponentImpl(
                 closeProfileEdit = ::dismissModalWithAnimation,
             ),
         )
+
         CoreModalScreen.ProductOpening -> CoreComponent.ModalChild.ProductOpening(
             component = ProductOpeningComponentImpl(
                 componentContext = componentContext,
