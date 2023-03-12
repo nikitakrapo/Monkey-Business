@@ -20,6 +20,8 @@ import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetParams
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetType
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningScreen
+import com.nikitakrapo.monkeybusiness.finances.accounts.opening.PreviewBankAccountOpeningComponent
 import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningScreen
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddScreen
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
@@ -50,8 +52,14 @@ fun CoreScreen(
             animation = stackAnimation(fade()),
         ) { createdChild ->
             when (val child = createdChild.instance) {
-                is CoreComponent.Child.Home -> HomeScreen(component = child.component)
-                is CoreComponent.Child.Authentication -> AuthScreen(component = child.component)
+                is CoreComponent.Child.Home ->
+                    HomeScreen(component = child.component)
+
+                is CoreComponent.Child.BankAccountOpening ->
+                    BankAccountOpeningScreen(component = child.component)
+
+                is CoreComponent.Child.Authentication ->
+                    AuthScreen(component = child.component)
             }
         }
 
@@ -118,6 +126,22 @@ fun CoreScreen_Preview_Home() {
     heightDp = 720,
 )
 @Composable
+fun CoreScreen_Preview_BankAccountOpening() {
+    MonkeyTheme {
+        Surface {
+            CoreScreen(
+                modifier = Modifier.fillMaxSize(),
+                component = PreviewCoreComponent(CoreComponentImpl.CoreScreen.BankAccountOpening),
+            )
+        }
+    }
+}
+
+@Preview(
+    widthDp = 360,
+    heightDp = 720,
+)
+@Composable
 fun CoreScreen_Preview_Authentication() {
     MonkeyTheme {
         Surface {
@@ -142,6 +166,9 @@ internal fun PreviewCoreComponent(
                 instance = when (child) {
                     CoreComponentImpl.CoreScreen.Home -> CoreComponent.Child.Home(
                         PreviewHomeComponent(),
+                    )
+                    CoreComponentImpl.CoreScreen.BankAccountOpening -> CoreComponent.Child.BankAccountOpening(
+                        PreviewBankAccountOpeningComponent(),
                     )
                     CoreComponentImpl.CoreScreen.Authentication -> CoreComponent.Child.Authentication(
                         PreviewAuthComponent(),

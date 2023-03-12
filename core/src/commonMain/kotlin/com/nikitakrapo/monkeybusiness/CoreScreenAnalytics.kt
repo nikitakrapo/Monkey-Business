@@ -10,12 +10,17 @@ class CoreScreenAnalytics(
         analytics.reportEvent(HOME_SHOWN)
     }
 
+    fun onBankAccountOpeningShown() {
+        analytics.reportEvent(BANK_ACCOUNT_OPENING_SHOWN)
+    }
+
     fun onAuthenticationShown() {
         analytics.reportEvent(AUTHENTICATION_SHOWN)
     }
 
     private companion object {
         const val HOME_SHOWN = "core_home_shown"
+        const val BANK_ACCOUNT_OPENING_SHOWN = "core_bank_account_opening_shown"
         const val AUTHENTICATION_SHOWN = "core_authentication_shown"
     }
 }

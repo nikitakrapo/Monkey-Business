@@ -10,6 +10,7 @@
     <string name="empty_name_error">Empty name</string>
     <string name="incorrect_amount_error">Incorrect amount</string>
     <string name="open_new_card_or_product">Open new card or product</string>
+    <string name="select_currency">Select a currency</string>
     <string name="switch_item_credit">Credit</string>
     <string name="switch_item_debit">Debit</string>
     <string name="transaction_adding">Transaction adding</string>

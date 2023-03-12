@@ -12,6 +12,7 @@ import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.currentAccount
 import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.decompose.coroutines.coroutineScope
+import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponentImpl
@@ -19,6 +20,8 @@ import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditComponentImpl
 import com.nikitakrapo.navigation.stack.childStackFlow
+import com.nikitakrapo.navigation.stack.filter
+import com.nikitakrapo.navigation.stack.filterNot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -71,6 +74,7 @@ class CoreComponentImpl(
     @Parcelize
     sealed class CoreScreen : Parcelable {
         object Home : CoreScreen()
+        object BankAccountOpening : CoreScreen()
         object Authentication : CoreScreen()
     }
 
@@ -134,6 +138,20 @@ class CoreComponentImpl(
                         },
                     ),
                 ),
+            )
+        }
+
+        CoreScreen.BankAccountOpening -> {
+            analytics.onBankAccountOpeningShown()
+            CoreComponent.Child.BankAccountOpening(
+                BankAccountOpeningComponentImpl(
+                    componentContext = componentContext,
+                    closeComponent = {
+                        navigation.filterNot(
+                            filter = { it is CoreScreen.BankAccountOpening }
+                        )
+                    }
+                )
             )
         }
 
@@ -201,7 +219,10 @@ class CoreComponentImpl(
         }
 
         override fun openAccountOpening() {
-            TODO("Not yet implemented")
+            navigation.bringToFront(CoreScreen.BankAccountOpening)
+            modalNavigation.filterNot(
+                filter = { it is CoreModalScreen.ProductOpening }
+            )
         }
     }
 }

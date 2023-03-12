@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness
 
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponent
 import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningComponent
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
@@ -19,6 +20,7 @@ interface CoreComponent {
 
     sealed class Child {
         class Home(val component: HomeComponent) : Child()
+        class BankAccountOpening(val component: BankAccountOpeningComponent) : Child()
         class Authentication(val component: AuthComponent) : Child()
     }
 
