@@ -70,7 +70,11 @@ class BankAccountOpeningComponentImpl(
                 Intent.OpenSearch -> flowOf(Effect.SearchOpened)
                 Intent.GoBack -> {
                     if (state.isSearchOpened) {
-                        flowOf(Effect.SearchClosed, Effect.SearchQueryUpdated(text = ""))
+                        flowOf(
+                            Effect.SearchClosed,
+                            Effect.SearchQueryUpdated(text = ""),
+                            Effect.CurrencyListUpdated(list = allCurrencies)
+                        )
                     } else {
                         flowOf(Effect.ScreenClosed)
                     }
