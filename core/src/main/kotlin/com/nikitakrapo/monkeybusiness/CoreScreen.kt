@@ -13,8 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetParams
@@ -49,7 +47,7 @@ fun CoreScreen(
             stack = childStack,
             modifier = Modifier
                 .fillMaxSize(),
-            animation = stackAnimation(fade()),
+            animation = coreScreenChildrenAnimation(),
         ) { createdChild ->
             when (val child = createdChild.instance) {
                 is CoreComponent.Child.Home ->
