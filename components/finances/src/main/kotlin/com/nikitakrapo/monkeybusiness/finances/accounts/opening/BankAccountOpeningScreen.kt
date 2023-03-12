@@ -102,7 +102,7 @@ fun BankAccountOpeningScreen(
                         placeholder = {
                             Text(
                                 modifier = Modifier.padding(start = 1.dp),
-                                text = "Search"
+                                text = stringResource(R.string.search_common)
                             )
                         }
                     )
