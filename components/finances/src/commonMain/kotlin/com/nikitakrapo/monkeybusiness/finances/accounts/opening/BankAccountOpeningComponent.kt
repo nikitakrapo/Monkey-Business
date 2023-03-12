@@ -14,7 +14,9 @@ interface BankAccountOpeningComponent {
 
     data class State(
         val isSearchOpened: Boolean,
+        val isProceedButtonVisible: Boolean,
         val query: String,
         val currencyList: List<CurrencyViewState>,
+        val selectedCurrencyIndex: Int?,
     )
 }
