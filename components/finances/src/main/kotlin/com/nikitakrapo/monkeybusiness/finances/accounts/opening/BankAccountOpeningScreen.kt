@@ -142,7 +142,7 @@ fun BankAccountOpeningScreen(
                                 ),
                             fullName = currencyViewState.fullName,
                             code = currencyViewState.code,
-                            isSelected = index == state.selectedCurrencyIndex,
+                            isSelected = currencyViewState.isSelected,
                         )
                     }
                 }
@@ -173,9 +173,9 @@ fun BankAccountOpeningScreen(
                     Text(
                         text = stringResource(
                             id = R.string.open_account_in_currency_button,
-                            state.selectedCurrencyIndex?.let {
-                                state.currencyList[it].fullName
-                            } ?: ""
+                            state.currencyList.firstOrNull { it.isSelected }
+                                ?.fullName
+                                ?: ""
                         ),
                         style = MaterialTheme.typography.titleMedium
                     )
@@ -221,11 +221,10 @@ fun PreviewBankAccountOpeningComponent(
                 isProceedButtonVisible = true,
                 query = "",
                 currencyList = listOf(
-                    CurrencyViewState("Russian Ruble", "RUB"),
-                    CurrencyViewState("Dollar USA", "USD"),
-                    CurrencyViewState("Hungarian Forint", "Ft"),
+                    CurrencyViewState("Russian Ruble", "RUB", false),
+                    CurrencyViewState("Dollar USA", "USD", true),
+                    CurrencyViewState("Hungarian Forint", "Ft", false),
                 ),
-                selectedCurrencyIndex = 1,
             )
         )
 

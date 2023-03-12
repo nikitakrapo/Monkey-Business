@@ -24,6 +24,7 @@ class BankAccountOpeningComponentImpl(
         CurrencyViewState(
             fullName = "${it.symbol} currency",
             code = it.code,
+            isSelected = false,
         )
     }
 
@@ -34,19 +35,21 @@ class BankAccountOpeningComponentImpl(
             isProceedButtonVisible = false,
             query = "",
             currencyList = allCurrencies,
-            selectedCurrencyIndex = null,
         ),
         intentToAction = { it },
         reducer = { effect ->
             when (effect) {
                 is Effect.CurrencySelected -> {
-                    val newSelectedIndex =
-                        if (effect.index == selectedCurrencyIndex) null else effect.index
+                    val toSelect = currencyList[effect.index]
+                    val newSelected = if (!toSelect.isSelected) effect.index else null
                     copy(
-                        selectedCurrencyIndex = newSelectedIndex,
-                        isProceedButtonVisible = newSelectedIndex != null,
+                        currencyList = currencyList.mapIndexed { index, currency ->
+                            currency.copy(isSelected = index == newSelected)
+                        },
+                        isProceedButtonVisible = newSelected != null,
                     )
                 }
+
                 Effect.SearchOpened -> copy(isSearchOpened = true)
                 Effect.SearchClosed -> copy(isSearchOpened = false)
                 is Effect.SearchQueryUpdated -> copy(query = effect.text)
