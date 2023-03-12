@@ -61,8 +61,8 @@ class BankAccountOpeningComponentImpl(
                     Effect.SearchQueryUpdated(action.text),
                     Effect.CurrencyListUpdated(
                         allCurrencies.filter {
-                            it.fullName.contains(action.text)
-                                    || it.code.contains(action.text)
+                            it.fullName.contains(action.text, ignoreCase = true)
+                                    || it.code.contains(action.text, ignoreCase = true)
                         }
                     )
                 )
