@@ -48,7 +48,7 @@ kotlin {
                 implementation(libs.sqldelight.android)
             }
         }
-        val androidAndroidTest by getting {
+        val androidInstrumentedTest by getting {
             dependsOn(commonTest)
             dependencies {
                 implementation(libs.androidx.junit)

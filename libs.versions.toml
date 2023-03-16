@@ -12,7 +12,7 @@ agp-bundle = "7.4.1" # https://developer.android.com/studio/releases/gradle-plug
 
 # Kotlin
 
-kotlin = "1.7.20" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "1.8.10" # https://kotlinlang.org/docs/releases.html#release-details
 kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlinx-serialization = "1.4.1" # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime/releases
@@ -28,7 +28,7 @@ profile-installer = "1.2.0" # https://mvnrepository.com/artifact/androidx.profil
 
 # Compose
 
-kotlinCompilerCompose = "1.3.2" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
+kotlinCompilerCompose = "1.4.3" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/compose
 accompanist = "0.28.0" # https://github.com/google/accompanist/releases
 material = "1.3.1" # https://developer.android.com/jetpack/androidx/releases/compose-material
