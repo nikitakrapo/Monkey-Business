@@ -16,12 +16,17 @@ kotlin {
 
         ios.deploymentTarget = "14.1"
 
-        pod("FirebaseAnalytics") {
-            version = "~> 10.3.0"
-        }
-        pod("FirebaseCrashlytics") {
-            version = "~> 10.3.0"
-        }
+        pod(
+            name = "FirebaseAnalytics",
+            path = File("$rootDir/ios-frameworks/FirebaseAnalytics"),
+            version = "10.6.0",
+        )
+
+        pod(
+            name = "FirebaseCrashlytics",
+            path = File("$rootDir/ios-frameworks/FirebaseCrashlytics"),
+            version = "10.6.0",
+        )
     }
 
     sourceSets {
