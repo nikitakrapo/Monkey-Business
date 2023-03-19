@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
     spec.dependency 'FirebaseAuth', '10.6.0'
                 
     spec.pod_target_xcconfig = {
-        'KOTLIN_PROJECT_PATH' => ':features:account:core',
+        'KOTLIN_PROJECT_PATH' => ':features:account-manager:core',
         'PRODUCT_MODULE_NAME' => 'core',
     }
                 

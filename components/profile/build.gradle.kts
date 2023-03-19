@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.features.account.core)
+                api(projects.features.accountManager.core)
                 api(projects.features.navigation.core)
                 implementation(projects.features.mvi.feature)
             }

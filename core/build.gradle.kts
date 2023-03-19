@@ -29,7 +29,7 @@ kotlin {
             baseName = "core"
             export(projects.features.navigation.core)
             export(projects.features.analytics)
-            export(projects.features.account.core)
+            export(projects.features.accountManager.core)
             export(projects.components.authentication)
             export(projects.components.home)
             export(projects.components.profile)
@@ -42,7 +42,7 @@ kotlin {
             dependencies {
                 api(projects.features.navigation.core)
                 api(projects.features.analytics)
-                api(projects.features.account.core)
+                api(projects.features.accountManager.core)
                 implementation(projects.features.mvi.feature)
                 // FIXME: remove
                 implementation(projects.features.finance.data)
@@ -55,7 +55,7 @@ kotlin {
             dependencies {
                 implementation(projects.features.mvi.featureLogging)
                 implementation(projects.features.navigation.test)
-                implementation(projects.features.account.test)
+                implementation(projects.features.accountManager.test)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
             }

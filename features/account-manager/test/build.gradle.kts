@@ -15,7 +15,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.features.account.core)
+                implementation(projects.features.accountManager.core)
                 implementation(libs.kotlinx.coroutines)
             }
         }
