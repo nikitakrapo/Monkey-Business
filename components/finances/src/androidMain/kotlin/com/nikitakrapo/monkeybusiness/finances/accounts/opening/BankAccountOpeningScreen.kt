@@ -12,6 +12,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -110,41 +111,54 @@ fun BankAccountOpeningScreen(
                     }
                 }
             }
-            androidx.compose.animation.AnimatedVisibility(
+            Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 4.dp)
-                    .padding(horizontal = 32.dp),
-                visible = state.isProceedButtonVisible,
-                enter = slideInVertically(initialOffsetY = { it / 2 }) + fadeIn(),
-                exit = slideOutVertically(targetOffsetY = { it / 2 }) + fadeOut(),
+                    .padding(horizontal = 32.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                FilledTonalButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .defaultMinSize(minHeight = 48.dp)
-                        .animateContentSize(),
-                    onClick = component::onProceedClicked,
-                    enabled = !state.isLoading
+                state.error?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    Spacer(modifier = Modifier.size(8.dp))
+                }
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = state.isProceedButtonVisible,
+                    enter = slideInVertically(initialOffsetY = { it / 2 }) + fadeIn(),
+                    exit = slideOutVertically(targetOffsetY = { it / 2 }) + fadeOut(),
                 ) {
-                    if (state.isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(32.dp)
-                                .align(Alignment.CenterVertically),
-                        )
-                    } else {
-                        Text(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically),
-                            text = stringResource(
-                                id = R.string.open_account_in_currency_button,
-                                state.currencyList
-                                    .firstOrNull { it == state.selectedCurrency }
-                                    ?: ""
-                            ),
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                    FilledTonalButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 48.dp)
+                            .animateContentSize(),
+                        onClick = component::onProceedClicked,
+                        enabled = !state.isLoading
+                    ) {
+                        if (state.isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .align(Alignment.CenterVertically),
+                            )
+                        } else {
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically),
+                                text = stringResource(
+                                    id = R.string.open_account_in_currency_button,
+                                    state.currencyList
+                                        .firstOrNull { it == state.selectedCurrency }
+                                        ?: ""
+                                ),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
                     }
                 }
             }
@@ -178,8 +192,23 @@ fun BankAccountOpeningScreen_Preview_Loading() {
     }
 }
 
+@Preview
+@Composable
+fun BankAccountOpeningScreen_Preview_Error() {
+    MonkeyTheme {
+        Surface {
+            BankAccountOpeningScreen(
+                component = PreviewBankAccountOpeningComponent(
+                    error = "Some kind of error happened"
+                )
+            )
+        }
+    }
+}
+
 fun PreviewBankAccountOpeningComponent(
     isLoading: Boolean = false,
+    error: String? = null,
 ) = object : BankAccountOpeningComponent {
     override val state: StateFlow<BankAccountOpeningComponent.State> =
         MutableStateFlow(
@@ -190,8 +219,8 @@ fun PreviewBankAccountOpeningComponent(
                     Currency.HUF,
                 ),
                 selectedCurrency = Currency.USD,
-                query = "",
                 isLoading = isLoading,
+                error = error,
             )
         )
 

@@ -7,6 +7,7 @@ import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeni
 import com.nikitakrapo.mvi.feature.FeatureFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
@@ -26,8 +27,8 @@ class BankAccountOpeningComponentImpl(
         initialState = State(
             currencyList = Currency.values().toList().sortedBy { it.code },
             selectedCurrency = null,
-            query = "",
             isLoading = false,
+            error = null,
         ),
         intentToAction = { it },
         reducer = { effect ->
@@ -40,6 +41,11 @@ class BankAccountOpeningComponentImpl(
 
                 Effect.AccountAddingStarted -> copy(isLoading = true)
 
+                is Effect.AccountAddingFinished -> copy(
+                    isLoading = false,
+                    error = effect.result.exceptionOrNull()?.message,
+                )
+
                 Effect.ScreenClosed -> copy()
             }
         },
@@ -47,9 +53,13 @@ class BankAccountOpeningComponentImpl(
             when (action) {
                 is Intent.SelectCurrency -> flowOf(Effect.CurrencySelected(action.index))
                 Intent.GoBack -> flowOf(Effect.ScreenClosed)
-                Intent.Proceed -> flowOf(
-                    Effect.AccountAddingStarted
-                )
+                Intent.Proceed -> flow {
+                    state.selectedCurrency ?: return@flow
+                    emit(Effect.AccountAddingStarted)
+                    val result = repository.openBankAccount(state.selectedCurrency)
+                    emit(Effect.AccountAddingFinished(result))
+                    if (result.isSuccess) emit(Effect.ScreenClosed)
+                }
             }
         },
         eventsPublisher = { _, effect, _ ->
@@ -90,6 +100,7 @@ class BankAccountOpeningComponentImpl(
     private sealed class Effect {
         class CurrencySelected(val index: Int) : Effect()
         object AccountAddingStarted : Effect()
+        class AccountAddingFinished(val result: Result<Unit>) : Effect()
         object ScreenClosed : Effect()
     }
 
