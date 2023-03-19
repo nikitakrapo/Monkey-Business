@@ -10,9 +10,4 @@ class BearerTokensProviderImpl(
         val token = accountManager.getToken().getOrNull() ?: return null
         return BearerTokens(accessToken = token, refreshToken = "")
     }
-
-    // TODO: figure out if it's okay
-    override suspend fun refreshToken(previousTokens: BearerTokens?): BearerTokens? {
-        return null
-    }
 }
