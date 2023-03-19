@@ -12,12 +12,6 @@ version = "1.0"
 
 setupMultiplatformModule(targets = ::multiplatformMobileTargets)
 
-sqldelight {
-    database("TransactionsDatabase") {
-        packageName = "finance.transactions"
-    }
-}
-
 android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

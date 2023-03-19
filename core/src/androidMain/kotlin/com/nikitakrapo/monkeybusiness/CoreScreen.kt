@@ -21,7 +21,6 @@ import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningScreen
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.PreviewBankAccountOpeningComponent
 import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningScreen
-import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddScreen
 import com.nikitakrapo.monkeybusiness.home.HomeScreen
 import com.nikitakrapo.monkeybusiness.home.PreviewHomeComponent
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthScreen
@@ -68,7 +67,6 @@ fun CoreScreen(
             when (modalChildStack.active.instance) {
                 CoreComponent.ModalChild.None -> mapOf(0.dp to 0, Int.MAX_VALUE.dp to 1)
                 is CoreComponent.ModalChild.ProfileEdit -> mapOf(0.dp to 0, 360.dp to 1)
-                is CoreComponent.ModalChild.TransactionAdd -> mapOf(0.dp to 0, maxHeight - 16.dp to 1)
                 is CoreComponent.ModalChild.ProductOpening -> mapOf(0.dp to 0, 180.dp to 1)
             }
         }
@@ -85,10 +83,6 @@ fun CoreScreen(
             onDismiss = component::dismissModalInstantly,
         ) {
             when (val child = modalChildStack.active.instance) {
-                is CoreComponent.ModalChild.TransactionAdd -> TransactionAddScreen(
-                    modifier = Modifier.dragHandlePadding(),
-                    component = child.component,
-                )
                 is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
                     component = child.component,
                 )

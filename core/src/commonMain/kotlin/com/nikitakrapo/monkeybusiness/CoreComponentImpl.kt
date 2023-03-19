@@ -15,7 +15,6 @@ import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningRouter
-import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponentImpl
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditComponentImpl
@@ -106,7 +105,6 @@ class CoreComponentImpl(
     @Parcelize
     sealed class CoreModalScreen : Parcelable {
         object None : CoreModalScreen()
-        object TransactionAdd : CoreModalScreen()
         object ProfileEdit : CoreModalScreen()
         object ProductOpening : CoreModalScreen()
     }
@@ -187,13 +185,6 @@ class CoreComponentImpl(
         componentContext: ComponentContext,
     ): CoreComponent.ModalChild = when (screen) {
         CoreModalScreen.None -> CoreComponent.ModalChild.None
-        CoreModalScreen.TransactionAdd -> CoreComponent.ModalChild.TransactionAdd(
-            component = TransactionAddComponentImpl(
-                componentContext = componentContext,
-                dependencies = dependencies.transactionAddDependencies(),
-                closeTransactionAdd = ::dismissModalWithAnimation
-            )
-        )
 
         CoreModalScreen.ProfileEdit -> CoreComponent.ModalChild.ProfileEdit(
             component = ProfileEditComponentImpl(
