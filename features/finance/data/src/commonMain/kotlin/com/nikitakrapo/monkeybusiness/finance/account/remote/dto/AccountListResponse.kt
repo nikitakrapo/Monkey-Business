@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AccountListResponse(
     @SerialName("accountList")
-    val accountList: List<BriefAccountInfo>,
+    val accountList: List<BriefAccountInfoDto>,
 )

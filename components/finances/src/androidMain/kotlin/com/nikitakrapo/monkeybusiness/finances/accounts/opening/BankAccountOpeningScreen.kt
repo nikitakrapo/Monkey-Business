@@ -225,6 +225,7 @@ fun PreviewBankAccountOpeningComponent(
                     CurrencyViewState("Dollar USA", "USD", true),
                     CurrencyViewState("Hungarian Forint", "Ft", false),
                 ),
+                isLoading = false,
             )
         )
 

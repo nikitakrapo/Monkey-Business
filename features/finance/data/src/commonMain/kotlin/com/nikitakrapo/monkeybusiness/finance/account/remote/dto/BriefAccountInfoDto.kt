@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BriefAccountInfo(
+data class BriefAccountInfoDto(
     @SerialName("name")
     val name: String,
     @SerialName("currency")

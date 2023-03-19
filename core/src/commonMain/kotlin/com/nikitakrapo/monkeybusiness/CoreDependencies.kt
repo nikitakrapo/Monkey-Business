@@ -4,7 +4,9 @@ import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.account.BearerTokensProviderImpl
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
+import com.nikitakrapo.monkeybusiness.finance.account.FakeBankAccountsRepositoryImpl
 import com.nikitakrapo.monkeybusiness.finances.accounts.ProductOpeningLandingRouter
+import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningDependencies
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningDependencies
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.home.HomeDependencies
@@ -29,6 +31,10 @@ class CoreDependencies(
         accountManager = accountManager,
         profileEditRouter = profileEditRouter,
         productOpeningLandingRouter = productOpeningLandingRouter,
+    )
+
+    fun bankAccountOpeningDependencies() = BankAccountOpeningDependencies(
+        bankAccountsRepository = FakeBankAccountsRepositoryImpl(),
     )
 
     fun authDependencies() = AuthDependencies(

@@ -15,9 +15,12 @@ class BankAccountOpeningComponentImpl(
     componentContext: ComponentContext,
     featureFactory: FeatureFactory = FeatureFactory(),
     private val closeComponent: () -> Unit,
+    dependencies: BankAccountOpeningDependencies,
 ) : BankAccountOpeningComponent, ComponentContext by componentContext {
 
     private val scope = coroutineScope(Dispatchers.Main)
+
+    private val repository = dependencies.bankAccountsRepository
 
     // consider moving it into the state
     private val allCurrencies = Currency.values().map {
@@ -35,6 +38,7 @@ class BankAccountOpeningComponentImpl(
             isProceedButtonVisible = false,
             query = "",
             currencyList = allCurrencies,
+            isLoading = false,
         ),
         intentToAction = { it },
         reducer = { effect ->

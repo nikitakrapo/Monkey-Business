@@ -17,5 +17,6 @@ interface BankAccountOpeningComponent {
         val isProceedButtonVisible: Boolean,
         val query: String,
         val currencyList: List<CurrencyViewState>,
+        val isLoading: Boolean,
     )
 }

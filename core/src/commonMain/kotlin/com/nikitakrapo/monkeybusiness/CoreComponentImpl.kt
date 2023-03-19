@@ -148,7 +148,8 @@ class CoreComponentImpl(
                         navigation.filterNot(
                             filter = { it is CoreScreen.BankAccountOpening }
                         )
-                    }
+                    },
+                    dependencies = dependencies.bankAccountOpeningDependencies(),
                 )
             )
         }
