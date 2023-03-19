@@ -10,14 +10,16 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets)
+setupMultiplatformModule(
+    targets = ::multiplatformMobileTargets,
+    withUtils = true,
+)
 
 kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(libs.sqldelight.runtime)
-                api(projects.features.kmmutils)
                 api(libs.kotlinx.coroutines)
             }
         }

@@ -16,7 +16,7 @@ fun Project.setupMultiplatformModule(
 
         setupSourceSets {
             common.main.dependencies {
-                if (withUtils) { implementation(project(":features:kmmutils")) }
+                if (withUtils) { implementation(project(":features:kmm-utils")) }
                 implementation(libs.napier)
                 implementation(kotlin("stdlib"))
             }

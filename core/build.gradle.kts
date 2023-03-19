@@ -11,7 +11,10 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets)
+setupMultiplatformModule(
+    targets = ::multiplatformMobileTargets,
+    withUtils = true,
+)
 
 applyCompose()
 
@@ -27,7 +30,6 @@ kotlin {
             export(projects.features.navigation.core)
             export(projects.features.analytics)
             export(projects.features.account.core)
-            export(projects.features.kmmutils)
             export(projects.components.authentication)
             export(projects.components.home)
             export(projects.components.profile)
@@ -41,7 +43,6 @@ kotlin {
                 api(projects.features.navigation.core)
                 api(projects.features.analytics)
                 api(projects.features.account.core)
-                api(projects.features.kmmutils)
                 implementation(projects.features.mvi.feature)
                 // FIXME: remove
                 implementation(projects.features.finance.data)

@@ -29,7 +29,7 @@ include(":components:home")
 include(":components:finances")
 include(":components:profile")
 
-include(":features:kmmutils")
+include(":features:kmm-utils")
 include(":features:navigation:core")
 include(":features:navigation:test")
 include(":features:mvi:feature")

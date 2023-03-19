@@ -10,7 +10,10 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets)
+setupMultiplatformModule(
+    targets = ::multiplatformMobileTargets,
+    withUtils = true,
+)
 
 android {
     defaultConfig {
@@ -23,7 +26,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.features.finance.models)
-                api(projects.features.kmmutils)
                 api(libs.kotlinx.coroutines)
                 api(projects.features.network)
                 implementation(libs.kotlinx.serialization.json)
