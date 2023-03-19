@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.finance
+package com.nikitakrapo.monkeybusiness.finance.transactions
 
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
 import kotlinx.coroutines.flow.Flow

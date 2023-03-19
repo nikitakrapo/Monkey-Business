@@ -6,6 +6,7 @@ import com.nikitakrapo.monkeybusiness.db.DatabaseDriverFactory
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
+import com.nikitakrapo.monkeybusiness.finance.transactions.db.TransactionsDatabaseProvider
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

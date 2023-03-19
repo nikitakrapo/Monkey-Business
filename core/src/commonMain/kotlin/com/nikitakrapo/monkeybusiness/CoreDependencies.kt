@@ -4,7 +4,7 @@ import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.account.BearerTokensProviderImpl
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
-import com.nikitakrapo.monkeybusiness.finance.TransactionsRepositoryImpl
+import com.nikitakrapo.monkeybusiness.finance.transactions.TransactionsRepositoryImpl
 import com.nikitakrapo.monkeybusiness.finances.accounts.ProductOpeningLandingRouter
 import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningDependencies
 import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningRouter

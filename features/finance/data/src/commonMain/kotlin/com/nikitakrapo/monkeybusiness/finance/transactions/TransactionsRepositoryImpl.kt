@@ -1,11 +1,11 @@
-package com.nikitakrapo.monkeybusiness.finance
+package com.nikitakrapo.monkeybusiness.finance.transactions
 
 import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.db.DatabaseDriverFactory
-import com.nikitakrapo.monkeybusiness.finance.db.TransactionsDatabaseProvider
+import com.nikitakrapo.monkeybusiness.finance.transactions.db.TransactionsDatabaseProvider
 import com.nikitakrapo.monkeybusiness.finance.models.Transaction
-import com.nikitakrapo.monkeybusiness.finance.network.TransactionsApi
-import com.nikitakrapo.monkeybusiness.finance.network.dto.TransactionRequest
+import com.nikitakrapo.monkeybusiness.finance.transactions.network.TransactionsApi
+import com.nikitakrapo.monkeybusiness.finance.transactions.network.dto.TransactionRequest
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokensProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged

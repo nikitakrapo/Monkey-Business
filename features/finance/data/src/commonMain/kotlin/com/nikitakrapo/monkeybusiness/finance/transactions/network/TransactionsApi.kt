@@ -1,7 +1,7 @@
-package com.nikitakrapo.monkeybusiness.finance.network
+package com.nikitakrapo.monkeybusiness.finance.transactions.network
 
-import com.nikitakrapo.monkeybusiness.finance.network.dto.TransactionRequest
-import com.nikitakrapo.monkeybusiness.finance.network.dto.TransactionsResponse
+import com.nikitakrapo.monkeybusiness.finance.transactions.network.dto.TransactionRequest
+import com.nikitakrapo.monkeybusiness.finance.transactions.network.dto.TransactionsResponse
 import com.nikitakrapo.monkeybusiness.network.HttpClientFactory.createHttpClient
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokensProvider
 import com.nikitakrapo.monkeybusiness.network.auth.ClientAuth

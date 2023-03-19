@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.finance.db
+package com.nikitakrapo.monkeybusiness.finance.transactions.db
 
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finance.models.MoneyAmount
