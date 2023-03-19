@@ -28,7 +28,6 @@ class BankAccountOpeningComponentImpl(
             selectedCurrency = null,
             query = "",
             isLoading = false,
-            isSearchOpened = false,
         ),
         intentToAction = { it },
         reducer = { effect ->
@@ -39,6 +38,8 @@ class BankAccountOpeningComponentImpl(
                     copy(selectedCurrency = newSelected)
                 }
 
+                Effect.AccountAddingStarted -> copy(isLoading = true)
+
                 Effect.ScreenClosed -> copy()
             }
         },
@@ -46,7 +47,9 @@ class BankAccountOpeningComponentImpl(
             when (action) {
                 is Intent.SelectCurrency -> flowOf(Effect.CurrencySelected(action.index))
                 Intent.GoBack -> flowOf(Effect.ScreenClosed)
-                Intent.Proceed -> TODO()
+                Intent.Proceed -> flowOf(
+                    Effect.AccountAddingStarted
+                )
             }
         },
         eventsPublisher = { _, effect, _ ->
@@ -86,6 +89,7 @@ class BankAccountOpeningComponentImpl(
 
     private sealed class Effect {
         class CurrencySelected(val index: Int) : Effect()
+        object AccountAddingStarted : Effect()
         object ScreenClosed : Effect()
     }
 

@@ -26,7 +26,7 @@ fun CurrencyItem(
 ) {
     Row(
         modifier = modifier
-            .defaultMinSize(minHeight = 44.dp),
+            .defaultMinSize(minHeight = 54.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {

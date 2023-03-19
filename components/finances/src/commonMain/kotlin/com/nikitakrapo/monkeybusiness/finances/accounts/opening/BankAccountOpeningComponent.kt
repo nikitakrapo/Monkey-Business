@@ -16,7 +16,6 @@ interface BankAccountOpeningComponent {
         val selectedCurrency: Currency?,
         val query: String,
         val isLoading: Boolean,
-        val isSearchOpened: Boolean,
     ) {
         val isProceedButtonVisible get() = selectedCurrency != null
     }

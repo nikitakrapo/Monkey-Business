@@ -1,5 +1,7 @@
 package com.nikitakrapo.monkeybusiness.finances.accounts.opening
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -10,15 +12,18 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -55,23 +60,12 @@ fun BankAccountOpeningScreen(
     modifier: Modifier = Modifier,
     component: BankAccountOpeningComponent,
 ) {
-    val focusRequester = remember { FocusRequester() }
-    val focusManager = LocalFocusManager.current
 
     val state by component.state.collectAsState()
 
-    LaunchedEffect(state.isSearchOpened) {
-        if (state.isSearchOpened) focusRequester.requestFocus()
-    }
-
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .clickable(
-                onClick = { focusManager.clearFocus() },
-                indication = null,
-                interactionSource = MutableInteractionSource(),
-            ),
+            .fillMaxWidth(),
     ) {
         TopAppBar(
             navigationIcon = {
@@ -105,7 +99,10 @@ fun BankAccountOpeningScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .animateItemPlacement()
-                                .clickable { component.onCurrencySelected(index) }
+                                .clickable(
+                                    onClick = { component.onCurrencySelected(index) },
+                                    enabled = !state.isLoading
+                                )
                                 .padding(horizontal = 12.dp),
                             code = currencyViewState.code,
                             isSelected = currencyViewState == state.selectedCurrency,
@@ -123,28 +120,32 @@ fun BankAccountOpeningScreen(
                 exit = slideOutVertically(targetOffsetY = { it / 2 }) + fadeOut(),
             ) {
                 FilledTonalButton(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .defaultMinSize(minHeight = 48.dp)
+                        .animateContentSize(),
                     onClick = component::onProceedClicked,
-                    contentPadding = PaddingValues(
-                        horizontal = 30.dp,
-                        vertical = 12.dp
-                    ),
-                    elevation = ButtonDefaults.filledTonalButtonElevation(
-                        defaultElevation = 2.dp,
-                        pressedElevation = 2.dp,
-                        focusedElevation = 2.dp,
-                        hoveredElevation = 2.dp,
-                    )
+                    enabled = !state.isLoading
                 ) {
-                    Text(
-                        text = stringResource(
-                            id = R.string.open_account_in_currency_button,
-                            state.currencyList
-                                .firstOrNull { it == state.selectedCurrency }
-                                ?: ""
-                        ),
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                    if (state.isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .align(Alignment.CenterVertically),
+                        )
+                    } else {
+                        Text(
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically),
+                            text = stringResource(
+                                id = R.string.open_account_in_currency_button,
+                                state.currencyList
+                                    .firstOrNull { it == state.selectedCurrency }
+                                    ?: ""
+                            ),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
                 }
             }
         }
@@ -165,12 +166,12 @@ fun BankAccountOpeningScreen_Preview() {
 
 @Preview
 @Composable
-fun BankAccountOpeningScreen_Preview_SearchOpened() {
+fun BankAccountOpeningScreen_Preview_Loading() {
     MonkeyTheme {
         Surface {
             BankAccountOpeningScreen(
                 component = PreviewBankAccountOpeningComponent(
-                    searchOpened = true
+                    isLoading = true
                 )
             )
         }
@@ -178,7 +179,7 @@ fun BankAccountOpeningScreen_Preview_SearchOpened() {
 }
 
 fun PreviewBankAccountOpeningComponent(
-    searchOpened: Boolean = false,
+    isLoading: Boolean = false,
 ) = object : BankAccountOpeningComponent {
     override val state: StateFlow<BankAccountOpeningComponent.State> =
         MutableStateFlow(
@@ -190,8 +191,7 @@ fun PreviewBankAccountOpeningComponent(
                 ),
                 selectedCurrency = Currency.USD,
                 query = "",
-                isLoading = false,
-                isSearchOpened = searchOpened,
+                isLoading = isLoading,
             )
         )
 
