@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.finances.opening
+package com.nikitakrapo.monkeybusiness.finances.products
 
 interface ProductOpeningRouter {
     fun openCardOpening()

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetDefaults
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finances.R
+import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningComponent
 
 @Composable
 fun ProductOpeningScreen(

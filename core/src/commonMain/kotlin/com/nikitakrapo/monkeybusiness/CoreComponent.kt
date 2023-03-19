@@ -2,7 +2,7 @@ package com.nikitakrapo.monkeybusiness
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponent
-import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningComponent
+import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningComponent
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponent

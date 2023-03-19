@@ -6,8 +6,8 @@ import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.finance.transactions.TransactionsRepositoryImpl
 import com.nikitakrapo.monkeybusiness.finances.accounts.ProductOpeningLandingRouter
-import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningDependencies
-import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningRouter
+import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningDependencies
+import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddDependencies
 import com.nikitakrapo.monkeybusiness.home.HomeDependencies
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokensProvider

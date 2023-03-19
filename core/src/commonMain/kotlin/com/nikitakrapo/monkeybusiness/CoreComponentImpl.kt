@@ -13,8 +13,8 @@ import com.nikitakrapo.account.currentAccount
 import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponentImpl
-import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningComponentImpl
-import com.nikitakrapo.monkeybusiness.finances.opening.ProductOpeningRouter
+import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningComponentImpl
+import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.finances.transactions.TransactionAddComponentImpl
 import com.nikitakrapo.monkeybusiness.home.HomeComponentImpl
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthComponentImpl
