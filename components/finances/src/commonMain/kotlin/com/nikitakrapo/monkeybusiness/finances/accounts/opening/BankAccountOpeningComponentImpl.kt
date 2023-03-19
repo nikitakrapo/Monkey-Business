@@ -6,7 +6,6 @@ import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponent.State
 import com.nikitakrapo.mvi.feature.FeatureFactory
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -22,71 +21,31 @@ class BankAccountOpeningComponentImpl(
 
     private val repository = dependencies.bankAccountsRepository
 
-    // consider moving it into the state
-    private val allCurrencies = Currency.values().map {
-        CurrencyViewState(
-            fullName = "${it.symbol} currency",
-            code = it.code,
-            isSelected = false,
-        )
-    }
-
     private val feature = featureFactory.create<Intent, Intent, Effect, State, Event>(
         name = "Bank Account Opening",
         initialState = State(
-            isSearchOpened = false,
-            isProceedButtonVisible = false,
+            currencyList = Currency.values().toList(),
+            selectedCurrency = null,
             query = "",
-            currencyList = allCurrencies,
             isLoading = false,
+            isSearchOpened = false,
         ),
         intentToAction = { it },
         reducer = { effect ->
             when (effect) {
                 is Effect.CurrencySelected -> {
                     val toSelect = currencyList[effect.index]
-                    val newSelected = if (!toSelect.isSelected) effect.index else null
-                    copy(
-                        currencyList = currencyList.mapIndexed { index, currency ->
-                            currency.copy(isSelected = index == newSelected)
-                        },
-                        isProceedButtonVisible = newSelected != null,
-                    )
+                    val newSelected = if (toSelect == selectedCurrency) null else toSelect
+                    copy(selectedCurrency = newSelected)
                 }
 
-                Effect.SearchOpened -> copy(isSearchOpened = true)
-                Effect.SearchClosed -> copy(isSearchOpened = false)
-                is Effect.SearchQueryUpdated -> copy(query = effect.text)
-                is Effect.CurrencyListUpdated -> copy(currencyList = effect.list)
                 Effect.ScreenClosed -> copy()
             }
         },
         actor = { action, state ->
             when (action) {
                 is Intent.SelectCurrency -> flowOf(Effect.CurrencySelected(action.index))
-                is Intent.UpdateSearchQuery -> flowOf(
-                    Effect.SearchQueryUpdated(action.text),
-                    Effect.CurrencyListUpdated(
-                        allCurrencies.filter {
-                            it.fullName.contains(action.text, ignoreCase = true)
-                                    || it.code.contains(action.text, ignoreCase = true)
-                        }
-                    )
-                )
-
-                Intent.OpenSearch -> flowOf(Effect.SearchOpened)
-                Intent.GoBack -> {
-                    if (state.isSearchOpened) {
-                        flowOf(
-                            Effect.SearchClosed,
-                            Effect.SearchQueryUpdated(text = ""),
-                            Effect.CurrencyListUpdated(list = allCurrencies)
-                        )
-                    } else {
-                        flowOf(Effect.ScreenClosed)
-                    }
-                }
-
+                Intent.GoBack -> flowOf(Effect.ScreenClosed)
                 Intent.Proceed -> TODO()
             }
         },
@@ -111,14 +70,6 @@ class BankAccountOpeningComponentImpl(
         feature.accept(Intent.SelectCurrency(index = index))
     }
 
-    override fun onSearchQueryUpdated(query: String) {
-        feature.accept(Intent.UpdateSearchQuery(text = query))
-    }
-
-    override fun onSearchClicked() {
-        feature.accept(Intent.OpenSearch)
-    }
-
     override fun onBackClicked() {
         feature.accept(Intent.GoBack)
     }
@@ -130,17 +81,11 @@ class BankAccountOpeningComponentImpl(
     private sealed class Intent {
         class SelectCurrency(val index: Int) : Intent()
         object Proceed : Intent()
-        object OpenSearch : Intent()
-        class UpdateSearchQuery(val text: String) : Intent()
         object GoBack : Intent()
     }
 
     private sealed class Effect {
         class CurrencySelected(val index: Int) : Effect()
-        class SearchQueryUpdated(val text: String) : Effect()
-        class CurrencyListUpdated(val list: List<CurrencyViewState>) : Effect()
-        object SearchOpened : Effect()
-        object SearchClosed : Effect()
         object ScreenClosed : Effect()
     }
 

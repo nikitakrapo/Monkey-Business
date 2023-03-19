@@ -44,6 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finances.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -82,41 +83,10 @@ fun BankAccountOpeningScreen(
                 }
             },
             title = {
-                if (!state.isSearchOpened) {
-                    Text(
-                        text = stringResource(R.string.select_currency),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                } else {
-                    TextField(
-                        modifier = Modifier
-                            .focusRequester(focusRequester),
-                        value = state.query,
-                        onValueChange = component::onSearchQueryUpdated,
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                        ),
-                        singleLine = true,
-                        placeholder = {
-                            Text(
-                                modifier = Modifier.padding(start = 1.dp),
-                                text = stringResource(R.string.search_common)
-                            )
-                        }
-                    )
-                }
-            },
-            actions = {
-                if (!state.isSearchOpened) {
-                    IconButton(onClick = component::onSearchClicked) {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            contentDescription = stringResource(R.string.select_currency)
-                        )
-                    }
-                }
+                Text(
+                    text = stringResource(R.string.select_currency),
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         )
         Box(
@@ -136,13 +106,9 @@ fun BankAccountOpeningScreen(
                                 .fillMaxWidth()
                                 .animateItemPlacement()
                                 .clickable { component.onCurrencySelected(index) }
-                                .padding(
-                                    vertical = 8.dp,
-                                    horizontal = 12.dp
-                                ),
-                            fullName = currencyViewState.fullName,
+                                .padding(horizontal = 12.dp),
                             code = currencyViewState.code,
-                            isSelected = currencyViewState.isSelected,
+                            isSelected = currencyViewState == state.selectedCurrency,
                         )
                     }
                 }
@@ -173,8 +139,8 @@ fun BankAccountOpeningScreen(
                     Text(
                         text = stringResource(
                             id = R.string.open_account_in_currency_button,
-                            state.currencyList.firstOrNull { it.isSelected }
-                                ?.fullName
+                            state.currencyList
+                                .firstOrNull { it == state.selectedCurrency }
                                 ?: ""
                         ),
                         style = MaterialTheme.typography.titleMedium
@@ -217,21 +183,19 @@ fun PreviewBankAccountOpeningComponent(
     override val state: StateFlow<BankAccountOpeningComponent.State> =
         MutableStateFlow(
             BankAccountOpeningComponent.State(
-                isSearchOpened = searchOpened,
-                isProceedButtonVisible = true,
-                query = "",
                 currencyList = listOf(
-                    CurrencyViewState("Russian Ruble", "RUB", false),
-                    CurrencyViewState("Dollar USA", "USD", true),
-                    CurrencyViewState("Hungarian Forint", "Ft", false),
+                    Currency.RUB,
+                    Currency.USD,
+                    Currency.HUF,
                 ),
+                selectedCurrency = Currency.USD,
+                query = "",
                 isLoading = false,
+                isSearchOpened = searchOpened,
             )
         )
 
     override fun onCurrencySelected(index: Int) {}
-    override fun onSearchQueryUpdated(query: String) {}
-    override fun onSearchClicked() {}
     override fun onBackClicked() {}
     override fun onProceedClicked() {}
 }

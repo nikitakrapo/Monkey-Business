@@ -3,6 +3,7 @@ package com.nikitakrapo.monkeybusiness.finances.accounts.opening
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
@@ -20,26 +21,19 @@ import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 @Composable
 fun CurrencyItem(
     modifier: Modifier = Modifier,
-    fullName: String,
     code: String,
     isSelected: Boolean,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .defaultMinSize(minHeight = 44.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column {
-            Text(
-                text = fullName,
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                text = code,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        Text(
+            text = code,
+            style = MaterialTheme.typography.titleMedium,
+        )
         if (isSelected) {
             Icon(
                 imageVector = Icons.Outlined.Check,
@@ -56,7 +50,6 @@ fun CurrencyItem_Preview() {
         Surface {
             CurrencyItem(
                 modifier = Modifier.width(300.dp),
-                fullName = "Russian ruble",
                 code = "RUB",
                 isSelected = false
             )
@@ -71,7 +64,6 @@ fun CurrencyItem_Preview_Selected() {
         Surface {
             CurrencyItem(
                 modifier = Modifier.width(300.dp),
-                fullName = "Russian ruble",
                 code = "RUB",
                 isSelected = true
             )
