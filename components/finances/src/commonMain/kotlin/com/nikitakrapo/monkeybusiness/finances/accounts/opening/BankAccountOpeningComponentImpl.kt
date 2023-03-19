@@ -24,7 +24,7 @@ class BankAccountOpeningComponentImpl(
     private val feature = featureFactory.create<Intent, Intent, Effect, State, Event>(
         name = "Bank Account Opening",
         initialState = State(
-            currencyList = Currency.values().toList(),
+            currencyList = Currency.values().toList().sortedBy { it.code },
             selectedCurrency = null,
             query = "",
             isLoading = false,
