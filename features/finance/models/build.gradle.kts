@@ -19,6 +19,6 @@ kotlin {
                 api(libs.kotlinx.datetime)
             }
         }
-        val androidMain by getting
+        val commonTest by getting
     }
 }

@@ -12,12 +12,14 @@ enum class Currency(
     val code: String,
     @SerialName("symbol")
     val symbol: String,
+    @SerialName("minorUnitDecimals")
+    val minorUnitDecimals: Int,
 ) {
-    USD("USD", "$"),
-    EUR("EUR", "€"),
-    GBP("GBP", "£"),
-    RUB("RUB", "₽"),
-    HUF("HUF", "Ft");
+    USD("USD", "$", 2),
+    EUR("EUR", "€", 2),
+    GBP("GBP", "£", 2),
+    RUB("RUB", "₽", 2),
+    HUF("HUF", "Ft", 2);
 
     companion object {
         fun fromCode(code: String): Currency {
