@@ -80,7 +80,7 @@ fun CoreScreen(
             ),
             enabled = hasModal,
             isDismissing = state.isModalDismissing,
-            onDismiss = component::dismissModalInstantly,
+            onDismiss = component::onModalDismissed,
         ) {
             when (val child = modalChildStack.active.instance) {
                 is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
@@ -176,5 +176,5 @@ internal fun PreviewCoreComponent(
             ),
         )
 
-    override fun dismissModalInstantly() {}
+    override fun onModalDismissed() {}
 }

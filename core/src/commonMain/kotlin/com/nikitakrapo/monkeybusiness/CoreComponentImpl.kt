@@ -113,7 +113,7 @@ class CoreComponentImpl(
         stateFlow.value = stateFlow.value.copy(isModalDismissing = true)
     }
 
-    override fun dismissModalInstantly() {
+    override fun onModalDismissed() {
         stateFlow.value = stateFlow.value.copy(isModalDismissing = false)
         modalNavigation.pop()
     }

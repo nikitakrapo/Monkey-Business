@@ -15,7 +15,7 @@ interface CoreComponent {
     val childStack: StateFlow<ChildStack<*, Child>>
     val modalChildStack: StateFlow<ChildStack<*, ModalChild>>
 
-    fun dismissModalInstantly()
+    fun onModalDismissed()
 
     sealed class Child {
         class Home(val component: HomeComponent) : Child()
