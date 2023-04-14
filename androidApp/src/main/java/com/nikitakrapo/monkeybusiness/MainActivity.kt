@@ -14,33 +14,30 @@ import androidx.fragment.app.FragmentActivity
 import com.arkivanov.decompose.defaultComponentContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.account.AccountManagerImpl
+import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.analytics.FirebaseAnalyticsManager
 import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import org.koin.android.ext.android.inject
 
 class MainActivity : FragmentActivity() {
 
-    private lateinit var mainActivityComponent: MainActivityComponent
     private lateinit var coreComponent: CoreComponent
 
-    private val accountManager get() = mainActivityComponent.accountManager
+    private val accountManager: AccountManager by inject()
+    private val analyticsManager: AnalyticsManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val analyticsManager = FirebaseAnalyticsManager(FirebaseAnalytics.getInstance(this))
-        mainActivityComponent = MainActivityComponent(
-            analyticsManager = analyticsManager,
-            accountManager = AccountManagerImpl(analyticsManager),
-        )
 
         val componentContext = defaultComponentContext()
 
         coreComponent = CoreComponentImpl(
             componentContext = componentContext,
             dependencies = CoreDependencies(
-                analyticsManager = mainActivityComponent.analyticsManager,
+                analyticsManager = analyticsManager,
                 accountManager = accountManager,
                 platformContext = PlatformContext(context = applicationContext),
             ),

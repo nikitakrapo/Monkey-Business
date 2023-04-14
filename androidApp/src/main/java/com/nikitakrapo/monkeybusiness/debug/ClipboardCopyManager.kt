@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness
+package com.nikitakrapo.monkeybusiness.debug
 
 import android.content.ClipData
 import android.content.ClipboardManager

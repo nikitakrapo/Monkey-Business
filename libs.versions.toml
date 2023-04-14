@@ -26,6 +26,9 @@ firebase-crashlytics-gradle = "2.9.2" # https://mvnrepository.com/artifact/com.g
 
 profile-installer = "1.2.0" # https://mvnrepository.com/artifact/androidx.profileinstaller/profileinstaller
 
+# Koin
+koin = "3.4.0" # https://github.com/InsertKoinIO/koin/tags
+
 # Compose
 
 kotlinCompilerCompose = "1.4.3" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
@@ -78,6 +81,10 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core",
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# Koin
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 
 # Google
 

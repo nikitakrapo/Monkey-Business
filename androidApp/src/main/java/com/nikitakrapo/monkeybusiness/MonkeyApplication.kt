@@ -1,24 +1,23 @@
 package com.nikitakrapo.monkeybusiness
 
 import android.app.Application
-import com.google.firebase.FirebaseApp
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.nikitakrapo.monkeybusiness.logging.KoinNapierLogger
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class MonkeyApplication : Application() {
-    private val scope = CoroutineScope(Dispatchers.Main)
-
     override fun onCreate() {
         super.onCreate()
-        Napier.i("Initializing application")
+
         Napier.base(DebugAntilog())
-        scope.launch {
-            FirebaseApp.initializeApp(this@MonkeyApplication)
-            FirebaseAnalytics.getInstance(this@MonkeyApplication)
+        Napier.i("MonkeyApplication.onCreate()")
+
+        startKoin {
+            androidContext(this@MonkeyApplication)
+            logger(KoinNapierLogger())
+            modules(applicationModule(this@MonkeyApplication))
         }
     }
 }

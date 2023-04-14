@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.account.currentAccount
-import com.nikitakrapo.monkeybusiness.ClipboardCopyManager.copyToClipboard
+import com.nikitakrapo.monkeybusiness.debug.ClipboardCopyManager.copyToClipboard
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 

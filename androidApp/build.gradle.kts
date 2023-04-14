@@ -26,6 +26,8 @@ dependencies {
     implementation(projects.features.accountManager.core)
     implementation(projects.features.analytics)
     implementation(projects.features.kmmUtils)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
     implementation(libs.androidx.appcompat)
     implementation(libs.decompose)
     implementation(libs.profile.installer)
