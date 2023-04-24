@@ -20,11 +20,9 @@ kotlin {
 
         ios.deploymentTarget = "14.1"
 
-        pod(
-            name = "FirebaseAuth",
-            path = File("$rootDir/ios-frameworks/FirebaseAuth"),
-            version = "10.6.0",
-        )
+        pod("FirebaseAuth") {
+            version = "~> 10.3.0"
+        }
     }
 
     sourceSets {

@@ -2,7 +2,7 @@ target 'iosApp' do
   use_frameworks!
   platform :ios, '14.1'
   pod 'core', :path => '../core'
-  pod 'FirebaseAuth', :path => '../ios-frameworks/FirebaseAuth'
-  pod 'FirebaseAnalytics', :path => '../ios-frameworks/FirebaseAnalytics'
-  pod 'FirebaseCrashlytics', :path => '../ios-frameworks/FirebaseCrashlytics'
+  pod 'FirebaseAuth', '10.3.0'
+  pod 'FirebaseAnalytics', '10.3.0'
+  pod 'FirebaseCrashlytics', '10.3.0'
 end
