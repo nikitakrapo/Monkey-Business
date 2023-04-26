@@ -4,12 +4,14 @@ import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.account.BearerTokenProviderImpl
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
-import com.nikitakrapo.monkeybusiness.finance.account.FakeBankAccountsRepositoryImpl
+import com.nikitakrapo.monkeybusiness.finance.account.BankAccountsRepositoryImpl
+import com.nikitakrapo.monkeybusiness.finance.account.remote.KtorBankAccountsApi
 import com.nikitakrapo.monkeybusiness.finances.accounts.ProductOpeningLandingRouter
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningDependencies
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningDependencies
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.home.HomeDependencies
+import com.nikitakrapo.monkeybusiness.network.HttpClientFactory
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokenProvider
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthDependencies
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditDependencies
@@ -23,6 +25,9 @@ class CoreDependencies(
     private val bearerTokenProvider: BearerTokenProvider =
         BearerTokenProviderImpl(accountManager)
 
+    private val httpClientFactory: HttpClientFactory =
+        HttpClientFactory(bearerTokenProvider)
+
     fun homeDependencies(
         productOpeningLandingRouter: ProductOpeningLandingRouter,
         profileEditRouter: ProfileEditRouter,
@@ -33,9 +38,14 @@ class CoreDependencies(
         productOpeningLandingRouter = productOpeningLandingRouter,
     )
 
-    fun bankAccountOpeningDependencies() = BankAccountOpeningDependencies(
-        bankAccountsRepository = FakeBankAccountsRepositoryImpl(),
-    )
+    fun bankAccountOpeningDependencies(): BankAccountOpeningDependencies {
+        val api = KtorBankAccountsApi(httpClientFactory.mainClient)
+        return BankAccountOpeningDependencies(
+            bankAccountsRepository = BankAccountsRepositoryImpl(
+                bankAccountsApi = api,
+            ),
+        )
+    }
 
     fun authDependencies() = AuthDependencies(
         accountManager = accountManager,

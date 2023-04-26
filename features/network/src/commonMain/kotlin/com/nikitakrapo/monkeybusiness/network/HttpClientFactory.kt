@@ -11,17 +11,25 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.plugin
 import io.ktor.client.request.header
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlin.time.Duration.Companion.seconds
 
 class HttpClientFactory(
     private val tokenProvider: BearerTokenProvider
 ) {
-    fun createHttpClient(baseUrl: String) = httpClient {
+    val mainClient by lazy {
+        createHttpClient(ApiUrlProvider.Main)
+    }
 
+    private fun createHttpClient(
+        baseUrl: String,
+    ) = httpClient {
         install(DefaultRequest) {
             url(baseUrl)
+            contentType(ContentType.Application.Json)
         }
 
         install(ContentNegotiation) {
