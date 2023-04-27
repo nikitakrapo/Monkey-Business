@@ -27,7 +27,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                // TODO: maybe it's not good to use serialization lib as api
                 api(libs.kotlinx.serialization.json)
             }
         }

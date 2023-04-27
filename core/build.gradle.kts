@@ -43,21 +43,10 @@ kotlin {
                 api(projects.features.navigation.core)
                 api(projects.features.analytics)
                 api(projects.features.accountManager.core)
-                implementation(projects.features.mvi.feature)
-                // FIXME: remove
-                implementation(projects.features.finance.data)
                 api(projects.components.authentication)
                 api(projects.components.home)
                 api(projects.components.profile)
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(projects.features.mvi.featureLogging)
-                implementation(projects.features.navigation.test)
-                implementation(projects.features.accountManager.test)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.turbine)
+                implementation(projects.features.mvi.feature)
             }
         }
         val androidMain by getting {
