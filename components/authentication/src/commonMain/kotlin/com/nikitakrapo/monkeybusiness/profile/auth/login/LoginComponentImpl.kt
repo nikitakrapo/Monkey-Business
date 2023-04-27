@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flowOf
 
 class LoginComponentImpl(
     componentContext: ComponentContext,
-    private val navigateToRegistration: () -> Unit,
+    private val navigateToRegistration: (initialEmail: String?) -> Unit,
     private val accountManager: AccountManager,
     featureFactory: FeatureFactory = FeatureFactory(),
 ) : LoginComponent, ComponentContext by componentContext {
@@ -82,7 +82,7 @@ class LoginComponentImpl(
     }
 
     override fun onRegistrationClicked() {
-        navigateToRegistration()
+        navigateToRegistration(state.value.emailText.takeIf(String::isNotBlank))
     }
 
     private sealed class Intent {

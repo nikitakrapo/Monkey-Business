@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.flowOf
 
 class RegistrationComponentImpl(
     componentContext: ComponentContext,
+    initialEmail: String? = null,
     featureFactory: FeatureFactory = FeatureFactory(),
     private val accountManager: AccountManager,
 ) : RegistrationComponent, ComponentContext by componentContext {
@@ -20,7 +21,7 @@ class RegistrationComponentImpl(
             name = "RegistrationFeature",
             initialState = RegistrationComponent.State(
                 username = "",
-                email = "",
+                email = initialEmail ?: "",
                 password = "",
                 isLoading = false,
                 error = null,

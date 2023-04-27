@@ -10,7 +10,7 @@ interface AuthComponent {
     val childStack: StateFlow<ChildStack<*, Child>>
 
     fun openLogin()
-    fun openRegistration()
+    fun openRegistration(initialEmail: String?)
 
     sealed class Child {
         class Login(val component: LoginComponent) : Child()

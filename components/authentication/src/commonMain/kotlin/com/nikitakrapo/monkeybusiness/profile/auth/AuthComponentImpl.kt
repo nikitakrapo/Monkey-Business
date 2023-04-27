@@ -30,14 +30,14 @@ class AuthComponentImpl(
         navigation.bringToFront(AuthScreen.Login)
     }
 
-    override fun openRegistration() {
-        navigation.bringToFront(AuthScreen.Registration)
+    override fun openRegistration(initialEmail: String?) {
+        navigation.bringToFront(AuthScreen.Registration(initialEmail = initialEmail))
     }
 
     @Parcelize
     sealed class AuthScreen : Parcelable {
         object Login : AuthScreen()
-        object Registration : AuthScreen()
+        class Registration(val initialEmail: String?) : AuthScreen()
     }
 
     private fun child(
@@ -53,9 +53,10 @@ class AuthComponentImpl(
                 )
                 AuthComponent.Child.Login(component)
             }
-            AuthScreen.Registration -> {
+            is AuthScreen.Registration -> {
                 val component = RegistrationComponentImpl(
                     componentContext = componentContext,
+                    initialEmail = screen.initialEmail,
                     accountManager = dependencies.accountManager,
                 )
                 AuthComponent.Child.Registration(component)
