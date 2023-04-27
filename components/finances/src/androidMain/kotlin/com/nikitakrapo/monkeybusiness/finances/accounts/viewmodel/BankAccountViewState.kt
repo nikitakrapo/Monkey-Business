@@ -1,4 +1,4 @@
-package com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels
+package com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel
 
 data class BankAccountViewState(
     val name: String,

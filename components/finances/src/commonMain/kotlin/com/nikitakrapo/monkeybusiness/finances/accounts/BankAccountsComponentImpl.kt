@@ -1,14 +1,10 @@
 package com.nikitakrapo.monkeybusiness.finances.accounts
 
 import com.arkivanov.decompose.ComponentContext
-import com.nikitakrapo.coroutines.mapState
-import com.nikitakrapo.decompose.coroutines.coroutineScope
 import com.nikitakrapo.monkeybusiness.finance.models.BankAccount
-import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.BankAccountViewState
+import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsComponent.State
 import com.nikitakrapo.mvi.feature.FeatureFactory
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
-import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsComponent.State as ViewState
 
 class BankAccountsComponentImpl(
     componentContext: ComponentContext,
@@ -16,27 +12,19 @@ class BankAccountsComponentImpl(
     dependencies: BankAccountsDependencies,
 ) : BankAccountsComponent, ComponentContext by componentContext {
 
-    private val scope = coroutineScope(Dispatchers.Main)
-
     private val bankAccountsRepository = dependencies.bankAccountsRepository
     private val productOpeningLandingRouter = dependencies.productOpeningLandingRouter
 
     private val feature = featureFactory.create<Intent, Intent, Effect, State, Nothing>(
         name = "BankAccounts",
-        initialState = State(
-            accountList = null,
-            isLoading = true,
-        ),
-        intentToAction = {},
-        bootstrapper = {
-
-        },
-        reducer = {},
-        actor = {},
+        initialState = TODO(),
+        intentToAction = TODO(),
+        bootstrapper = TODO(),
+        reducer = TODO(),
+        actor = TODO(),
     )
 
-    override val state: StateFlow<ViewState> = feature.state
-        .mapState(scope, State::toViewState)
+    override val state: StateFlow<State> = feature.state
 
     override fun onAccountClicked(index: Int) {
 
@@ -46,22 +34,12 @@ class BankAccountsComponentImpl(
         productOpeningLandingRouter.openProductOpening()
     }
 
-    private data class State(
-        val accountList: List<BankAccount>?,
-        val isLoading: Boolean,
-    ) {
-        fun toViewState() = ViewState(
-            accountList = accountList.map {},
-            showShimmer = isLoading && accountList.isNullOrEmpty()
-        )
-    }
-
     private sealed class Action {
-        class AccountListUpdated(val accountList: List<BankAccountViewState>?) : Action()
+        class AccountListUpdated(val accountList: List<BankAccount>) : Action()
     }
 
     private sealed class Intent {
-        private class UpdateAccountList(val accountList: List<BankAccountViewState>?)
+        private class UpdateAccountList(val accountList: List<BankAccount>)
     }
 
     private sealed class Effect {

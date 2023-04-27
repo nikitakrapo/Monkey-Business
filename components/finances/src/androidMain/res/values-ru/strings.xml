@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cd_navigate_back">Вернуться назад</string>
+    <string name="currency_label">Валюта</string>
+    <string name="open_new_card_or_product">Открыть новую карту или продукт</string>
+    <string name="open_account_in_currency_button">Открыть %1s</string>
+    <string name="search_common">Поиск</string>
+    <string name="select_currency">Поиск валюты</string>
+
+    <string name="currency_name_usd">Доллар США</string>
+    <string name="currency_name_eur">Евро</string>
+    <string name="currency_name_gbp">Британский фунт</string>
+    <string name="currency_name_rub">Российский рубль</string>
+    <string name="currency_name_huf">Венгерский Форинт</string>
+</resources>

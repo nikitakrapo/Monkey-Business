@@ -13,7 +13,7 @@ setupAndroidApp(
     applicationId = "com.nikitakrapo.monkeybusiness",
     versionCode = 1,
     versionName = "1.0",
-    supportedLocales = listOf("en", "de", "ru"),
+    supportedLocales = listOf("en", "ru"),
 )
 
 applyCompose()

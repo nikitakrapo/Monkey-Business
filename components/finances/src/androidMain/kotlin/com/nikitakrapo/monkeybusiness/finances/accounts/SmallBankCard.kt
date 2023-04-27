@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
-import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.SmallBankCardViewState
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.SmallBankCardViewState
 
 @Composable
 fun SmallBankCard(

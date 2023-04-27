@@ -45,12 +45,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
+import com.nikitakrapo.monkeybusiness.finances.CurrencyNameProvider.getFullName
 import com.nikitakrapo.monkeybusiness.finances.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -94,7 +96,7 @@ fun BankAccountOpeningScreen(
                 modifier = Modifier
                     .fillMaxSize(),
             ) {
-                state.currencyList.forEachIndexed { index, currencyViewState ->
+                state.currencyList.forEachIndexed { index, currency ->
                     item {
                         CurrencyItem(
                             modifier = Modifier
@@ -105,8 +107,8 @@ fun BankAccountOpeningScreen(
                                     enabled = !state.isLoading
                                 )
                                 .padding(horizontal = 12.dp),
-                            code = currencyViewState.code,
-                            isSelected = currencyViewState == state.selectedCurrency,
+                            code = currency.getFullName(LocalContext.current),
+                            isSelected = currency == state.selectedCurrency,
                         )
                     }
                 }

@@ -22,8 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
-import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.BankAccountViewState
-import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.SmallBankCardViewState
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.BankAccountViewState
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.SmallBankCardViewState
 import kotlin.random.Random
 
 @Composable
@@ -121,7 +121,7 @@ fun BankAccountCard_Preview_EmptyCardList() {
     }
 }
 
-internal fun bankAccountViewState(
+private fun bankAccountViewState(
     name: String = "Bank account",
     amount: String = "120 023,93",
     currency: String = "Ft",
