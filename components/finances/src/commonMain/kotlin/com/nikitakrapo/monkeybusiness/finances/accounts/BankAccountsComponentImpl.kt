@@ -1,43 +1,70 @@
 package com.nikitakrapo.monkeybusiness.finances.accounts
 
 import com.arkivanov.decompose.ComponentContext
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.nikitakrapo.coroutines.mapState
+import com.nikitakrapo.decompose.coroutines.coroutineScope
+import com.nikitakrapo.monkeybusiness.finance.models.BankAccount
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.BankAccountViewState
+import com.nikitakrapo.mvi.feature.FeatureFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import com.nikitakrapo.monkeybusiness.finances.accounts.BankAccountsComponent.State as ViewState
 
 class BankAccountsComponentImpl(
     componentContext: ComponentContext,
+    featureFactory: FeatureFactory = FeatureFactory(),
     dependencies: BankAccountsDependencies,
 ) : BankAccountsComponent, ComponentContext by componentContext {
 
+    private val scope = coroutineScope(Dispatchers.Main)
+
+    private val bankAccountsRepository = dependencies.bankAccountsRepository
     private val productOpeningLandingRouter = dependencies.productOpeningLandingRouter
 
-    override val state: StateFlow<BankAccountsComponent.State> =
-        MutableStateFlow(BankAccountsComponent.State(fakeBankAccountList()))
+    private val feature = featureFactory.create<Intent, Intent, Effect, State, Nothing>(
+        name = "BankAccounts",
+        initialState = State(
+            accountList = null,
+            isLoading = true,
+        ),
+        intentToAction = {},
+        bootstrapper = {
 
-    private fun fakeBankAccountList() = listOf(
-        BankAccountViewState(
-            name = "Main account",
-            moneyText = "872 102,00 $",
-            currencyText = "$",
-            bankCardList = fakeSmallBankCardViewState(),
-        ),
-        BankAccountViewState(
-            name = "Rubles",
-            moneyText = "0,00 ₽",
-            currencyText = "₽",
-            bankCardList = emptyList(),
-        ),
+        },
+        reducer = {},
+        actor = {},
     )
 
-    private fun fakeSmallBankCardViewState() = listOf(
-        SmallBankCardViewState("9924"),
-        SmallBankCardViewState("4092"),
-        SmallBankCardViewState("1928"),
-    )
+    override val state: StateFlow<ViewState> = feature.state
+        .mapState(scope, State::toViewState)
 
-    override fun onAccountClicked(index: Int) {}
+    override fun onAccountClicked(index: Int) {
+
+    }
 
     override fun onOpenProductClicked() {
         productOpeningLandingRouter.openProductOpening()
+    }
+
+    private data class State(
+        val accountList: List<BankAccount>?,
+        val isLoading: Boolean,
+    ) {
+        fun toViewState() = ViewState(
+            accountList = accountList.map {},
+            showShimmer = isLoading && accountList.isNullOrEmpty()
+        )
+    }
+
+    private sealed class Action {
+        class AccountListUpdated(val accountList: List<BankAccountViewState>?) : Action()
+    }
+
+    private sealed class Intent {
+        private class UpdateAccountList(val accountList: List<BankAccountViewState>?)
+    }
+
+    private sealed class Effect {
+
     }
 }

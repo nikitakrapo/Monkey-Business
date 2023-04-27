@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class BankCard(
+internal class BankCardDto(
     @SerialName("pan")
     val pan: String,
 )

@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.SmallBankCardViewState
 
 @Composable
 fun SmallBankCard(
@@ -38,7 +39,7 @@ fun SmallBankCard(
     ) {
         Text(
             modifier = Modifier.align(Alignment.BottomStart),
-            text = state.lastDigits,
+            text = state.text,
             color = MaterialTheme.colorScheme.contentColorFor(color),
             style = MaterialTheme.typography.labelSmall
         )
@@ -58,5 +59,5 @@ fun SmallBankCard_Preview() {
 }
 
 private fun smallBankCardViewState() = SmallBankCardViewState(
-    lastDigits = "4492"
+    text = "4492"
 )

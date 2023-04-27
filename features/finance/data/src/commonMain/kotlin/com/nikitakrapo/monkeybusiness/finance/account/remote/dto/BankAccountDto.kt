@@ -1,11 +1,10 @@
 package com.nikitakrapo.monkeybusiness.finance.account.remote.dto
 
-import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankCard
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class BankAccount(
+internal class BankAccountDto(
     @SerialName("iban")
     val iban: String,
     @SerialName("balance")
@@ -13,7 +12,7 @@ class BankAccount(
     @SerialName("currencyCode")
     val currencyCode: String,
     @SerialName("cards")
-    val cards: List<BankCard>,
+    val cards: List<BankCardDto>,
     @SerialName("name")
     val name: String,
 )

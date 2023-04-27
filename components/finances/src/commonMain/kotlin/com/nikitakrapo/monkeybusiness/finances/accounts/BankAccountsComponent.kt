@@ -1,5 +1,6 @@
 package com.nikitakrapo.monkeybusiness.finances.accounts
 
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.BankAccountViewState
 import kotlinx.coroutines.flow.StateFlow
 
 interface BankAccountsComponent {
@@ -10,6 +11,7 @@ interface BankAccountsComponent {
     fun onOpenProductClicked()
 
     data class State(
-        val accountList: List<BankAccountViewState>
+        val accountList: List<BankAccountViewState>?,
+        val showShimmer: Boolean,
     )
 }

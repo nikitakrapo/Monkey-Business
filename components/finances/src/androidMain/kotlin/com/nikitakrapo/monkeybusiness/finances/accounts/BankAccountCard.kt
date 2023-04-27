@@ -22,6 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.BankAccountViewState
+import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodels.SmallBankCardViewState
 import kotlin.random.Random
 
 @Composable
@@ -45,7 +47,7 @@ fun BankAccountCard(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = state.currencyText,
+                text = state.currencySign,
                 style = MaterialTheme.typography.titleLarge
             )
         }
@@ -127,7 +129,7 @@ internal fun bankAccountViewState(
 ) = BankAccountViewState(
     name = name,
     moneyText = "$amount $currency",
-    currencyText = currency,
+    currencySign = currency,
     bankCardList = smallBankCardViewStateList(cardAmount)
 )
 
@@ -136,7 +138,7 @@ private fun smallBankCardViewStateList(
 ) = buildList {
     (0 until size).forEach { _ ->
         val lastDigits = Random.nextInt(1000, 9999).toString()
-        add(SmallBankCardViewState(lastDigits = lastDigits))
+        add(SmallBankCardViewState(text = lastDigits))
     }
 }
 

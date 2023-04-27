@@ -1,6 +1,6 @@
 package com.nikitakrapo.monkeybusiness.finance.account
 
-import com.nikitakrapo.monkeybusiness.finance.models.BriefAccountInfo
+import com.nikitakrapo.monkeybusiness.finance.models.BankAccount
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import kotlinx.coroutines.flow.Flow
 
@@ -9,5 +9,5 @@ interface BankAccountsRepository {
         currency: Currency
     ): Result<Unit>
 
-    suspend fun getBankAccounts(): Flow<List<BriefAccountInfo>>
+    suspend fun getBankAccounts(): Flow<List<BankAccount>>
 }

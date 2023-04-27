@@ -4,8 +4,7 @@ import com.nikitakrapo.account.AccountManager
 import com.nikitakrapo.account.BearerTokenProviderImpl
 import com.nikitakrapo.analytics.AnalyticsManager
 import com.nikitakrapo.application.PlatformContext
-import com.nikitakrapo.monkeybusiness.finance.account.BankAccountsRepositoryImpl
-import com.nikitakrapo.monkeybusiness.finance.account.remote.KtorBankAccountsApi
+import com.nikitakrapo.monkeybusiness.finance.account.BankAccountsRepositoryFactory
 import com.nikitakrapo.monkeybusiness.finances.accounts.ProductOpeningLandingRouter
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningDependencies
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningDependencies
@@ -28,6 +27,12 @@ class CoreDependencies(
     private val httpClientFactory: HttpClientFactory =
         HttpClientFactory(bearerTokenProvider)
 
+    private val bankAccountsRepository by lazy {
+        BankAccountsRepositoryFactory.create(
+            httpClient = httpClientFactory.mainClient,
+        )
+    }
+
     fun homeDependencies(
         productOpeningLandingRouter: ProductOpeningLandingRouter,
         profileEditRouter: ProfileEditRouter,
@@ -36,16 +41,13 @@ class CoreDependencies(
         accountManager = accountManager,
         profileEditRouter = profileEditRouter,
         productOpeningLandingRouter = productOpeningLandingRouter,
+        bankAccountsRepository = bankAccountsRepository,
     )
 
-    fun bankAccountOpeningDependencies(): BankAccountOpeningDependencies {
-        val api = KtorBankAccountsApi(httpClientFactory.mainClient)
-        return BankAccountOpeningDependencies(
-            bankAccountsRepository = BankAccountsRepositoryImpl(
-                bankAccountsApi = api,
-            ),
+    fun bankAccountOpeningDependencies(): BankAccountOpeningDependencies =
+        BankAccountOpeningDependencies(
+            bankAccountsRepository = bankAccountsRepository,
         )
-    }
 
     fun authDependencies() = AuthDependencies(
         accountManager = accountManager,

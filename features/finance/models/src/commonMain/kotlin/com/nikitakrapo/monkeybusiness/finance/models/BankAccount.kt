@@ -1,7 +1,9 @@
 package com.nikitakrapo.monkeybusiness.finance.models
 
-data class BriefAccountInfo(
+class BankAccount(
+    val iban: String,
     val name: String,
-    val currency: Currency,
     val balance: Long,
+    val currency: Currency,
+    val cards: List<BankCard>,
 )

@@ -1,13 +1,13 @@
 package com.nikitakrapo.monkeybusiness.finance.account
 
-import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountOpeningRequest
 import com.nikitakrapo.monkeybusiness.finance.account.remote.BankAccountsApi
-import com.nikitakrapo.monkeybusiness.finance.models.BriefAccountInfo
+import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountOpeningRequest
+import com.nikitakrapo.monkeybusiness.finance.models.BankAccount
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class BankAccountsRepositoryImpl(
+internal class BankAccountsRepositoryImpl constructor(
     private val bankAccountsApi: BankAccountsApi,
 ) : BankAccountsRepository {
 
@@ -21,15 +21,11 @@ class BankAccountsRepositoryImpl(
         }
     }
 
-    override suspend fun getBankAccounts(): Flow<List<BriefAccountInfo>> {
+    override suspend fun getBankAccounts(): Flow<List<BankAccount>> {
         // FIXME: handle errors
         return flow {
             val res = bankAccountsApi.getAccountList().accounts.map {
-                BriefAccountInfo(
-                    name = it.name,
-                    currency = Currency.fromCode(it.currencyCode),
-                    balance = it.balance,
-                )
+                TODO()
             }
             emit(res)
         }

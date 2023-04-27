@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class BankCardOpeningRequest(
+internal class BankCardOpeningRequest(
     @SerialName("iban")
     val iban: String,
 )

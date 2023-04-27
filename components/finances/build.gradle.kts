@@ -9,7 +9,7 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets)
+setupMultiplatformModule(targets = ::multiplatformMobileTargets, withUtils = true)
 
 applyCompose()
 

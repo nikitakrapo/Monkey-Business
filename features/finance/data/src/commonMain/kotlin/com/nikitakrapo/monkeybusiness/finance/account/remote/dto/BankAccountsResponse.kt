@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class BankAccountsResponse(
+internal class BankAccountsResponse(
     @SerialName("accounts")
-    val accounts: List<BankAccount>,
+    val accounts: List<BankAccountDto>,
 )
