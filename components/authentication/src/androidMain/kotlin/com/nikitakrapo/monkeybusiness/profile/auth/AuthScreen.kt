@@ -49,5 +49,5 @@ fun PreviewAuthComponent() = object : AuthComponent {
         )
 
     override fun openLogin() {}
-    override fun openRegistration() {}
+    override fun openRegistration(initialEmail: String?) {}
 }
