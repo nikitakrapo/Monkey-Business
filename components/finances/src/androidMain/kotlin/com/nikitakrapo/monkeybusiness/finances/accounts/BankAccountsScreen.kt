@@ -1,5 +1,6 @@
 package com.nikitakrapo.monkeybusiness.finances.accounts
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,7 @@ import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.toViewState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BankAccountsScreen(
     modifier: Modifier = Modifier,
@@ -48,7 +50,9 @@ fun BankAccountsScreen(
             items(state.accountList.size) { index ->
                 val accountViewState = state.accountList[index]
                 BankAccountCard(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateItemPlacement(),
                     state = accountViewState,
                     onClick = { component.onAccountClicked(index) }
                 )
