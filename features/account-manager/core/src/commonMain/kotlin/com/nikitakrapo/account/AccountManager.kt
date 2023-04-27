@@ -13,7 +13,6 @@ interface AccountManager {
     suspend fun createAccount(
         email: String,
         password: String,
-        username: String,
     ): Result<Account>
 
     suspend fun login(

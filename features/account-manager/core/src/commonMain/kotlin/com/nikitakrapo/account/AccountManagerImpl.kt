@@ -44,7 +44,6 @@ class AccountManagerImpl(
     override suspend fun createAccount(
         email: String,
         password: String,
-        username: String,
     ): Result<Account> {
         return try {
             analytics.onCreateAccountStarted(email)

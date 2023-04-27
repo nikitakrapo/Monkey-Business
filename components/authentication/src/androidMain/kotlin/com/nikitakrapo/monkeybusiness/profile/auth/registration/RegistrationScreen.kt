@@ -105,22 +105,6 @@ fun RegistrationScreen(
                         .fillMaxWidth()
                         .focusRequester(focusRequester),
                     enabled = !state.isLoading,
-                    value = state.username,
-                    onValueChange = component::onUsernameTextChanged,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                    ),
-                    label = { Text(stringResource(R.string.username_hint)) },
-                    singleLine = true,
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    enabled = !state.isLoading,
                     value = state.email,
                     onValueChange = component::onEmailTextChanged,
                     keyboardOptions = KeyboardOptions(
@@ -222,7 +206,6 @@ fun PreviewRegistrationComponent(
     override val state: StateFlow<RegistrationComponent.State>
         get() = MutableStateFlow(
             RegistrationComponent.State(
-                username = "username",
                 email = "email@email.com",
                 password = "samplepass",
                 isLoading = isLoading,
@@ -230,7 +213,6 @@ fun PreviewRegistrationComponent(
             ),
         )
 
-    override fun onUsernameTextChanged(text: String) {}
     override fun onEmailTextChanged(text: String) {}
     override fun onPasswordTextChanged(text: String) {}
     override fun onRegisterClicked() {}

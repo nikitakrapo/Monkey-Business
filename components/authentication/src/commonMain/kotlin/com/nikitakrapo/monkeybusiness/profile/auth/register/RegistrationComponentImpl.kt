@@ -20,7 +20,6 @@ class RegistrationComponentImpl(
         featureFactory.create<Intent, Intent, Effect, RegistrationComponent.State, Nothing>(
             name = "RegistrationFeature",
             initialState = RegistrationComponent.State(
-                username = "",
                 email = initialEmail ?: "",
                 password = "",
                 isLoading = false,
@@ -29,7 +28,6 @@ class RegistrationComponentImpl(
             intentToAction = { it },
             actor = { action, state ->
                 when (action) {
-                    is Intent.ChangeUsernameText -> flowOf(Effect.UsernameChanged(action.text))
                     is Intent.ChangeEmailText -> flowOf(Effect.EmailChanged(action.text))
                     is Intent.ChangePasswordText -> flowOf(Effect.PasswordChanged(action.text))
                     Intent.Register -> flow {
@@ -37,7 +35,6 @@ class RegistrationComponentImpl(
                         accountManager.createAccount(
                             email = state.email,
                             password = state.password,
-                            username = state.username,
                         )
                             .fold(
                                 onSuccess = {
@@ -52,10 +49,6 @@ class RegistrationComponentImpl(
             },
             reducer = {
                 when (it) {
-                    is Effect.UsernameChanged -> copy(
-                        username = it.text,
-                        error = null,
-                    )
                     is Effect.EmailChanged -> copy(
                         email = it.text,
                         error = null,
@@ -79,10 +72,6 @@ class RegistrationComponentImpl(
 
     override val state: StateFlow<RegistrationComponent.State> get() = feature.state
 
-    override fun onUsernameTextChanged(text: String) {
-        feature.accept(Intent.ChangeUsernameText(text))
-    }
-
     override fun onEmailTextChanged(text: String) {
         feature.accept(Intent.ChangeEmailText(text))
     }
@@ -96,14 +85,12 @@ class RegistrationComponentImpl(
     }
 
     private sealed class Intent {
-        class ChangeUsernameText(val text: String) : Intent()
         class ChangeEmailText(val text: String) : Intent()
         class ChangePasswordText(val text: String) : Intent()
         object Register : Intent()
     }
 
     private sealed class Effect {
-        class UsernameChanged(val text: String) : Effect()
         class EmailChanged(val text: String) : Effect()
         class PasswordChanged(val text: String) : Effect()
         object StartLoading : Effect()

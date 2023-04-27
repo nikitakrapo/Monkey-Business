@@ -20,7 +20,6 @@ fun testAccountManager(
     override suspend fun createAccount(
         email: String,
         password: String,
-        username: String,
     ): Result<Account> {
         val newAccount = Account(
             uid = "uid",
