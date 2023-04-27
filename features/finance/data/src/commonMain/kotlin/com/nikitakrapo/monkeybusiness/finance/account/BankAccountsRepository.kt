@@ -9,5 +9,7 @@ interface BankAccountsRepository {
         currency: Currency
     ): Result<Unit>
 
-    suspend fun getBankAccounts(): Flow<List<BankAccount>>
+    fun getBankAccounts(): Flow<List<BankAccount>>
+
+    suspend fun updateBankAccounts()
 }

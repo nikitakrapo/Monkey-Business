@@ -59,6 +59,7 @@ class BankAccountOpeningComponentImpl(
                     val result = repository.openBankAccount(state.selectedCurrency)
                     emit(Effect.AccountAddingFinished(result))
                     if (result.isSuccess) emit(Effect.ScreenClosed)
+                    repository.updateBankAccounts()
                 }
             }
         },
