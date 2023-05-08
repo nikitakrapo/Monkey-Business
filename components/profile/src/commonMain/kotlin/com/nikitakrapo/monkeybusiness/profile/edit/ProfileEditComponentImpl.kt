@@ -66,7 +66,7 @@ class ProfileEditComponentImpl(
                 }
             }
         },
-        eventsPublisher = { action, effect, state ->
+        eventsPublisher = { _, effect, _ ->
             if (effect is Effect.SavingFinished && effect.result.isSuccess) {
                 Event.SavingFinishedSuccessfully
             } else {

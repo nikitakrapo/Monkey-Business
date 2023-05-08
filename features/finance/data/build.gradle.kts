@@ -1,5 +1,4 @@
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -10,10 +9,7 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(
-    targets = ::multiplatformMobileTargets,
-    withUtils = true,
-)
+setupMobileMultiplatformModule(androidNamespace = "com.nikitakrapo.monkeybusiness.finance.data")
 
 android {
     defaultConfig {
@@ -28,6 +24,7 @@ kotlin {
                 api(projects.features.finance.models)
                 api(libs.kotlinx.coroutines)
                 api(projects.features.network)
+                implementation(projects.features.kmmUtils)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(projects.features.database)
                 implementation(libs.sqldelight.runtime)

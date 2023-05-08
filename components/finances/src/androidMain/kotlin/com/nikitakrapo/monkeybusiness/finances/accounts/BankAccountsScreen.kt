@@ -41,14 +41,14 @@ fun BankAccountsScreen(
         .mapState(scope, BankAccountsComponent.State::toViewState)
         .collectAsState()
 
-    when (val state = state) {
+    when (val viewState = state) {
         is BankAccountsScreenViewState.ShowingAccounts -> LazyColumn(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp),
         ) {
-            items(state.accountList.size) { index ->
-                val accountViewState = state.accountList[index]
+            items(viewState.accountList.size) { index ->
+                val accountViewState = viewState.accountList[index]
                 BankAccountCard(
                     modifier = Modifier
                         .fillMaxWidth()

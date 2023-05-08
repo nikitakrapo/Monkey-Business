@@ -1,12 +1,11 @@
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
 }
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets)
+setupMobileMultiplatformModule(androidNamespace = "com.nikitakrapo.monkeybusiness.navigation.test")
 
 kotlin {
     sourceSets {

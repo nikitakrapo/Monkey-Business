@@ -1,5 +1,4 @@
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -8,7 +7,7 @@ plugins {
     kotlin("native.cocoapods")
 }
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets)
+setupMobileMultiplatformModule(androidNamespace = "com.nikitakrapo.monkeybusiness.analytics")
 
 kotlin {
     cocoapods {

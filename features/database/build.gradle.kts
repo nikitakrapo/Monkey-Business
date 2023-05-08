@@ -1,5 +1,4 @@
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -10,17 +9,15 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(
-    targets = ::multiplatformMobileTargets,
-    withUtils = true,
-)
+setupMobileMultiplatformModule(androidNamespace = "com.nikitakrapo.monkeybusiness.database")
 
 kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.sqldelight.runtime)
                 api(libs.kotlinx.coroutines)
+                implementation(projects.features.kmmUtils)
+                implementation(libs.sqldelight.runtime)
             }
         }
         val androidMain by getting {

@@ -1,5 +1,4 @@
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -8,10 +7,7 @@ plugins {
     kotlin("native.cocoapods")
 }
 
-setupMultiplatformModule(
-    withUtils = true,
-    targets = ::multiplatformMobileTargets,
-)
+setupMobileMultiplatformModule(androidNamespace = "com.nikitakrapo.monkeybusiness.account")
 
 kotlin {
     cocoapods {
@@ -30,8 +26,9 @@ kotlin {
             dependencies {
                 api(projects.features.analytics)
                 implementation(libs.kotlinx.coroutines)
-                implementation(projects.features.network)
                 implementation(libs.essenty.parcelable)
+                implementation(projects.features.network)
+                implementation(projects.features.kmmUtils)
             }
         }
 

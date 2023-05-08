@@ -1,22 +1,19 @@
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
 }
 
-setupMultiplatformModule(
-    withUtils = true,
-    targets = ::multiplatformMobileTargets,
-)
+setupMobileMultiplatformModule(androidNamespace = "com.nikitakrapo.monkeybusiness.account.test")
 
 kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.features.accountManager.core)
                 implementation(libs.kotlinx.coroutines)
+                implementation(projects.features.accountManager.core)
+                implementation(projects.features.kmmUtils)
             }
         }
     }

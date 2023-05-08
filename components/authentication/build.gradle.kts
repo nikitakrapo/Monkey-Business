@@ -1,6 +1,4 @@
-import com.nikitakrapo.configuration.android.applyCompose
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -10,9 +8,12 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets)
-
-applyCompose()
+setupMobileMultiplatformModule(
+    androidNamespace = "com.nikitakrapo.monkeybusiness.authentication",
+    androidConfiguration = {
+        useCompose()
+    }
+)
 
 kotlin {
     sourceSets {

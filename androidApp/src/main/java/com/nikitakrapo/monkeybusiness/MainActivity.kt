@@ -13,11 +13,8 @@ import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.arkivanov.decompose.defaultComponentContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.nikitakrapo.account.AccountManager
-import com.nikitakrapo.account.AccountManagerImpl
 import com.nikitakrapo.analytics.AnalyticsManager
-import com.nikitakrapo.analytics.FirebaseAnalyticsManager
 import com.nikitakrapo.application.PlatformContext
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import org.koin.android.ext.android.inject

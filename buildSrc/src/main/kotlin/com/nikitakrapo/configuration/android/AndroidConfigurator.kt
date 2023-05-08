@@ -6,63 +6,70 @@ import com.nikitakrapo.configuration.libs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withGroovyBuilder
-import org.gradle.kotlin.dsl.*
 
-internal fun defaultAndroidConfig() = AndroidConfig(
-    minSdk = 24,
-    targetSdk = 31,
-    compileSdk = 33,
-)
-
-fun Project.setupAndroidLibrary() {
-    setupAndroidCommon()
-}
-
-fun Project.setupAndroidApp(
-    applicationId: String,
-    versionCode: Int,
-    versionName: String,
-    supportedLocales: List<String>,
+open class AndroidConfigurator(
+    private val config: AndroidModuleConfig,
+    private val project: Project,
 ) {
-    setupAndroidCommon()
 
-    extensions.configure<BaseAppModuleExtension> {
-        defaultConfig {
-            this.applicationId = applicationId
-            this.versionCode = versionCode
-            this.versionName = versionName
+    internal fun configureAndroidModule() {
+        project.extensions.configure<BaseExtension> {
+            namespace = config.namespace
 
-            resourceConfigurations += supportedLocales
-        }
-    }
-}
+            compileSdkVersion(config.compileSdk)
 
-internal fun Project.setupAndroidCommon(
-    config: AndroidConfig = defaultAndroidConfig(),
-) {
-    dependencies {
-        add("implementation", libs.napier)
-    }
+            defaultConfig {
+                minSdk = config.minSdk
+                targetSdk = config.targetSdk
 
-    extensions.configure<BaseExtension> {
-        compileSdkVersion(config.compileSdk)
+                buildFeatures.buildConfig = true
+            }
 
-        defaultConfig {
-            minSdk = config.minSdk
-            targetSdk = config.targetSdk
-        }
+            compileOptions {
+                sourceCompatibility(JavaVersion.VERSION_1_8)
+                targetCompatibility(JavaVersion.VERSION_1_8)
+            }
 
-        compileOptions {
-            sourceCompatibility(JavaVersion.VERSION_1_8)
-            targetCompatibility(JavaVersion.VERSION_1_8)
-        }
-
-        withGroovyBuilder {
-            "kotlinOptions" {
-                setProperty("jvmTarget", "1.8")
+            withGroovyBuilder {
+                "kotlinOptions" {
+                    setProperty("jvmTarget", "1.8")
+                }
             }
         }
+    }
+
+    fun useCompose() {
+        project.extensions.configure<BaseExtension> {
+            buildFeatures.compose = true
+            composeOptions {
+                kotlinCompilerExtensionVersion = project.libs.versions.kotlinCompilerCompose.get()
+            }
+        }
+    }
+
+    fun configureBenchmarkBuildType() {
+        project.configure<BaseExtension> {
+            buildTypes {
+                create("benchmark") {
+                    signingConfig = signingConfigs.getByName("debug")
+                    matchingFallbacks += listOf("release")
+                    isDebuggable = false
+                }
+            }
+        }
+    }
+}
+
+fun Project.setupAndroidLibrary(
+    moduleConfig: AndroidModuleConfig,
+    configuration: AndroidConfigurator.() -> Unit
+) {
+    AndroidConfigurator(
+        config = moduleConfig,
+        project = this
+    ).apply {
+        configureAndroidModule()
+        configuration()
     }
 }

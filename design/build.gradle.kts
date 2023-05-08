@@ -1,4 +1,4 @@
-import com.nikitakrapo.configuration.android.applyCompose
+import com.nikitakrapo.configuration.android.androidModuleConfig
 import com.nikitakrapo.configuration.android.setupAndroidLibrary
 
 plugins {
@@ -6,9 +6,11 @@ plugins {
     kotlin("android")
 }
 
-setupAndroidLibrary()
-
-applyCompose()
+setupAndroidLibrary(
+    moduleConfig = androidModuleConfig("com.nikitakrapo.monkeybusiness.design")
+) {
+    useCompose()
+}
 
 dependencies {
     api(libs.compose.ui)

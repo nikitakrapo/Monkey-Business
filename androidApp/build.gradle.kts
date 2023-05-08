@@ -1,5 +1,5 @@
-import com.nikitakrapo.configuration.android.applyCompose
-import com.nikitakrapo.configuration.android.createBenchmarkBuildType
+import com.nikitakrapo.configuration.android.AndroidApplicationConfig
+import com.nikitakrapo.configuration.android.androidModuleConfig
 import com.nikitakrapo.configuration.android.setupAndroidApp
 
 plugins {
@@ -9,16 +9,21 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
+val appId = "com.nikitakrapo.monkeybusiness"
 setupAndroidApp(
-    applicationId = "com.nikitakrapo.monkeybusiness",
-    versionCode = 1,
-    versionName = "1.0",
-    supportedLocales = listOf("en", "ru"),
-)
+    appConfig = AndroidApplicationConfig(
+        applicationId = appId,
+        versionCode = 1,
+        versionName = "1.0",
+    ),
+    moduleConfig = androidModuleConfig(appId)
+) {
+    val supportedLocales = listOf("en", "ru")
+    setResourceConfigs(supportedLocales)
 
-applyCompose()
-
-createBenchmarkBuildType()
+    useCompose()
+    configureBenchmarkBuildType()
+}
 
 dependencies {
     implementation(projects.core)

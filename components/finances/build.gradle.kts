@@ -1,6 +1,4 @@
-import com.nikitakrapo.configuration.android.applyCompose
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -9,9 +7,12 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(targets = ::multiplatformMobileTargets, withUtils = true)
-
-applyCompose()
+setupMobileMultiplatformModule(
+    androidNamespace = "com.nikitakrapo.monkeybusiness.finances",
+    androidConfiguration = {
+        useCompose()
+    }
+)
 
 kotlin {
     sourceSets {
@@ -21,6 +22,7 @@ kotlin {
                 api(projects.features.finance.models)
                 api(projects.features.navigation.core)
                 api(projects.features.analytics)
+                implementation(projects.features.kmmUtils)
                 implementation(projects.features.mvi.feature)
                 implementation(libs.kotlinx.datetime)
             }

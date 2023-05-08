@@ -9,7 +9,6 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.isBack
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 
-@OptIn(ExperimentalDecomposeApi::class)
 @Composable
 internal fun homeTabAnimation(): StackAnimation<Any, HomeComponent.Child> =
     stackAnimation { child, otherChild, direction ->
@@ -27,17 +26,16 @@ private val HomeComponent.Child.index: Int
             is HomeComponent.Child.Profile -> 2
         }
 
-@OptIn(ExperimentalDecomposeApi::class)
 private fun StackAnimator.flipSide(): StackAnimator =
-    StackAnimator { direction, onFinished, content ->
+    StackAnimator { direction, isInitial, onFinished, content ->
         invoke(
             direction = direction.flipSide(),
+            isInitial = isInitial,
             onFinished = onFinished,
             content = content,
         )
     }
 
-@OptIn(ExperimentalDecomposeApi::class)
 private fun Direction.flipSide(): Direction =
     when (this) {
         Direction.ENTER_FRONT -> Direction.ENTER_BACK

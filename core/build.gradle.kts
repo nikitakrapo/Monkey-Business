@@ -1,6 +1,4 @@
-import com.nikitakrapo.configuration.android.applyCompose
-import com.nikitakrapo.configuration.multiplatform.multiplatformMobileTargets
-import com.nikitakrapo.configuration.multiplatform.setupMultiplatformModule
+import com.nikitakrapo.configuration.multiplatform.setupMobileMultiplatformModule
 
 plugins {
     kotlin("multiplatform")
@@ -11,12 +9,12 @@ plugins {
 
 version = "1.0"
 
-setupMultiplatformModule(
-    targets = ::multiplatformMobileTargets,
-    withUtils = true,
+setupMobileMultiplatformModule(
+    androidNamespace = "com.nikitakrapo.monkeybusiness.core",
+    androidConfiguration = {
+        useCompose()
+    }
 )
-
-applyCompose()
 
 kotlin {
     cocoapods {
@@ -46,6 +44,7 @@ kotlin {
                 api(projects.components.authentication)
                 api(projects.components.home)
                 api(projects.components.profile)
+                implementation(projects.features.kmmUtils)
                 implementation(projects.features.mvi.feature)
             }
         }
