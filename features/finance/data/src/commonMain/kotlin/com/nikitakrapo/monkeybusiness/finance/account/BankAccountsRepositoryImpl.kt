@@ -6,6 +6,7 @@ import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountOpen
 import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.toDomainModel
 import com.nikitakrapo.monkeybusiness.finance.models.BankAccount
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -20,20 +21,20 @@ internal class BankAccountsRepositoryImpl constructor(
         val request = BankAccountOpeningRequest(
             currencyCode = currency.code,
         )
-        return runCatching {
-            bankAccountsApi.createAccount(request)
-        }
+        return bankAccountsApi.createAccount(request)
     }
 
     override fun getBankAccounts(): Flow<List<BankAccount>> = bankAccountsFlow
 
     override suspend fun updateBankAccounts() {
         val accounts = fetchBankAccounts()
-        bankAccountsFlow.emit(accounts)
+        accounts?.let { bankAccountsFlow.emit(it) }
     }
 
     private suspend fun fetchBankAccounts() =
         bankAccountsApi.getAccountList()
-            .accounts
-            .map(BankAccountDto::toDomainModel)
+            .onFailure { Napier.e("Error fetching accounts", it) }
+            .getOrNull()
+            ?.accounts
+            ?.map(BankAccountDto::toDomainModel)
 }

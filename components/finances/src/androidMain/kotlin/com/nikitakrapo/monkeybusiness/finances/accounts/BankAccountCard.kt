@@ -75,24 +75,35 @@ fun BankAccountCard(
     }
 }
 
-@Preview(
-    widthDp = 360
-)
 @Composable
-fun BankAccountCard_Preview_CardList() {
-    MonkeyTheme {
-        Surface {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp),
-            ) {
-                BankAccountCard(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = bankAccountViewState(
-                        cardAmount = 5
-                    ),
-                    onClick = {}
-                )
+fun BankAccountCard_Shimmer(
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .clip(MaterialTheme.shapes.medium)
+            .padding(14.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.medium)
+                .background(MaterialTheme.colorScheme.secondaryContainer)
+                .size(44.dp),
+        )
+        Spacer(modifier = Modifier.size(16.dp))
+        Column {
+            Text(
+                text = "120 023,93",
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = "Bank account",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Row {
+
             }
         }
     }
@@ -102,21 +113,44 @@ fun BankAccountCard_Preview_CardList() {
     widthDp = 360
 )
 @Composable
+fun BankAccountCard_Preview_CardList() {
+    MonkeyTheme {
+        BankAccountCard(
+            modifier = Modifier.fillMaxWidth(),
+            state = bankAccountViewState(
+                cardAmount = 5
+            ),
+            onClick = {}
+        )
+    }
+}
+
+@Preview(
+    widthDp = 360
+)
+@Composable
 fun BankAccountCard_Preview_EmptyCardList() {
     MonkeyTheme {
+        BankAccountCard(
+            modifier = Modifier.fillMaxWidth(),
+            state = bankAccountViewState(
+                cardAmount = 0
+            ),
+            onClick = {}
+        )
+    }
+}
+
+@Preview(
+    widthDp = 360
+)
+@Composable
+fun BankAccountCard_Shimmer_Preview() {
+    MonkeyTheme {
         Surface {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp),
-            ) {
-                BankAccountCard(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = bankAccountViewState(
-                        cardAmount = 0
-                    ),
-                    onClick = {}
-                )
-            }
+            BankAccountCard_Shimmer(
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }

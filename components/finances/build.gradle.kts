@@ -37,6 +37,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(projects.design)
+                implementation(libs.compose.shimmer)
             }
         }
     }

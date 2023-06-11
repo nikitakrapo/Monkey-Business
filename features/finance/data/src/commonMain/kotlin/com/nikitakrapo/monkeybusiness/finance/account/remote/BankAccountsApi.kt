@@ -4,6 +4,6 @@ import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountOpen
 import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountsResponse
 
 internal interface BankAccountsApi {
-    suspend fun createAccount(request: BankAccountOpeningRequest)
-    suspend fun getAccountList(): BankAccountsResponse
+    suspend fun createAccount(request: BankAccountOpeningRequest): Result<Unit>
+    suspend fun getAccountList(): Result<BankAccountsResponse>
 }
