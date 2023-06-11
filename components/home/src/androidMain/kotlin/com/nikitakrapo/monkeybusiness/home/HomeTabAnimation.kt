@@ -1,7 +1,6 @@
 package com.nikitakrapo.monkeybusiness.home
 
 import androidx.compose.runtime.Composable
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.Direction
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimation
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimator

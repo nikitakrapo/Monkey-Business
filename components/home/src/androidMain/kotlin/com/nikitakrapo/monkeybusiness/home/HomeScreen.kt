@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.analytics.AnalyticsScreen
@@ -37,7 +36,6 @@ import com.nikitakrapo.monkeybusiness.profile.ProfileScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-@OptIn(ExperimentalDecomposeApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -50,11 +48,11 @@ fun HomeScreen(
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.statusBars),
     ) {
-        val (child, bottomNav) = createRefs()
+        val (children, bottomNav) = createRefs()
 
         Children(
             modifier = Modifier
-                .constrainAs(child) {
+                .constrainAs(children) {
                     top.linkTo(parent.top)
                     bottom.linkTo(bottomNav.top)
                     centerHorizontallyTo(parent)

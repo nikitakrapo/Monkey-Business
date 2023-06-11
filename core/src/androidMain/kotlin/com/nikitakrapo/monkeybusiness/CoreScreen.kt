@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
@@ -29,7 +28,6 @@ import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-@OptIn(ExperimentalDecomposeApi::class)
 @Composable
 fun CoreScreen(
     modifier: Modifier = Modifier,
