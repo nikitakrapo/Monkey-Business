@@ -1,5 +1,12 @@
 # Monkey-Business
 
+## Tech stack
+- Navigation: Decompose
+- UI: Jetpack Compose, SwiftUI
+- Networking: Ktor
+- Data storage: SQLDelight
+- Analytics, Auth: Firebase
+
 ## Features
 ### Multiplatform
 - Navigation
