@@ -58,10 +58,11 @@ ktor = "2.3.0" # https://github.com/ktorio/ktor/releases
 
 sqldelight = "1.5.5" # https://github.com/cashapp/sqldelight/releases
 
-# Decompose
+# Architecture
 
 essenty = "1.1.0" # https://github.com/arkivanov/Essenty/releases
 decompose = "2.0.0-alpha-02" # https://github.com/arkivanov/Decompose/releases
+mvikotlin = "3.2.1" # https://github.com/arkivanov/MVIKotlin/releases
 
 # Logging
 
@@ -139,11 +140,16 @@ sqldelight-gradle = { module = "com.squareup.sqldelight:gradle-plugin", version.
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
 
-# Decompose
+# Architecture
 
 essenty-parcelable = { module = "com.arkivanov.essenty:parcelable", version.ref = "essenty" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-jetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
+mvikotlin-core = { module = "com.arkivanov.mvikotlin:mvikotlin", version.ref = "mvikotlin" }
+mvikotlin-main = { module = "com.arkivanov.mvikotlin:mvikotlin-main", version.ref = "mvikotlin" }
+mvikotlin-logging = { module = "com.arkivanov.mvikotlin:mvikotlin-logging", version.ref = "mvikotlin" }
+mvikotlin-timetravel = { module = "com.arkivanov.mvikotlin:mvikotlin-timetravel", version.ref = "mvikotlin" }
+mvikotlin-coroutines = { module = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
 
 # AndroidX
 
