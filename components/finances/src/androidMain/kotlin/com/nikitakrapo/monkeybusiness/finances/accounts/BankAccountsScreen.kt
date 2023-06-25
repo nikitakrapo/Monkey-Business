@@ -74,9 +74,11 @@ fun BankAccountsScreen(
             }
         }
 
-        BankAccountsScreenViewState.Loading -> Text("Here should be accounts shimmer..")
+        BankAccountsScreenViewState.Loading -> BankAccountsShimmer(
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
-
 }
 
 @Preview(
@@ -94,7 +96,26 @@ fun BankAccountsScreen_Preview() {
     }
 }
 
-fun PreviewBankAccountsComponent() = object : BankAccountsComponent {
+@Preview(
+    widthDp = 360,
+    heightDp = 720
+)
+@Composable
+fun BankAccountsScreen_Preview_Loading() {
+    MonkeyTheme {
+        Surface {
+            BankAccountsScreen(
+                component = PreviewBankAccountsComponent(
+                    isLoading = true
+                )
+            )
+        }
+    }
+}
+
+fun PreviewBankAccountsComponent(
+    isLoading: Boolean = false,
+) = object : BankAccountsComponent {
     override val state: StateFlow<BankAccountsComponent.State> =
         MutableStateFlow(
             BankAccountsComponent.State(
@@ -117,9 +138,8 @@ fun PreviewBankAccountsComponent() = object : BankAccountsComponent {
                             bankCard("9042"),
                         ),
                     ),
-
-                ),
-                isLoading = false,
+                ).takeIf { !isLoading },
+                isLoading = isLoading,
                 error = null,
             )
         )

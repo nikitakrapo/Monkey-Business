@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.BankAccountViewState
 import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.SmallBankCardViewState
+import com.valentinilk.shimmer.ShimmerBounds
+import com.valentinilk.shimmer.rememberShimmer
 import kotlin.random.Random
 
 @Composable
@@ -75,40 +77,6 @@ fun BankAccountCard(
     }
 }
 
-@Composable
-fun BankAccountCard_Shimmer(
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .clip(MaterialTheme.shapes.medium)
-            .padding(14.dp),
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(MaterialTheme.shapes.medium)
-                .background(MaterialTheme.colorScheme.secondaryContainer)
-                .size(44.dp),
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        Column {
-            Text(
-                text = "120 023,93",
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = "Bank account",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-            Row {
-
-            }
-        }
-    }
-}
-
 @Preview(
     widthDp = 360
 )
@@ -148,8 +116,9 @@ fun BankAccountCard_Preview_EmptyCardList() {
 fun BankAccountCard_Shimmer_Preview() {
     MonkeyTheme {
         Surface {
-            BankAccountCard_Shimmer(
+            BankAccountCardShimmer(
                 modifier = Modifier.fillMaxWidth(),
+                shimmer = rememberShimmer(shimmerBounds = ShimmerBounds.Window),
             )
         }
     }

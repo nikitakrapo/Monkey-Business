@@ -34,6 +34,7 @@ kotlin {
                 implementation(projects.features.mvi.featureLogging)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.turbine)
+                implementation(libs.compose.shimmer)
             }
         }
         val androidMain by getting {
