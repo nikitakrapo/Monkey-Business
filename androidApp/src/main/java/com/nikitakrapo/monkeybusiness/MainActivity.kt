@@ -69,17 +69,6 @@ class MainActivity : FragmentActivity() {
                                 },
                             component = coreComponent,
                         )
-
-                        // TODO: make testing abstraction
-                        if (BuildConfig.DEBUG) {
-                            DebugButton(
-                                modifier = Modifier.constrainAs(debugButton) {
-                                    centerVerticallyTo(parent)
-                                    end.linkTo(parent.end)
-                                },
-                                accountManager = accountManager
-                            )
-                        }
                     }
                 }
             }

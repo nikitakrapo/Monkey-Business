@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.childContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
@@ -12,6 +13,8 @@ import com.arkivanov.essenty.parcelable.Parcelize
 import com.nikitakrapo.account.currentAccount
 import com.nikitakrapo.account.models.Account
 import com.nikitakrapo.decompose.coroutines.coroutineScope
+import com.nikitakrapo.monkeybusiness.debug.DebugPanelComponent
+import com.nikitakrapo.monkeybusiness.debug.DebugPanelComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningComponentImpl
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningRouter
@@ -51,6 +54,12 @@ class CoreComponentImpl(
         )
     )
     override val state: StateFlow<CoreComponent.State> get() = stateFlow.asStateFlow()
+
+    override val debugPanelComponent = DebugPanelComponentImpl(
+        accountManager = accountManager,
+        platformContext = dependencies.platformContext,
+        componentContext = componentContext.childContext(key = "DebugPanel"),
+    )
 
     private val navigation = StackNavigation<CoreScreen>()
 

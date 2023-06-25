@@ -2,7 +2,6 @@ package com.nikitakrapo.monkeybusiness
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,6 +12,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.monkeybusiness.debug.DebugPanelComponent
+import com.nikitakrapo.monkeybusiness.debug.DebugPanelWrapper
+import com.nikitakrapo.monkeybusiness.debug.PreviewDebugPanelComponent
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheet
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetParams
 import com.nikitakrapo.monkeybusiness.design.components.bottomsheet.BottomSheetType
@@ -37,63 +39,69 @@ fun CoreScreen(
     val childStack by component.childStack.collectAsState()
     val modalChildStack by component.modalChildStack.collectAsState()
 
-    BoxWithConstraints(
-        modifier = modifier,
-    ) {
-        Children(
-            stack = childStack,
-            modifier = Modifier
-                .fillMaxSize(),
-            animation = coreScreenChildrenAnimation(),
-        ) { createdChild ->
-            when (val child = createdChild.instance) {
-                is CoreComponent.Child.Home ->
-                    HomeScreen(component = child.component)
-
-                is CoreComponent.Child.BankAccountOpening ->
-                    BankAccountOpeningScreen(component = child.component)
-
-                is CoreComponent.Child.Authentication ->
-                    AuthScreen(component = child.component)
-            }
-        }
-
-        val hasModal = remember(modalChildStack.active.instance) {
-            modalChildStack.active.instance !is CoreComponent.ModalChild.None
-        }
-        val offsetAnchors = remember(modalChildStack.active.configuration) {
-            when (modalChildStack.active.instance) {
-                CoreComponent.ModalChild.None -> mapOf(0.dp to 0, Int.MAX_VALUE.dp to 1)
-                is CoreComponent.ModalChild.ProfileEdit -> mapOf(0.dp to 0, 360.dp to 1)
-                is CoreComponent.ModalChild.ProductOpening -> mapOf(0.dp to 0, 180.dp to 1)
-            }
-        }
-        BottomSheet(
-            modifier = Modifier
-                .fillMaxSize(),
-            params = BottomSheetParams(
-                type = BottomSheetType.Modal,
-                offsetAnchors = offsetAnchors,
-                initialState = if (hasModal) 0 else 1,
-            ),
-            enabled = hasModal,
-            isDismissing = state.isModalDismissing,
-            onDismiss = component::onModalDismissed,
+    val content = @Composable {
+        BoxWithConstraints(
+            modifier = modifier,
         ) {
-            when (val child = modalChildStack.active.instance) {
-                is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
-                    component = child.component,
-                )
-                is CoreComponent.ModalChild.ProductOpening -> ProductOpeningScreen(
-                    component = child.component,
-                )
-                CoreComponent.ModalChild.None -> {}
+            Children(
+                stack = childStack,
+                modifier = Modifier
+                    .fillMaxSize(),
+                animation = coreScreenChildrenAnimation(),
+            ) { createdChild ->
+                when (val child = createdChild.instance) {
+                    is CoreComponent.Child.Home ->
+                        HomeScreen(component = child.component)
+
+                    is CoreComponent.Child.BankAccountOpening ->
+                        BankAccountOpeningScreen(component = child.component)
+
+                    is CoreComponent.Child.Authentication ->
+                        AuthScreen(component = child.component)
+                }
+            }
+
+            val hasModal = remember(modalChildStack.active.instance) {
+                modalChildStack.active.instance !is CoreComponent.ModalChild.None
+            }
+            val offsetAnchors = remember(modalChildStack.active.configuration) {
+                when (modalChildStack.active.instance) {
+                    CoreComponent.ModalChild.None -> mapOf(0.dp to 0, Int.MAX_VALUE.dp to 1)
+                    is CoreComponent.ModalChild.ProfileEdit -> mapOf(0.dp to 0, 360.dp to 1)
+                    is CoreComponent.ModalChild.ProductOpening -> mapOf(0.dp to 0, 180.dp to 1)
+                }
+            }
+            BottomSheet(
+                modifier = Modifier
+                    .fillMaxSize(),
+                params = BottomSheetParams(
+                    type = BottomSheetType.Modal,
+                    offsetAnchors = offsetAnchors,
+                    initialState = if (hasModal) 0 else 1,
+                ),
+                enabled = hasModal,
+                isDismissing = state.isModalDismissing,
+                onDismiss = component::onModalDismissed,
+            ) {
+                when (val child = modalChildStack.active.instance) {
+                    is CoreComponent.ModalChild.ProfileEdit -> ProfileEditScreen(
+                        component = child.component,
+                    )
+
+                    is CoreComponent.ModalChild.ProductOpening -> ProductOpeningScreen(
+                        component = child.component,
+                    )
+
+                    CoreComponent.ModalChild.None -> {}
+                }
             }
         }
     }
+    DebugPanelWrapper(
+        component = component.debugPanelComponent,
+        content = content,
+    )
 }
-
-private fun Modifier.dragHandlePadding() = padding(top = 16.dp)
 
 @Preview(
     widthDp = 360,
@@ -148,6 +156,9 @@ internal fun PreviewCoreComponent(
 ) = object : CoreComponent {
     override val state: StateFlow<CoreComponent.State>
         get() = MutableStateFlow(CoreComponent.State(isModalDismissing = false))
+
+    override val debugPanelComponent: DebugPanelComponent
+        get() = PreviewDebugPanelComponent()
 
     override val childStack: StateFlow<ChildStack<CoreComponentImpl.CoreScreen, CoreComponent.Child>>
         get() = MutableStateFlow(

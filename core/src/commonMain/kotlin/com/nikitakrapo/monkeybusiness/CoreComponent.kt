@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness
 
 import com.arkivanov.decompose.router.stack.ChildStack
+import com.nikitakrapo.monkeybusiness.debug.DebugPanelComponent
 import com.nikitakrapo.monkeybusiness.finances.accounts.opening.BankAccountOpeningComponent
 import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningComponent
 import com.nikitakrapo.monkeybusiness.home.HomeComponent
@@ -11,6 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
 interface CoreComponent {
 
     val state: StateFlow<State>
+
+    val debugPanelComponent: DebugPanelComponent
 
     val childStack: StateFlow<ChildStack<*, Child>>
     val modalChildStack: StateFlow<ChildStack<*, ModalChild>>
