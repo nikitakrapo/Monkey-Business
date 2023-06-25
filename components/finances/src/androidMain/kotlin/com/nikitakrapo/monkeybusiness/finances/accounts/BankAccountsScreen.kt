@@ -120,6 +120,7 @@ fun PreviewBankAccountsComponent() = object : BankAccountsComponent {
 
                 ),
                 isLoading = false,
+                error = null,
             )
         )
 

@@ -13,5 +13,6 @@ interface BankAccountsComponent {
     data class State(
         val accountList: List<BankAccount>?,
         val isLoading: Boolean,
+        val error: String?,
     )
 }

@@ -3,6 +3,7 @@ package com.nikitakrapo.monkeybusiness.finance.account
 import com.nikitakrapo.monkeybusiness.finance.account.remote.BankAccountsApi
 import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountDto
 import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountOpeningRequest
+import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.BankAccountsResponse
 import com.nikitakrapo.monkeybusiness.finance.account.remote.dto.toDomainModel
 import com.nikitakrapo.monkeybusiness.finance.models.BankAccount
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
@@ -27,14 +28,17 @@ internal class BankAccountsRepositoryImpl constructor(
     override fun getBankAccounts(): Flow<List<BankAccount>> = bankAccountsFlow
 
     override suspend fun updateBankAccounts() {
-        val accounts = fetchBankAccounts()
-        accounts?.let { bankAccountsFlow.emit(it) }
+        val accounts = getBankAccountsFromApi()
+        accounts.onSuccess { bankAccountsFlow.emit(it) }
     }
 
-    private suspend fun fetchBankAccounts() =
+    override suspend fun fetchBankAccounts(): Result<List<BankAccount>> {
+        return getBankAccountsFromApi()
+    }
+
+    private suspend fun getBankAccountsFromApi() =
         bankAccountsApi.getAccountList()
             .onFailure { Napier.e("Error fetching accounts", it) }
-            .getOrNull()
-            ?.accounts
-            ?.map(BankAccountDto::toDomainModel)
+            .map(BankAccountsResponse::accounts)
+            .map { accountList -> accountList.map(BankAccountDto::toDomainModel) }
 }

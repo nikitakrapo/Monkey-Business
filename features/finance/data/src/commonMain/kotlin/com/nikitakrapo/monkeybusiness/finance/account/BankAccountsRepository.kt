@@ -12,4 +12,6 @@ interface BankAccountsRepository {
     fun getBankAccounts(): Flow<List<BankAccount>>
 
     suspend fun updateBankAccounts()
+
+    suspend fun fetchBankAccounts(): Result<List<BankAccount>>
 }

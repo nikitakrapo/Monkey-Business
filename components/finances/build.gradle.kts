@@ -22,8 +22,10 @@ kotlin {
                 api(projects.features.finance.models)
                 api(projects.features.navigation.core)
                 api(projects.features.analytics)
+                api(libs.mvikotlin.core)
+                api(libs.mvikotlin.main)
+                implementation(libs.mvikotlin.coroutines)
                 implementation(projects.features.kmmUtils)
-                implementation(projects.features.mvi.feature)
                 implementation(libs.kotlinx.datetime)
             }
         }
