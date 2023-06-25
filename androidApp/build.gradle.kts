@@ -27,7 +27,7 @@ setupAndroidApp(
 
 dependencies {
     implementation(projects.core)
-    implementation(projects.design)
+    implementation(projects.features.designCompose)
     implementation(projects.features.accountManager.core)
     implementation(projects.features.analytics)
     implementation(projects.features.kmmUtils)

@@ -50,7 +50,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.design)
+                implementation(projects.features.designCompose)
                 implementation(libs.decompose.jetpack)
             }
         }

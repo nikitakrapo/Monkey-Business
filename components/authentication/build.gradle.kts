@@ -26,7 +26,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.design)
+                implementation(projects.features.designCompose)
                 implementation(libs.coil.compose)
                 implementation(libs.decompose.jetpack)
             }

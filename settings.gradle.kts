@@ -20,7 +20,6 @@ rootProject.name = "MonkeyBusiness"
 
 include(":androidApp")
 include(":core")
-include(":design")
 
 include(":components:analytics")
 include(":components:authentication")
@@ -28,6 +27,7 @@ include(":components:home")
 include(":components:finances")
 include(":components:profile")
 
+include(":features:design-compose")
 include(":features:kmm-utils")
 include(":features:navigation:core")
 include(":features:navigation:test")
