@@ -1,6 +1,7 @@
 package com.nikitakrapo.monkeybusiness.network
 
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokenProvider
+import io.ktor.client.call.HttpClientCall
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.HttpTimeout
@@ -17,8 +18,12 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlin.time.Duration.Companion.seconds
 
+/**
+ * @param onHttpCall May be used for additional logging purposes
+ */
 class HttpClientFactory(
-    private val tokenProvider: BearerTokenProvider
+    private val tokenProvider: BearerTokenProvider,
+    private val onHttpCall: (HttpClientCall) -> Unit = {},
 ) {
     val mainClient by lazy {
         createHttpClient(ApiUrlProvider.Main)
@@ -49,7 +54,9 @@ class HttpClientFactory(
             tokenProvider.getToken()?.let { token ->
                 request.header(HttpHeaders.Authorization, "Bearer $token")
             }
-            execute(request)
+            val httpCall = execute(request)
+            onHttpCall(httpCall)
+            httpCall
         }
     }
 }

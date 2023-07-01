@@ -26,6 +26,7 @@ kotlin {
                 api(libs.mvikotlin.main)
                 implementation(libs.mvikotlin.coroutines)
                 implementation(projects.features.kmmUtils)
+                implementation(projects.features.androidResources)
                 implementation(libs.kotlinx.datetime)
             }
         }

@@ -28,6 +28,7 @@ include(":components:finances")
 include(":components:profile")
 
 include(":features:design-compose")
+include(":features:android-resources")
 include(":features:kmm-utils")
 include(":features:navigation:core")
 include(":features:navigation:test")
