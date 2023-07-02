@@ -7,6 +7,7 @@ interface ProfileComponent {
     val state: StateFlow<State>
 
     fun onEditClicked()
+    fun onSettingsClicked()
     fun onLogoutClicked()
 
     data class State(

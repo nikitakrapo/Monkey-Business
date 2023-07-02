@@ -22,7 +22,7 @@
     <string name="cd_profile_image">Изображение профиля</string>
     <string name="cd_edit_account">Изменить аккаунт</string>
     <string name="cd_save_changes">Сохранить изменения</string>
-    <string name="logout">Выйти</string>
+    <string name="logout_common">Выйти</string>
 
     <!-- Currencies -->
     <string name="currency_name_usd">Доллар США</string>
@@ -36,4 +36,8 @@
     <string name="open_new_card_or_product">Открыть новую карту или продукт</string>
     <string name="open_account_in_currency_button">Открыть %1s</string>
     <string name="select_currency">Выбрать валюту</string>
+
+    <!-- Settings -->
+    <string name="settings_menu_item">Настройки</string>
+    <string name="logout_menu_item">Выйти из аккаунта</string>
 </resources>

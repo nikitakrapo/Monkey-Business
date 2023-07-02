@@ -22,6 +22,7 @@ interface CoreComponent {
 
     sealed class Child {
         class Home(val component: HomeComponent) : Child()
+        class Settings(val component: Unit) : Child()
         class BankAccountOpening(val component: BankAccountOpeningComponent) : Child()
         class Authentication(val component: AuthComponent) : Child()
     }

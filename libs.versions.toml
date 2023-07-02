@@ -54,9 +54,10 @@ androidx-espresso = "3.5.1" # https://developer.android.com/jetpack/androidx/rel
 
 ktor = "2.3.0" # https://github.com/ktorio/ktor/releases
 
-# SQLDelight
+# Data storage
 
 sqldelight = "1.5.5" # https://github.com/cashapp/sqldelight/releases
+settings = "1.0.0" # https://github.com/russhwolf/multiplatform-settings/releases
 
 # Architecture
 
@@ -132,13 +133,15 @@ ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 
-# SQLDelight
+# Data storage
 
 sqldelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-gradle = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
+
+settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "settings" }
 
 # Architecture
 

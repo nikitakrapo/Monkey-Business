@@ -3,6 +3,7 @@ package com.nikitakrapo.monkeybusiness
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -52,6 +53,9 @@ fun CoreScreen(
                 when (val child = createdChild.instance) {
                     is CoreComponent.Child.Home ->
                         HomeScreen(component = child.component)
+
+                    is CoreComponent.Child.Settings ->
+                        Text("Settings")
 
                     is CoreComponent.Child.BankAccountOpening ->
                         BankAccountOpeningScreen(component = child.component)
@@ -168,6 +172,7 @@ internal fun PreviewCoreComponent(
                     CoreComponentImpl.CoreScreen.Home -> CoreComponent.Child.Home(
                         PreviewHomeComponent(),
                     )
+                    CoreComponentImpl.CoreScreen.Settings -> CoreComponent.Child.Settings(Unit)
                     CoreComponentImpl.CoreScreen.BankAccountOpening -> CoreComponent.Child.BankAccountOpening(
                         PreviewBankAccountOpeningComponent(),
                     )

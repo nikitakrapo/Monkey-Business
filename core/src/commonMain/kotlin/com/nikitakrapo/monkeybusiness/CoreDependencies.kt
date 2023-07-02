@@ -12,6 +12,7 @@ import com.nikitakrapo.monkeybusiness.finances.products.ProductOpeningRouter
 import com.nikitakrapo.monkeybusiness.home.HomeDependencies
 import com.nikitakrapo.monkeybusiness.network.HttpClientFactory
 import com.nikitakrapo.monkeybusiness.network.auth.BearerTokenProvider
+import com.nikitakrapo.monkeybusiness.profile.SettingsRouter
 import com.nikitakrapo.monkeybusiness.profile.auth.AuthDependencies
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditDependencies
 import com.nikitakrapo.monkeybusiness.profile.edit.ProfileEditRouter
@@ -35,10 +36,12 @@ class CoreDependencies(
 
     fun homeDependencies(
         productOpeningLandingRouter: ProductOpeningLandingRouter,
+        settingsRouter: SettingsRouter,
         profileEditRouter: ProfileEditRouter,
     ) = HomeDependencies(
         analyticsManager = analyticsManager,
         accountManager = accountManager,
+        settingsRouter = settingsRouter,
         profileEditRouter = profileEditRouter,
         productOpeningLandingRouter = productOpeningLandingRouter,
         bankAccountsRepository = bankAccountsRepository,

@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.outlined.ExitToApp
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -44,12 +45,22 @@ fun ProfileScreen(
         )
         ListItem(
             modifier = Modifier
-                .clickable(onClick = component::onLogoutClicked),
+                .clickable(onClick = component::onSettingsClicked),
             headlineText = {
-                Text(text = stringResource(R.string.logout))
+                Text(text = stringResource(R.string.settings_menu_item))
             },
             leadingContent = {
-                Icon(imageVector = Icons.Filled.ExitToApp, contentDescription = null)
+                Icon(imageVector = Icons.Outlined.Settings, contentDescription = null)
+            }
+        )
+        ListItem(
+            modifier = Modifier
+                .clickable(onClick = component::onLogoutClicked),
+            headlineText = {
+                Text(text = stringResource(R.string.logout_menu_item))
+            },
+            leadingContent = {
+                Icon(imageVector = Icons.Outlined.ExitToApp, contentDescription = null)
             }
         )
     }
@@ -84,5 +95,6 @@ fun PreviewProfileComponent(
         )
 
     override fun onEditClicked() {}
+    override fun onSettingsClicked() {}
     override fun onLogoutClicked() {}
 }

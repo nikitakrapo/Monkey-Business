@@ -82,6 +82,7 @@ class CoreComponentImpl(
     @Parcelize
     sealed class CoreScreen : Parcelable {
         object Home : CoreScreen()
+        object Settings : CoreScreen()
         object BankAccountOpening : CoreScreen()
         object Authentication : CoreScreen()
     }
@@ -140,11 +141,21 @@ class CoreComponentImpl(
                         productOpeningLandingRouter = {
                             modalNavigation.bringToFront(CoreModalScreen.ProductOpening)
                         },
+                        settingsRouter = {
+                            navigation.bringToFront(CoreScreen.Settings)
+                        },
                         profileEditRouter = {
                             modalNavigation.bringToFront(CoreModalScreen.ProfileEdit)
                         },
                     ),
                 ),
+            )
+        }
+
+        CoreScreen.Settings -> {
+            analytics.onSettingsShown()
+            CoreComponent.Child.Settings(
+                Unit
             )
         }
 

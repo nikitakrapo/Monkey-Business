@@ -22,7 +22,7 @@
     <string name="cd_profile_image">Profile image</string>
     <string name="cd_edit_account">Edit account</string>
     <string name="cd_save_changes">Save changes</string>
-    <string name="logout">Logout</string>
+    <string name="logout_common">Logout</string>
 
     <!-- Currencies -->
     <string name="currency_name_usd">United States dollar</string>
@@ -36,4 +36,8 @@
     <string name="open_new_card_or_product">Open new card or product</string>
     <string name="open_account_in_currency_button">Open %1s</string>
     <string name="select_currency">Select a currency</string>
+
+    <!-- Settings -->
+    <string name="settings_menu_item">Settings</string>
+    <string name="logout_menu_item">Logout</string>
 </resources>

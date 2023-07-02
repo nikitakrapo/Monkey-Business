@@ -40,6 +40,10 @@ class ProfileComponentImpl(
         dependencies.profileEditRouter.openProfileEdit()
     }
 
+    override fun onSettingsClicked() {
+        dependencies.settingsRouter.openSettings()
+    }
+
     override fun onLogoutClicked() {
         dependencies.accountManager.logout()
     }
