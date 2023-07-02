@@ -3,9 +3,11 @@ package com.nikitakrapo.monkeybusiness.finances.accounts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Surface
 import androidx.compose.material3.FilledTonalButton
@@ -41,11 +43,17 @@ fun BankAccountsScreen(
         .mapState(scope, BankAccountsComponent.State::toViewState)
         .collectAsState()
 
+    val insets = WindowInsets.statusBars.asPaddingValues()
     when (val viewState = state) {
         is BankAccountsScreenViewState.ShowingAccounts -> LazyColumn(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp,
+                top = 16.dp + insets.calculateTopPadding()
+            ),
         ) {
             items(viewState.accountList.size) { index ->
                 val accountViewState = viewState.accountList[index]

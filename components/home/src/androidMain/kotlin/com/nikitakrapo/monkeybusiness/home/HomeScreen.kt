@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -46,8 +47,7 @@ fun HomeScreen(
 
     ConstraintLayout(
         modifier = modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars),
+            .fillMaxSize(),
     ) {
         val (children, bottomNav) = createRefs()
 
@@ -64,15 +64,20 @@ fun HomeScreen(
         ) { createdChild ->
             when (val child = createdChild.instance) {
                 is HomeComponent.Child.Finances -> FinancesScreen(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     component = child.component,
                 )
                 is HomeComponent.Child.Analytics -> AnalyticsScreen(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding(),
                     component = child.component,
                 )
                 is HomeComponent.Child.Profile -> ProfileScreen(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding(),
                     component = child.component,
                 )
             }

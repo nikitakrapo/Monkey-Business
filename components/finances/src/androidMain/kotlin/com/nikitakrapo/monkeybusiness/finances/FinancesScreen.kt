@@ -52,8 +52,7 @@ fun FinancesScreen(
     Box(modifier = modifier.pullRefresh(pullRefreshState)) {
         BankAccountsScreen(
             modifier = Modifier
-                .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.statusBars),
+                .fillMaxSize(),
             component = component.bankAccountsComponent
         )
 
