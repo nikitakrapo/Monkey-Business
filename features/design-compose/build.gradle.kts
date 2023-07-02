@@ -20,4 +20,5 @@ dependencies {
     api(libs.compose.ui.tooling)
     api(libs.compose.ui.tooling.preview)
     api(libs.constraintlayout.compose)
+    implementation(projects.features.androidResources)
 }

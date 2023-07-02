@@ -2,6 +2,7 @@ package com.nikitakrapo.monkeybusiness.finances
 
 import android.content.Context
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
+import com.nikitakrapo.monkeybusiness.resources.R
 
 object CurrencyNameProvider {
     fun Currency.getFullName(context: Context) = when(this) {

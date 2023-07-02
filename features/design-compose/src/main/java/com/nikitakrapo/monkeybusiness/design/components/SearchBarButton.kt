@@ -21,8 +21,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nikitakrapo.monkeybusiness.design.R
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.resources.R
 
 @Composable
 fun SearchBarButton(
@@ -40,7 +40,7 @@ fun SearchBarButton(
         Icon(imageVector = Icons.Default.Search, contentDescription = null, tint = colorScheme.onSurfaceVariant)
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = stringResource(R.string.search),
+            text = stringResource(R.string.search_common),
             style = typography.bodyLarge,
             color = colorScheme.onSurfaceVariant,
         )

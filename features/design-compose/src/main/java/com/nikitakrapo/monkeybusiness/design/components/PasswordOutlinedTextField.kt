@@ -17,9 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.nikitakrapo.monkeybusiness.design.R
 import com.nikitakrapo.monkeybusiness.design.icons.filled.Visibility
 import com.nikitakrapo.monkeybusiness.design.icons.filled.VisibilityOff
+import com.nikitakrapo.monkeybusiness.resources.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -21,10 +21,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.coroutines.mapState
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
+import com.nikitakrapo.monkeybusiness.resources.R
 import com.nikitakrapo.monkeybusiness.finance.models.BankAccount
 import com.nikitakrapo.monkeybusiness.finance.models.BankCard
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
-import com.nikitakrapo.monkeybusiness.finances.R
 import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.BankAccountsScreenViewState
 import com.nikitakrapo.monkeybusiness.finances.accounts.viewmodel.toViewState
 import kotlinx.coroutines.flow.MutableStateFlow

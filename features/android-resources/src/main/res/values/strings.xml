@@ -1,4 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cd_navigate_back">Navigate back</string>
+    <string name="search_common">Search</string>
+
+    <!-- Authentication -->
+    <string name="login_common">Login</string>
+    <string name="create_account">Create account?</string>
+    <string name="register_common">Register</string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint" translatable="false">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="cd_show_password">Show password</string>
+    <string name="cd_hide_password">Hide password</string>
+
+    <!-- Home -->
+    <string name="cd_finances">Finances</string>
+    <string name="cd_analytics">Analytics</string>
+    <string name="cd_profile">Profile</string>
+
+    <!-- Profile -->
+    <string name="cd_profile_image">Profile image</string>
+    <string name="cd_edit_account">Edit account</string>
+    <string name="cd_save_changes">Save changes</string>
+    <string name="logout">Logout</string>
+
+    <!-- Currencies -->
+    <string name="currency_name_usd">United States dollar</string>
+    <string name="currency_name_eur">Euro</string>
+    <string name="currency_name_gbp">British pound</string>
+    <string name="currency_name_rub">Russian ruble</string>
+    <string name="currency_name_huf">Hungarian Forint</string>
+
+    <!-- Finances -->
+    <string name="currency_label">Currency</string>
+    <string name="open_new_card_or_product">Open new card or product</string>
+    <string name="open_account_in_currency_button">Open %1s</string>
+    <string name="select_currency">Select a currency</string>
 </resources>

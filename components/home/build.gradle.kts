@@ -25,6 +25,7 @@ kotlin {
                 api(projects.features.finance.models)
                 api(projects.features.analytics)
                 implementation(projects.features.mvi.feature)
+                implementation(projects.features.androidResources)
             }
         }
         val commonTest by getting {

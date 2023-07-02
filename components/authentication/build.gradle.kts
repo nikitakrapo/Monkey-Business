@@ -22,6 +22,7 @@ kotlin {
                 api(projects.features.accountManager.core)
                 api(projects.features.navigation.core)
                 implementation(projects.features.mvi.feature)
+                implementation(projects.features.androidResources)
             }
         }
         val androidMain by getting {

@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
-import com.nikitakrapo.monkeybusiness.finances.R
+import com.nikitakrapo.monkeybusiness.resources.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

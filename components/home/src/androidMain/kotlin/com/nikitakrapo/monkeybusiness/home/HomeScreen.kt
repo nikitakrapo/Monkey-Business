@@ -33,6 +33,7 @@ import com.nikitakrapo.monkeybusiness.finances.FinancesScreen
 import com.nikitakrapo.monkeybusiness.finances.PreviewFinancesComponent
 import com.nikitakrapo.monkeybusiness.profile.PreviewProfileComponent
 import com.nikitakrapo.monkeybusiness.profile.ProfileScreen
+import com.nikitakrapo.monkeybusiness.resources.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

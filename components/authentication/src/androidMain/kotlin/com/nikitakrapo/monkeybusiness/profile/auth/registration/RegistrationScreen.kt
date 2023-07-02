@@ -40,10 +40,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.nikitakrapo.monkeybusiness.authentication.R
 import com.nikitakrapo.monkeybusiness.design.components.PasswordOutlinedTextField
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.profile.auth.register.RegistrationComponent
+import com.nikitakrapo.monkeybusiness.resources.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

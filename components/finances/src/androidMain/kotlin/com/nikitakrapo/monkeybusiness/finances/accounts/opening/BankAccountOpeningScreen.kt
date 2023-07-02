@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.nikitakrapo.monkeybusiness.design.theme.MonkeyTheme
 import com.nikitakrapo.monkeybusiness.finance.models.Currency
 import com.nikitakrapo.monkeybusiness.finances.CurrencyNameProvider.getFullName
-import com.nikitakrapo.monkeybusiness.finances.R
+import com.nikitakrapo.monkeybusiness.resources.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
